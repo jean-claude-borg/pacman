@@ -1,0 +1,117 @@
+[
+{
+  "directory": "C:/dev/pacman/build",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\g++.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP @CMakeFiles/pacman.dir/includes_CXX.rsp -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles\\pacman.dir\\main.cpp.obj -c C:\\dev\\pacman\\main.cpp",
+  "file": "C:/dev/pacman/main.cpp"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\core.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\core.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/core.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\models.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\models.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/models.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\shapes.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\shapes.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/shapes.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\text.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\text.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/text.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\textures.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\textures.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/textures.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\utils.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\utils.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/utils.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/raylib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -o CMakeFiles\\raylib.dir\\raudio.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\raudio.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/raudio.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\context.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\context.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/context.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\init.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\init.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/init.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\input.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\input.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/input.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\monitor.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\monitor.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/monitor.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\vulkan.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\vulkan.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/vulkan.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\window.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\window.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/window.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\win32_init.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_init.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/win32_init.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\win32_joystick.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_joystick.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/win32_joystick.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\win32_monitor.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_monitor.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/win32_monitor.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\win32_time.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_time.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/win32_time.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\win32_thread.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_thread.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/win32_thread.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\win32_window.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_window.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/win32_window.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\wgl_context.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\wgl_context.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/wgl_context.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\egl_context.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\egl_context.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/egl_context.c"
+},
+{
+  "directory": "C:/dev/pacman/build/_deps/raylib-build/raylib/external/glfw/src",
+  "command": "C:\\dev\\mingw\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H @CMakeFiles/glfw_objlib.dir/includes_C.rsp -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -Wall -std=gnu99 -Wdeclaration-after-statement -o CMakeFiles\\glfw_objlib.dir\\osmesa_context.c.obj -c C:\\dev\\pacman\\build\\_deps\\raylib-src\\src\\external\\glfw\\src\\osmesa_context.c",
+  "file": "C:/dev/pacman/build/_deps/raylib-src/src/external/glfw/src/osmesa_context.c"
+}
+]

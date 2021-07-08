@@ -1,0 +1,3 @@
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E rm -f CMakeFiles\pacman.dir/objects.a
+C:\dev\mingw\mingw64\bin\ar.exe cr CMakeFiles\pacman.dir/objects.a @CMakeFiles\pacman.dir\objects1.rsp
+C:\dev\mingw\mingw64\bin\g++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\pacman.dir/objects.a -Wl,--no-whole-archive -o pacman.exe -Wl,--out-implib,libpacman.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\pacman.dir\linklibs.rsp
