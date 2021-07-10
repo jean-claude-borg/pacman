@@ -69,6 +69,8 @@ int clydeHeight = 32;
 
 int inkyX;
 int inkyY;
+int inkyWidth = 32;
+int inkyHeight = 32;
 
 int pinkyX;
 int pinkyY;

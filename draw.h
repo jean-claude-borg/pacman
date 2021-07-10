@@ -48,7 +48,7 @@ void loadTextures()
     //ghosts
     ImageResize(&tempBlinky,blinkyWidth,blinkyHeight);
     ImageResize(&tempClyde,clydeWidth,clydeHeight);
-    ImageResize(&tempInky,25,25);
+    ImageResize(&tempInky,inkyWidth,inkyHeight);
     ImageResize(&tempPinky,25,25);
 
     blinky = LoadTextureFromImage(tempBlinky);

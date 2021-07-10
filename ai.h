@@ -12,6 +12,10 @@ enum eDirection clydeDir;
 bool clydeCrossedWall = false;
 int clydeMovCounter = 0;
 
+enum eDirection inkyDir;
+bool inkyCrossedWall = false;
+int inkyMovCounter = 0;
+
 void initAi()
 {    
     blinkyX = ghostStartX[0];
@@ -28,6 +32,7 @@ void initAi()
 
     blinkyDir = STOP;
     clydeDir = STOP;
+    inkyDir = STOP;
 };
 
 bool atCrossRoad(int x, int y)
@@ -67,7 +72,6 @@ void aiCalcDir()
     blinkyMovCounter = 0;
 
     if(clydeY <= ghostWallY - 33)   {clydeCrossedWall = true;} 
-
     if(!clydeCrossedWall)   clydeDir = UP; 
 
     while(clydeCrossedWall)
@@ -79,6 +83,19 @@ void aiCalcDir()
         else if(random == 3 && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP) {clydeDir = DOWN; break;}
     }
     clydeMovCounter = 0;
+
+    if(inkyY <= ghostWallY - 33)   {inkyCrossedWall = true;} 
+    if(!inkyCrossedWall)   inkyDir = UP; 
+
+    while(inkyCrossedWall)
+    {   
+        int random = rand() % 4;
+        if(random == 0 && !ghostsGetCollision(inkyX - 1,inkyY) && inkyDir != RIGHT) {inkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(inkyX + 1,inkyY) && inkyDir != LEFT) {inkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN) {inkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP) {inkyDir = DOWN; break;}
+    }
+    inkyMovCounter = 0;
 };
 
 void updateBlinky()
@@ -159,10 +176,50 @@ void updateClyde()
     clydeMovCounter++;
 };
 
+void updateInky()
+{
+    if(!inkyCrossedWall){aiCalcDir();}
+    
+    if(!inkyCrossedWall)
+    {    
+        if(inkyDir == LEFT      ) inkyX -= 1;
+        else if(inkyDir == RIGHT) inkyX += 1;
+        else if(inkyDir == UP   ) inkyY -= 1;
+        else if(inkyDir == DOWN ) inkyY += 1;
+    }
+    if(inkyCrossedWall) 
+    {
+        if(inkyX < 7) inkyX = 454;
+        else if(inkyX >= 454) inkyX = 10;
+        //iteration1
+        if(inkyDir == LEFT        && ghostsGetCollision(inkyX - 1,inkyY) && inkyMovCounter >=20) aiCalcDir();
+        else if(inkyDir == RIGHT  && ghostsGetCollision(inkyX + 1,inkyY) && inkyMovCounter >=20) aiCalcDir();
+        else if(inkyDir == UP     && ghostsGetCollision(inkyX,inkyY - 1) && inkyMovCounter >=20) aiCalcDir();
+        else if(inkyDir == DOWN   && ghostsGetCollision(inkyX,inkyY + 1) && inkyMovCounter >=20) aiCalcDir();
+        if     (inkyDir == LEFT   && !ghostsGetCollision(inkyX - 1,inkyY)) inkyX -= 1;
+        else if(inkyDir == RIGHT  && !ghostsGetCollision(inkyX + 1,inkyY)) inkyX += 1;
+        else if(inkyDir == UP     && !ghostsGetCollision(inkyX,inkyY - 1)) inkyY -= 1;
+        else if(inkyDir == DOWN   && !ghostsGetCollision(inkyX,inkyY + 1)) inkyY += 1;
+        if(atCrossRoad(inkyX, inkyY)) aiCalcDir();
+        //iteration2
+        if(inkyDir == LEFT        && ghostsGetCollision(inkyX - 1,inkyY) && inkyMovCounter >=20) aiCalcDir();
+        else if(inkyDir == RIGHT  && ghostsGetCollision(inkyX + 1,inkyY) && inkyMovCounter >=20) aiCalcDir();
+        else if(inkyDir == UP     && ghostsGetCollision(inkyX,inkyY - 1) && inkyMovCounter >=20) aiCalcDir();
+        else if(inkyDir == DOWN   && ghostsGetCollision(inkyX,inkyY + 1) && inkyMovCounter >=20) aiCalcDir();
+        if     (inkyDir == LEFT   && !ghostsGetCollision(inkyX - 1,inkyY)) inkyX -= 1;
+        else if(inkyDir == RIGHT  && !ghostsGetCollision(inkyX + 1,inkyY)) inkyX += 1;
+        else if(inkyDir == UP     && !ghostsGetCollision(inkyX,inkyY - 1)) inkyY -= 1;
+        else if(inkyDir == DOWN   && !ghostsGetCollision(inkyX,inkyY + 1)) inkyY += 1;
+        if(atCrossRoad(inkyX, inkyY)) aiCalcDir();
+    }
+    inkyMovCounter++;
+};
+
 void updateAi()
 {
     updateBlinky();
     updateClyde();
+    updateInky();
 };
 
 bool ghostsGetCollision(int x, int y)

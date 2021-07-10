@@ -92,7 +92,7 @@ void updateLogic(int *x, int *y)
     else if(pacX >= 454) pacX = 7;
 
     if(ateFood(*x, *y, sizeOfFoodArray)) score++;
-    printf("Score: %d\n", score);
+    //printf("Score: %d\n", score);
 
     if(getGhostCollision(pacX, pacY))
         CloseWindow();
