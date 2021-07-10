@@ -59,21 +59,23 @@ int* ghostStartY;
 
 int blinkyX;
 int blinkyY;
-int blinkyWidth = 32;
-int blinkyHeight = 32;
+int blinkyWidth = 24;
+int blinkyHeight = 24;
 
 int clydeX;
 int clydeY;
-int clydeWidth = 32;
-int clydeHeight = 32;
+int clydeWidth = 24;
+int clydeHeight = 24;
 
 int inkyX;
 int inkyY;
-int inkyWidth = 32;
-int inkyHeight = 32;
+int inkyWidth = 24;
+int inkyHeight = 24;
 
 int pinkyX;
 int pinkyY;
+int pinkyWidth = 24;
+int pinkyHeight = 24;
 
 int ghostWallX;
 int ghostWallY;

@@ -16,6 +16,10 @@ enum eDirection inkyDir;
 bool inkyCrossedWall = false;
 int inkyMovCounter = 0;
 
+enum eDirection pinkyDir;
+bool pinkyCrossedWall = false;
+int pinkyMovCounter = 0;
+
 void initAi()
 {    
     blinkyX = ghostStartX[0];
@@ -33,6 +37,7 @@ void initAi()
     blinkyDir = STOP;
     clydeDir = STOP;
     inkyDir = STOP;
+    pinkyDir = STOP;
 };
 
 bool atCrossRoad(int x, int y)
@@ -96,6 +101,19 @@ void aiCalcDir()
         else if(random == 3 && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP) {inkyDir = DOWN; break;}
     }
     inkyMovCounter = 0;
+
+    if(pinkyY <= ghostWallY - 33)   {pinkyCrossedWall = true;} 
+    if(!pinkyCrossedWall)   pinkyDir = UP; 
+
+    while(pinkyCrossedWall)
+    {   
+        int random = rand() % 4;
+        if(random == 0 && !ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyDir != RIGHT) {pinkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyDir != LEFT) {pinkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN) {pinkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP) {pinkyDir = DOWN; break;}
+    }
+    pinkyMovCounter = 0;
 };
 
 void updateBlinky()
@@ -215,18 +233,59 @@ void updateInky()
     inkyMovCounter++;
 };
 
+void updatePinky()
+{
+    if(!pinkyCrossedWall){aiCalcDir();}
+    
+    if(!pinkyCrossedWall)
+    {    
+        if(pinkyDir == LEFT      ) pinkyX -= 1;
+        else if(pinkyDir == RIGHT) pinkyX += 1;
+        else if(pinkyDir == UP   ) pinkyY -= 1;
+        else if(pinkyDir == DOWN ) pinkyY += 1;
+    }
+    if(pinkyCrossedWall) 
+    {
+        if(pinkyX < 7) pinkyX = 454;
+        else if(pinkyX >= 454) pinkyX = 10;
+        //iteration1
+        if(pinkyDir == LEFT        && ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyMovCounter >=20) aiCalcDir();
+        else if(pinkyDir == RIGHT  && ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyMovCounter >=20) aiCalcDir();
+        else if(pinkyDir == UP     && ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyMovCounter >=20) aiCalcDir();
+        else if(pinkyDir == DOWN   && ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyMovCounter >=20) aiCalcDir();
+        if     (pinkyDir == LEFT   && !ghostsGetCollision(pinkyX - 1,pinkyY)) pinkyX -= 1;
+        else if(pinkyDir == RIGHT  && !ghostsGetCollision(pinkyX + 1,pinkyY)) pinkyX += 1;
+        else if(pinkyDir == UP     && !ghostsGetCollision(pinkyX,pinkyY - 1)) pinkyY -= 1;
+        else if(pinkyDir == DOWN   && !ghostsGetCollision(pinkyX,pinkyY + 1)) pinkyY += 1;
+        if(atCrossRoad(pinkyX, pinkyY)) aiCalcDir();
+        //iteration2
+        if(pinkyDir == LEFT        && ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyMovCounter >=20) aiCalcDir();
+        else if(pinkyDir == RIGHT  && ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyMovCounter >=20) aiCalcDir();
+        else if(pinkyDir == UP     && ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyMovCounter >=20) aiCalcDir();
+        else if(pinkyDir == DOWN   && ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyMovCounter >=20) aiCalcDir();
+        if     (pinkyDir == LEFT   && !ghostsGetCollision(pinkyX - 1,pinkyY)) pinkyX -= 1;
+        else if(pinkyDir == RIGHT  && !ghostsGetCollision(pinkyX + 1,pinkyY)) pinkyX += 1;
+        else if(pinkyDir == UP     && !ghostsGetCollision(pinkyX,pinkyY - 1)) pinkyY -= 1;
+        else if(pinkyDir == DOWN   && !ghostsGetCollision(pinkyX,pinkyY + 1)) pinkyY += 1;
+        if(atCrossRoad(pinkyX, pinkyY)) aiCalcDir();
+    }
+    pinkyMovCounter++;
+};
+
 void updateAi()
 {
     updateBlinky();
     updateClyde();
     updateInky();
+    updatePinky();
 };
 
 bool ghostsGetCollision(int x, int y)
 {
     for(int i = 0; i < sizeOfWallArray; i++)
     {
-        if((wallsX[i] >= x && wallsX[i] < x + blinkyWidth) && (wallsY[i] >= y && wallsY[i] < y + blinkyHeight))
+        //32 is corridor width
+        if((wallsX[i] >= x && wallsX[i] < x + 32) && (wallsY[i] >= y && wallsY[i] < y + 32))
             return true;
     }
     return false;

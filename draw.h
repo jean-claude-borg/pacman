@@ -90,8 +90,9 @@ void draw(int pacX, int pacY)
         animCounter = 0;
     }
     DrawRectangle(ghostWallX,ghostWallY, 37, 4, CLITERAL(Color){ 255, 203, 164, 255 }); 
-    DrawTexture(blinky, blinkyX , blinkyY, WHITE);
-    DrawTexture(clyde, clydeX , clydeY ,WHITE);
-    DrawTexture(inky, inkyX , inkyY ,WHITE);
-    DrawTexture(pinky, pinkyX , pinkyY ,WHITE);
+    //offset by 4 to centre the ghosts
+    DrawTexture(blinky, blinkyX+4 , blinkyY+4, WHITE);
+    DrawTexture(clyde, clydeX+4 , clydeY+4 ,WHITE);
+    DrawTexture(inky, inkyX+4 , inkyY+4 ,WHITE);
+    DrawTexture(pinky, pinkyX+4 , pinkyY+4 ,WHITE);
 };
