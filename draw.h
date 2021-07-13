@@ -17,34 +17,34 @@ void loadTextures()
     Image tempPacNarrowRight = LoadImage("../assets/sprites/pacNarrow.png");
     Image tempPacClosed = LoadImage("../assets/sprites/pacClosed.png");
 
+    Image tempPowerup = LoadImage("../assets/sprites/powerup.png");
+
     ImageResize(&tempPacWideRight, 31, 31);
     ImageResize(&tempPacNarrowRight, 31, 31);
-
     pacWideRight = LoadTextureFromImage(tempPacWideRight);
     pacNarrowRight = LoadTextureFromImage(tempPacNarrowRight);
 
     ImageRotateCW(&tempPacWideRight);
     ImageRotateCW(&tempPacNarrowRight);
-
     pacWideDown = LoadTextureFromImage(tempPacWideRight);
     pacNarrowDown = LoadTextureFromImage(tempPacNarrowRight);
 
     ImageRotateCW(&tempPacWideRight);
     ImageRotateCW(&tempPacNarrowRight);
-
     pacWideLeft = LoadTextureFromImage(tempPacWideRight);
     pacNarrowLeft = LoadTextureFromImage(tempPacNarrowRight);
 
     ImageRotateCW(&tempPacWideRight);
     ImageRotateCW(&tempPacNarrowRight);
-
     pacWideUp = LoadTextureFromImage(tempPacWideRight);
     pacNarrowUp = LoadTextureFromImage(tempPacNarrowRight);
 
     ImageResize(&tempPacClosed, 20, 20);
-
     pacClosed = LoadTextureFromImage(tempPacClosed);
 
+    ImageResize(&tempPowerup, 21, 14);
+    powerup = LoadTextureFromImage(tempPowerup);
+    
     //ghosts
     ImageResize(&tempBlinky,blinkyWidth,blinkyHeight);
     ImageResize(&tempClyde,clydeWidth,clydeHeight);
@@ -60,6 +60,9 @@ void loadTextures()
 
 void draw(int pacX, int pacY)
 {
+    for(int i = 0; i < numPowerups; i++)
+        DrawTexture(powerup, powerUpX[i] - powerup.width / 2 + 1, powerUpY[i] - powerup.height / 2, CLITERAL(Color){ 255, 188, 180, 225});
+
     if(dir == LEFT)          {pacWide = pacWideLeft;     pacNarrow = pacNarrowLeft;}
     else if(dir == RIGHT)    {pacWide = pacWideRight;    pacNarrow = pacNarrowRight;}
     else if(dir == UP)       {pacWide = pacWideUp;       pacNarrow = pacNarrowUp;}

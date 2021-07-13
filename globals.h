@@ -13,7 +13,6 @@ Texture2D pacWideLeft;
 Texture2D pacNarrowLeft;
 Texture2D pacWideRight;
 Texture2D pacNarrowRight;
-
 Texture2D pacClosed;
 
 Texture2D blinky;
@@ -21,6 +20,8 @@ Texture2D clyde;
 Texture2D inky;
 Texture2D pinky;
 Texture2D blueGhost;
+
+Texture2D powerup;
 
 int animCounter = 0;
 const int animMax = 4;
@@ -36,11 +37,15 @@ int* visibleWallsY;
 int* foodsX;
 int* foodsY;
 bool* showFood;
+int* powerUpX;
+int* powerUpY;
+bool* showPowerUp;
 int pacX = 65, pacY = 13;
 
 int sizeOfFoodArray;
 int sizeOfWallArray;
 int sizeOfVisibleWallArray;
+int numPowerups = 0;
 int score = 0;
 
 Music start;

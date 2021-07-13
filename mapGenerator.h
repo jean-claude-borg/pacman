@@ -2,15 +2,17 @@
 
 #include "globals.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int getWallPositions();
 int getVisibleWallPositions();
 int getFoodPositions();
 void getGhostStartPositions();
+int getPowerUpPositions();
 
 int loadMap()
 {
-    map = LoadImage("../assets/maps/map3-12.png");
+    map = LoadImage("../assets/maps/map4.png");
     pixels = LoadImageColors(map);
 
     wallsX = (int*)malloc(map.width * map.height * sizeof (int));
@@ -22,6 +24,10 @@ int loadMap()
     foodsX = (int*)malloc(map.width * map.height * sizeof (int));
     foodsY = (int*)malloc(map.width * map.height * sizeof (int));
     showFood = (bool*)malloc(map.width * map.height * sizeof (bool));
+    
+    powerUpX = (int*)malloc(map.width * map.height * sizeof (int));
+    powerUpY = (int*)malloc(map.width * map.height * sizeof (int));
+    showPowerUp = (bool*)malloc(map.width * map.height * sizeof (bool));
 
     ghostStartX = (int*)malloc(sizeof(int) * 4);
     ghostStartY = (int*)malloc(sizeof(int) * 4);
@@ -29,6 +35,7 @@ int loadMap()
     int counter = getWallPositions();
     sizeOfFoodArray = getFoodPositions();
     sizeOfVisibleWallArray = getVisibleWallPositions();
+    numPowerups = getPowerUpPositions();
     getGhostStartPositions();
     return counter;
 };
@@ -36,7 +43,7 @@ int loadMap()
 void generateMapFromImage()
 {
     for(int i = 0; i < sizeOfVisibleWallArray; i++)
-        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, DARKBLUE);
+        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, VIOLET);
 
     // for(int i = 0; i < sizeOfWallArray; i++)
     //     DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);
@@ -93,7 +100,7 @@ int getWallPositions()
                         continue;
                         
             //detect walls
-            if(pixels[(i*map.width) + j].r == 25 || pixels[(i*map.width) + j].r == 91)
+            if(pixels[(i*map.width) + j].r == 25 || pixels[(i*map.width) + j].r == 91 || pixels[(i*map.width) + j].r == 90)
             {
                 if(pixels[(i*map.width) + j].g == 29 || pixels[(i*map.width) + j].g == 238 || pixels[(i*map.width) + j].g == 30)
                 {
@@ -188,6 +195,39 @@ int getFoodPositions()
     foodsX = (int *)realloc(foodsX, sizeof(int) * counter);
     foodsY = (int *)realloc(foodsY, sizeof(int) * counter);
     showFood = (bool *)realloc(showFood, sizeof(bool) * counter);
+
+    return counter;
+};
+
+int getPowerUpPositions()
+{
+    int counter = 0;
+
+    for(int i = 0; i < map.height; i++)
+    {
+        for(int j = 0; j < map.width; j++)
+        {
+            if(pixels[(i*map.width) + j].r == 235)
+            {
+                if(pixels[(i*map.width) + j].g == 22)
+                {
+                    if(pixels[(i*map.width) + j].b == 18)
+                    {
+                        powerUpX[counter] = j;
+                        powerUpY[counter] = i;
+                        showPowerUp[counter] = true;
+                        counter++;
+
+                        j+=4;
+                    }
+                }
+            }
+        }
+        i+=3;
+    }
+    powerUpX = (int *)realloc(powerUpX, sizeof(int) * counter);
+    powerUpY = (int *)realloc(powerUpY, sizeof(int) * counter);
+    showPowerUp = (bool *)realloc(showPowerUp, sizeof(bool) * counter);
 
     return counter;
 };
