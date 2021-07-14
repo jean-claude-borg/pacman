@@ -12,7 +12,7 @@ int getPowerUpPositions();
 
 int loadMap()
 {
-    map = LoadImage("../assets/maps/map4.png");
+    map = LoadImage("../assets/maps/map4-3.png");
     pixels = LoadImageColors(map);
 
     wallsX = (int*)malloc(map.width * map.height * sizeof (int));
@@ -60,11 +60,11 @@ int getVisibleWallPositions()
     {
         for(int j = 0; j < map.width; j++)
         {
-             if(pixels[(i*map.width) + j].r == 25)
+             if(pixels[(i*map.width) + j].r == 24 || pixels[(i*map.width) + j].r == 158)
             {
-                if(pixels[(i*map.width) + j].g == 29 || pixels[(i*map.width) + j].g == 30)
+                if(pixels[(i*map.width) + j].g == 29 || pixels[(i*map.width) + j].g == 66)
                 {
-                    if(pixels[(i*map.width) + j].b == 214)
+                    if(pixels[(i*map.width) + j].b == 215 || pixels[(i*map.width) + j].b == 137)
                     {
                         visibleWallsX[counter] = j;
                         visibleWallsY[counter] = i;
@@ -100,11 +100,11 @@ int getWallPositions()
                         continue;
                         
             //detect walls
-            if(pixels[(i*map.width) + j].r == 25 || pixels[(i*map.width) + j].r == 91 || pixels[(i*map.width) + j].r == 90)
+            if(pixels[(i*map.width) + j].r == 24 || pixels[(i*map.width) + j].r == 91 || pixels[(i*map.width) + j].r == 90)
             {
                 if(pixels[(i*map.width) + j].g == 29 || pixels[(i*map.width) + j].g == 238 || pixels[(i*map.width) + j].g == 30)
                 {
-                    if(pixels[(i*map.width) + j].b == 214 || pixels[(i*map.width) + j].b == 5)
+                    if(pixels[(i*map.width) + j].b == 215 || pixels[(i*map.width) + j].b == 5)
                     {
                         //Add wall to wall array
                         wallsX[counter] = j;

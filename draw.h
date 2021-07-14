@@ -2,8 +2,7 @@
 
 #include "globals.h"
 
-Texture2D pacWide;
-Texture2D pacNarrow;
+void drawGhosts();
 
 void loadTextures()
 {
@@ -11,7 +10,7 @@ void loadTextures()
     Image tempClyde = LoadImage("../assets/sprites/clyde.png");
     Image tempInky = LoadImage("../assets/sprites/inky.png");
     Image tempPinky = LoadImage("../assets/sprites/pinky.png");
-    Image tempBlueGhost = LoadImage("../assets/sprites/blueGhost.png");
+    Image tempBlueGhost = LoadImage("../assets/sprites/blue_ghost.png");
 
     Image tempPacWideRight = LoadImage("../assets/sprites/pacWide.png");
     Image tempPacNarrowRight = LoadImage("../assets/sprites/pacNarrow.png");
@@ -19,8 +18,8 @@ void loadTextures()
 
     Image tempPowerup = LoadImage("../assets/sprites/powerup.png");
 
-    ImageResize(&tempPacWideRight, 31, 31);
-    ImageResize(&tempPacNarrowRight, 31, 31);
+    ImageResize(&tempPacWideRight, pacWidth, pacHeight);
+    ImageResize(&tempPacNarrowRight, pacWidth, pacHeight);
     pacWideRight = LoadTextureFromImage(tempPacWideRight);
     pacNarrowRight = LoadTextureFromImage(tempPacNarrowRight);
 
@@ -39,8 +38,8 @@ void loadTextures()
     pacWideUp = LoadTextureFromImage(tempPacWideRight);
     pacNarrowUp = LoadTextureFromImage(tempPacNarrowRight);
 
-    ImageResize(&tempPacClosed, 20, 20);
-    pacClosed = LoadTextureFromImage(tempPacClosed);
+    // ImageResize(&tempPacClosed, 20, 20);
+    // pacClosed = LoadTextureFromImage(tempPacClosed);
 
     ImageResize(&tempPowerup, 21, 14);
     powerup = LoadTextureFromImage(tempPowerup);
@@ -49,7 +48,9 @@ void loadTextures()
     ImageResize(&tempBlinky,blinkyWidth,blinkyHeight);
     ImageResize(&tempClyde,clydeWidth,clydeHeight);
     ImageResize(&tempInky,inkyWidth,inkyHeight);
-    ImageResize(&tempPinky,25,25);
+    ImageResize(&tempPinky,pinkyWidth,pinkyHeight);
+    //resized to the size of any ghost since they are all the same size
+    ImageResize(&tempBlueGhost,pinkyWidth,pinkyHeight);
 
     blinky = LoadTextureFromImage(tempBlinky);
     clyde = LoadTextureFromImage(tempClyde);
@@ -61,7 +62,8 @@ void loadTextures()
 void draw(int pacX, int pacY)
 {
     for(int i = 0; i < numPowerups; i++)
-        DrawTexture(powerup, powerUpX[i] - powerup.width / 2 + 1, powerUpY[i] - powerup.height / 2, CLITERAL(Color){ 255, 188, 180, 225});
+        if(showPowerUp[i])
+            DrawTexture(powerup, powerUpX[i] - powerup.width / 2 + 1, powerUpY[i] - powerup.height / 2, CLITERAL(Color){ 255, 188, 180, 225});
 
     if(dir == LEFT)          {pacWide = pacWideLeft;     pacNarrow = pacNarrowLeft;}
     else if(dir == RIGHT)    {pacWide = pacWideRight;    pacNarrow = pacNarrowRight;}
@@ -93,9 +95,29 @@ void draw(int pacX, int pacY)
         animCounter = 0;
     }
     DrawRectangle(ghostWallX,ghostWallY, 37, 4, CLITERAL(Color){ 255, 203, 164, 255 }); 
-    //offset by 4 to centre the ghosts
-    DrawTexture(blinky, blinkyX+4 , blinkyY+4, WHITE);
-    DrawTexture(clyde, clydeX+4 , clydeY+4 ,WHITE);
-    DrawTexture(inky, inkyX+4 , inkyY+4 ,WHITE);
-    DrawTexture(pinky, pinkyX+4 , pinkyY+4 ,WHITE);
+    drawGhosts();
 };
+
+void drawGhosts()
+{
+    //offset by 4 to centre the ghosts
+    if(!poweredUp)
+    {
+        DrawTexture(blinky, blinkyX+4 , blinkyY+4, WHITE);
+        DrawTexture(clyde, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(inky, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(pinky, pinkyX+4 , pinkyY+4 ,WHITE);
+    }
+    else if(poweredUp)
+    {
+        DrawTexture(blueGhost, blinkyX+4 , blinkyY+4, WHITE);
+        DrawTexture(blueGhost, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(blueGhost, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(blueGhost, pinkyX+4 , pinkyY+4 ,WHITE);
+        if(poweredUpDuration >= poweredUpMaxDuration)
+        {
+            poweredUp = false;
+            poweredUpDuration = 0;
+        }
+    }
+}

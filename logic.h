@@ -4,7 +4,8 @@
 #include "stdio.h"
 
 enum eDirection bufferDir;
-bool getGhostCollision(int x, int y);
+bool getGhostCollision();
+bool atePowerUp(int x, int y);
 
 bool getCollision(int x, int y)
 {
@@ -94,15 +95,35 @@ void updateLogic(int *x, int *y)
     if(ateFood(*x, *y, sizeOfFoodArray)) score++;
     //printf("Score: %d\n", score);
 
-    if(getGhostCollision(pacX, pacY))
-        CloseWindow();
+    if(atePowerUp(pacX, pacY))
+        poweredUp = true;
+
+    if(poweredUp == true)
+        poweredUpDuration++;
+
+    getGhostCollision();
 }; 
 
-bool getGhostCollision(int x, int y)
+bool getGhostCollision()
 {
-    // if((x >= blinkyX && x + pacWideRight.width < blinkyX + blinkyWidth) &&
-    //    (y >= blinkyY && y + pacWideRight.height < blinkyY + blinkyHeight))
-    //    return true;
-    
-    // return false;
+    if(blinkyX >= pacX && blinkyX <= pacX + pacWideLeft.width &&
+       blinkyY >= pacY && blinkyY <= pacY + pacWideLeft.height)
+        {blinkyX = ghostStartX[0]; blinkyY = ghostStartY[0];}
+
+}
+
+bool atePowerUp(int pacX, int pacY)
+{
+    for(int i = 0; i < numPowerups; i++)
+    {
+        if(powerUpX[i] >= pacX && powerUpX[i] <= pacX + pacWideLeft.width && powerUpY[i] >= pacY && powerUpY[i] <= pacY + pacWideLeft.height)
+        {
+            if(showPowerUp[i])
+            {
+                showPowerUp[i] = false;
+                return true;
+            }
+        }
+    }
+    return false;
 }

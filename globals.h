@@ -5,6 +5,9 @@
 enum eDirection{LEFT,RIGHT,UP,DOWN,STOP};
 enum eDirection dir;
 
+Texture2D pacWide;
+Texture2D pacNarrow;
+
 Texture2D pacWideUp;
 Texture2D pacNarrowUp;
 Texture2D pacWideDown;
@@ -59,6 +62,9 @@ Sound siren3;
 Sound siren4;
 Sound siren5;
 
+int pacWidth = 31;
+int pacHeight = 31;
+
 int* ghostStartX;
 int* ghostStartY;
 
@@ -84,3 +90,7 @@ int pinkyHeight = 24;
 
 int ghostWallX;
 int ghostWallY;
+
+bool poweredUp = false;
+int poweredUpDuration = 0;
+int poweredUpMaxDuration = 350;
