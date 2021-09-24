@@ -1,23 +1,30 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-msc50-cpp"
 #include "globals.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 bool ghostsGetCollision(int x, int y);
+void blinkyChaseState();
+void clydeChaseState();
+void inkyChaseState();
+void pinkyChaseState();
+void blinkyRunState();
+void clydeRunState();
+void inkyRunState();
+void pinkyRunState();
+
 
 enum eDirection blinkyDir;
-bool blinkyCrossedWall = false;
 int blinkyMovCounter = 0;
 
 enum eDirection clydeDir;
-bool clydeCrossedWall = false;
 int clydeMovCounter = 0;
 
 enum eDirection inkyDir;
-bool inkyCrossedWall = false;
 int inkyMovCounter = 0;
 
 enum eDirection pinkyDir;
-bool pinkyCrossedWall = false;
 int pinkyMovCounter = 0;
 
 void initAi()
@@ -77,62 +84,28 @@ void aiCalcDir()
     if(blinkyY <= ghostWallY - 33)   {blinkyCrossedWall = true;} 
     if(!blinkyCrossedWall)   blinkyDir = UP; 
 
-    while(blinkyCrossedWall)
-    {   
-        int random = rand() % 17;
-        if(random == 0 && !ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyDir != RIGHT) {blinkyDir = LEFT; break;}
-        else if(random == 1 && !ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyDir != LEFT) {blinkyDir = RIGHT; break;}
-        else if(random == 2 && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN) {blinkyDir = UP; break;}
-        else if(random == 3 && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP) {blinkyDir = DOWN; break;}
+    if(!poweredUp)
+        blinkyChaseState();
+    else if(poweredUp)
+        blinkyRunState();
 
-        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyDir != RIGHT && closerToPac(blinkyX, blinkyY, blinkyX - 1, blinkyY)) {blinkyDir = LEFT; break;}
-        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyDir != LEFT && closerToPac(blinkyX, blinkyY, blinkyX + 1, blinkyY)) {blinkyDir = RIGHT; break;}
-        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN && closerToPac(blinkyX, blinkyY, blinkyX, blinkyY - 1)) {blinkyDir = UP; break;}
-        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP && closerToPac(blinkyX, blinkyY, blinkyX, blinkyY + 1)) {blinkyDir = DOWN; break;}
-    }
-    blinkyMovCounter = 0;
-    
     //clyde
     if(clydeY <= ghostWallY - 33)   {clydeCrossedWall = true;} 
     if(!clydeCrossedWall)   clydeDir = UP; 
 
-    while(clydeCrossedWall)
-    {  
-        int random = rand() % 4;
-        if(random == 0 && !ghostsGetCollision(clydeX - 1,clydeY) && clydeDir != RIGHT) {clydeDir = LEFT; break;}
-        else if(random == 1 && !ghostsGetCollision(clydeX + 1,clydeY) && clydeDir != LEFT) {clydeDir = RIGHT; break;}
-        else if(random == 2 && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN) {clydeDir = UP; break;}
-        else if(random == 3 && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP) {clydeDir = DOWN; break;}
-    }
-    clydeMovCounter = 0;
+    clydeChaseState();
 
     //inky
     if(inkyY <= ghostWallY - 33)   {inkyCrossedWall = true;} 
     if(!inkyCrossedWall)   inkyDir = UP; 
 
-    while(inkyCrossedWall)
-    {   
-        int random = rand() % 4;
-        if(random == 0 && !ghostsGetCollision(inkyX - 1,inkyY) && inkyDir != RIGHT) {inkyDir = LEFT; break;}
-        else if(random == 1 && !ghostsGetCollision(inkyX + 1,inkyY) && inkyDir != LEFT) {inkyDir = RIGHT; break;}
-        else if(random == 2 && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN) {inkyDir = UP; break;}
-        else if(random == 3 && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP) {inkyDir = DOWN; break;}
-    }
-    inkyMovCounter = 0;
+    inkyChaseState();
 
     //pinky
     if(pinkyY <= ghostWallY - 33)   {pinkyCrossedWall = true;} 
     if(!pinkyCrossedWall)   pinkyDir = UP; 
 
-    while(pinkyCrossedWall)
-    {   
-        int random = rand() % 4;
-        if(random == 0 && !ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyDir != RIGHT) {pinkyDir = LEFT; break;}
-        else if(random == 1 && !ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyDir != LEFT) {pinkyDir = RIGHT; break;}
-        else if(random == 2 && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN) {pinkyDir = UP; break;}
-        else if(random == 3 && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP) {pinkyDir = DOWN; break;}
-    }
-    pinkyMovCounter = 0;
+    pinkyChaseState();
 };
 
 void updateBlinky()
@@ -309,3 +282,148 @@ bool ghostsGetCollision(int x, int y)
     }
     return false;
 };
+
+void blinkyChaseState()
+{
+    while(blinkyCrossedWall)
+    {   
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyDir != RIGHT) {blinkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyDir != LEFT) {blinkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN) {blinkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP) {blinkyDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyDir != RIGHT && closerToPac(blinkyX, blinkyY, blinkyX - 1, blinkyY)) {blinkyDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyDir != LEFT && closerToPac(blinkyX, blinkyY, blinkyX + 1, blinkyY)) {blinkyDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN && closerToPac(blinkyX, blinkyY, blinkyX, blinkyY - 1)) {blinkyDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP && closerToPac(blinkyX, blinkyY, blinkyX, blinkyY + 1)) {blinkyDir = DOWN; break;}
+    }
+    blinkyMovCounter = 0;
+}
+
+void clydeChaseState()
+{
+    while(clydeCrossedWall)
+    {  
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(clydeX - 1,clydeY) && clydeDir != RIGHT) {clydeDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(clydeX + 1,clydeY) && clydeDir != LEFT) {clydeDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN) {clydeDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP) {clydeDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(clydeX - 1,clydeY) && clydeDir != RIGHT && closerToPac(clydeX, clydeY, clydeX - 1, clydeY)) {clydeDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(clydeX + 1,clydeY) && clydeDir != LEFT && closerToPac(clydeX, clydeY, clydeX + 1, clydeY)) {clydeDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN && closerToPac(clydeX, clydeY, clydeX, clydeY - 1)) {clydeDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP && closerToPac(clydeX, clydeY, clydeX, clydeY + 1)) {clydeDir = DOWN; break;}
+    }
+    clydeMovCounter = 0;
+}
+
+void inkyChaseState()
+{
+    while(inkyCrossedWall)
+    {   
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(inkyX - 1,inkyY) && inkyDir != RIGHT) {inkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(inkyX + 1,inkyY) && inkyDir != LEFT) {inkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN) {inkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP) {inkyDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(inkyX - 1,inkyY) && inkyDir != RIGHT && closerToPac(inkyX, inkyY, inkyX - 1, inkyY)) {inkyDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(inkyX + 1,inkyY) && inkyDir != LEFT && closerToPac(inkyX, inkyY, inkyX + 1, inkyY)) {inkyDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN && closerToPac(inkyX, inkyY, inkyX, inkyY - 1)) {inkyDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP && closerToPac(inkyX, inkyY, inkyX, inkyY + 1)) {inkyDir = DOWN; break;}
+    }
+    inkyMovCounter = 0;
+}
+
+void pinkyChaseState()
+{
+    while(pinkyCrossedWall)
+    {   
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyDir != RIGHT) {pinkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyDir != LEFT) {pinkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN) {pinkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP) {pinkyDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyDir != RIGHT && closerToPac(pinkyX, pinkyY, pinkyX - 1, pinkyY)) {pinkyDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyDir != LEFT && closerToPac(pinkyX, pinkyY, pinkyX + 1, pinkyY)) {pinkyDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY - 1)) {pinkyDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY + 1)) {pinkyDir = DOWN; break;}
+    }
+    pinkyMovCounter = 0;
+}
+
+void blinkyRunState()
+{
+    while(blinkyCrossedWall)
+    {   
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyDir != RIGHT) {blinkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyDir != LEFT) {blinkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN) {blinkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP) {blinkyDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyDir != RIGHT && !closerToPac(blinkyX, blinkyY, blinkyX - 1, blinkyY)) {blinkyDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyDir != LEFT && !closerToPac(blinkyX, blinkyY, blinkyX + 1, blinkyY)) {blinkyDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN && !closerToPac(blinkyX, blinkyY, blinkyX, blinkyY - 1)) {blinkyDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP && !closerToPac(blinkyX, blinkyY, blinkyX, blinkyY + 1)) {blinkyDir = DOWN; break;}
+    }
+    blinkyMovCounter = 0;
+}
+
+void clydeRunState()
+{
+    while(clydeCrossedWall)
+    {  
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(clydeX - 1,clydeY) && clydeDir != RIGHT) {clydeDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(clydeX + 1,clydeY) && clydeDir != LEFT) {clydeDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN) {clydeDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP) {clydeDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(clydeX - 1,clydeY) && clydeDir != RIGHT && closerToPac(clydeX, clydeY, clydeX - 1, clydeY)) {clydeDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(clydeX + 1,clydeY) && clydeDir != LEFT && closerToPac(clydeX, clydeY, clydeX + 1, clydeY)) {clydeDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN && closerToPac(clydeX, clydeY, clydeX, clydeY - 1)) {clydeDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP && closerToPac(clydeX, clydeY, clydeX, clydeY + 1)) {clydeDir = DOWN; break;}
+    }
+    clydeMovCounter = 0;
+}
+
+void inkyRunState()
+{
+    while(inkyCrossedWall)
+    {   
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(inkyX - 1,inkyY) && inkyDir != RIGHT) {inkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(inkyX + 1,inkyY) && inkyDir != LEFT) {inkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN) {inkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP) {inkyDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(inkyX - 1,inkyY) && inkyDir != RIGHT && closerToPac(inkyX, inkyY, inkyX - 1, inkyY)) {inkyDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(inkyX + 1,inkyY) && inkyDir != LEFT && closerToPac(inkyX, inkyY, inkyX + 1, inkyY)) {inkyDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN && closerToPac(inkyX, inkyY, inkyX, inkyY - 1)) {inkyDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP && closerToPac(inkyX, inkyY, inkyX, inkyY + 1)) {inkyDir = DOWN; break;}
+    }
+    inkyMovCounter = 0;
+}
+
+void pinkyRunState()
+{
+    while(pinkyCrossedWall)
+    {   
+        int random = rand() % 17;
+        if(random == 0 && !ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyDir != RIGHT) {pinkyDir = LEFT; break;}
+        else if(random == 1 && !ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyDir != LEFT) {pinkyDir = RIGHT; break;}
+        else if(random == 2 && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN) {pinkyDir = UP; break;}
+        else if(random == 3 && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP) {pinkyDir = DOWN; break;}
+
+        else if((random == 14 || random == 15 || random == 16) && !ghostsGetCollision(pinkyX - 1,pinkyY) && pinkyDir != RIGHT && closerToPac(pinkyX, pinkyY, pinkyX - 1, pinkyY)) {pinkyDir = LEFT; break;}
+        else if((random == 5 || random == 6 || random == 7) && !ghostsGetCollision(pinkyX + 1,pinkyY) && pinkyDir != LEFT && closerToPac(pinkyX, pinkyY, pinkyX + 1, pinkyY)) {pinkyDir = RIGHT; break;}
+        else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY - 1)) {pinkyDir = UP; break;}
+        else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY + 1)) {pinkyDir = DOWN; break;}
+    }
+    pinkyMovCounter = 0;
+}
+#pragma clang diagnostic pop

@@ -29,13 +29,13 @@ bool ateFood(int x, int y, int sizeOfFoodArray)
 
 void getInput(int sizeOfWallArray)
 {    
-    if (IsKeyDown(KEY_RIGHT))
+    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
         bufferDir = RIGHT;
-    else if (IsKeyDown(KEY_LEFT))
+    else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
         bufferDir = LEFT;
-    else if (IsKeyDown(KEY_UP))
+    else if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
         bufferDir = UP;
-    else if (IsKeyDown(KEY_DOWN))
+    else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
         bufferDir = DOWN;
 
     if (bufferDir == RIGHT && !getCollision(pacX+1, pacY) && !getCollision(pacX+2, pacY) && !getCollision(pacX+3, pacY) && !getCollision(pacX+4, pacY))
@@ -106,10 +106,28 @@ void updateLogic(int *x, int *y)
 
 bool getGhostCollision()
 {
-    if(blinkyX >= pacX && blinkyX <= pacX + pacWideLeft.width &&
-       blinkyY >= pacY && blinkyY <= pacY + pacWideLeft.height)
-        {blinkyX = ghostStartX[0]; blinkyY = ghostStartY[0];}
+    Rectangle pacHitBox = {pacX, pacY, pacWidth, pacHeight};
+    Rectangle blinkyHitBox = {blinkyX, blinkyY, blinkyWidth * 0.5, blinkyHeight * 0.5};
+    Rectangle clydeHitBox = {clydeX, clydeY, clydeWidth * 0.5, clydeHeight * 0.5};
+    Rectangle inkyHitBox = {inkyX, inkyY, inkyWidth * 0.5, inkyHeight * 0.5};
+    Rectangle pinkyHitBox = {pinkyX, pinkyY, pinkyWidth * 0.5, pinkyHeight * 0.5};
 
+    if(CheckCollisionRecs(pacHitBox, blinkyHitBox) && poweredUp == true)
+    {
+        blinkyX = ghostStartX[0]; blinkyY = ghostStartY[0]; blinkyCrossedWall = false;
+    }
+    if(CheckCollisionRecs(pacHitBox, clydeHitBox) && poweredUp == true)
+    {
+        clydeX = ghostStartX[1]; clydeY = ghostStartY[1]; clydeCrossedWall = false;
+    }
+    if(CheckCollisionRecs(pacHitBox, inkyHitBox) && poweredUp == true)
+    {
+        inkyX = ghostStartX[2]; inkyY = ghostStartY[2]; inkyCrossedWall = false;
+    }
+    if(CheckCollisionRecs(pacHitBox, pinkyHitBox) && poweredUp == true)
+    {
+        pinkyX = ghostStartX[3]; pinkyY = ghostStartY[3]; pinkyCrossedWall = false;
+    }
 }
 
 bool atePowerUp(int pacX, int pacY)

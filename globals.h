@@ -88,6 +88,11 @@ int pinkyY;
 int pinkyWidth = 24;
 int pinkyHeight = 24;
 
+bool blinkyCrossedWall = false;
+bool clydeCrossedWall = false;
+bool inkyCrossedWall = false;
+bool pinkyCrossedWall = false;
+
 int ghostWallX;
 int ghostWallY;
 

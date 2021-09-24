@@ -11,7 +11,7 @@ int main()
 {
     float volume = 0.0f;
     InitWindow(700, 700, "Pacman");
-    SetTargetFPS(60);
+    SetTargetFPS(70);
     loadTextures();
     sizeOfWallArray = loadMap();
     SetWindowSize(map.width, map.height);

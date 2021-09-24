@@ -43,7 +43,7 @@ int loadMap()
 void generateMapFromImage()
 {
     for(int i = 0; i < sizeOfVisibleWallArray; i++)
-        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, VIOLET);
+        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, RED);
 
     // for(int i = 0; i < sizeOfWallArray; i++)
     //     DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);
@@ -94,8 +94,8 @@ int getWallPositions()
         for(int j = 0; j < map.width; j++)
         {
             //vertical optimisation
-            if(pixels[((i+1)*map.width) + j].b == 214 || pixels[((i+1)*map.width) + j].b == 5)
-                if(pixels[((i-1)*map.width) + j].b == 214 || pixels[((i-1)*map.width) + j].b == 5)
+            if(pixels[((i+1)*map.width) + j].b == 215 || pixels[((i+1)*map.width) + j].b == 5)
+                if(pixels[((i-1)*map.width) + j].b == 215 || pixels[((i-1)*map.width) + j].b == 5)
                     if(i%2 == 0 || i%3 == 0 || i%5 == 0 || i%7 == 0 || i%11 == 0 || i%13 == 0 || i%17 == 0 || i%19 == 0 || i%23 == 0 || i%29 == 0)
                         continue;
                         
@@ -111,11 +111,11 @@ int getWallPositions()
                         wallsY[counter] = i;
                         counter++;
                         //horizontal optimisation
-                        if(pixels[(i*map.width) + j + skip].b == 214 || pixels[(i*map.width) + j + skip].b == 5)    j+=skip - 1;
-                        else if(pixels[(i*map.width) + j + skip2].b == 214 || pixels[(i*map.width) + j + skip2].b == 5)    j+=skip2 - 1;
-                        else if(pixels[(i*map.width) + j + skip4].b == 214 || pixels[(i*map.width) + j + skip4].b == 5)    j+=skip4 - 1;
-                        else if(pixels[(i*map.width) + j + skip8].b == 214 || pixels[(i*map.width) + j + skip8].b == 5)    j+=skip8 - 1;
-                        else if(pixels[(i*map.width) + j + skip12].b == 214 || pixels[(i*map.width) + j + skip12].b == 5)    j+=skip12 - 1;
+                        if(pixels[(i*map.width) + j + skip].b == 215 || pixels[(i*map.width) + j + skip].b == 5)    j+=skip - 1;
+                        else if(pixels[(i*map.width) + j + skip2].b == 215 || pixels[(i*map.width) + j + skip2].b == 5)    j+=skip2 - 1;
+                        else if(pixels[(i*map.width) + j + skip4].b == 215 || pixels[(i*map.width) + j + skip4].b == 5)    j+=skip4 - 1;
+                        else if(pixels[(i*map.width) + j + skip8].b == 215 || pixels[(i*map.width) + j + skip8].b == 5)    j+=skip8 - 1;
+                        else if(pixels[(i*map.width) + j + skip12].b == 215 || pixels[(i*map.width) + j + skip12].b == 5)    j+=skip12 - 1;
                     }
                 }
             }
