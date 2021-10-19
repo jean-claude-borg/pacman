@@ -25,6 +25,11 @@ Texture2D pinky;
 Texture2D blueGhost;
 
 Texture2D powerup;
+Texture2D heart;
+
+bool paused = false;
+
+int windowWidth = 700, windowHeight = 700;
 
 int animCounter = 0;
 const int animMax = 4;
@@ -88,6 +93,19 @@ int pinkyY;
 int pinkyWidth = 24;
 int pinkyHeight = 24;
 
+int blinkyTimeInSpawn;
+int clydeTimeInSpawn;
+int inkyTimeInSpawn;
+int pinkyTimeInSpawn;
+
+int blinkyEaten = false;
+int clydeEaten = false;
+int inkyEaten = false;
+int pinkyEaten = false;
+
+int maxTimeInSpawn = 250;
+
+
 bool blinkyCrossedWall = false;
 bool clydeCrossedWall = false;
 bool inkyCrossedWall = false;
@@ -99,3 +117,5 @@ int ghostWallY;
 bool poweredUp = false;
 int poweredUpDuration = 0;
 int poweredUpMaxDuration = 350;
+
+int lives = 3;

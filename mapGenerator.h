@@ -40,10 +40,10 @@ int loadMap()
     return counter;
 };
 
-void generateMapFromImage()
+void renderMap()
 {
     for(int i = 0; i < sizeOfVisibleWallArray; i++)
-        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, RED);
+        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, DARKBLUE);
 
     // for(int i = 0; i < sizeOfWallArray; i++)
     //     DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);

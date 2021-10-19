@@ -27,8 +27,11 @@ bool ateFood(int x, int y, int sizeOfFoodArray)
     return false;
 }
 
-void getInput(int sizeOfWallArray)
-{    
+void getInput()
+{
+    if(IsKeyPressed(KEY_P))
+        paused = !paused;
+
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
         bufferDir = RIGHT;
     else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
@@ -50,7 +53,7 @@ void getInput(int sizeOfWallArray)
 
 void updateLogic(int *x, int *y)
 {
-    getInput(sizeOfWallArray);
+    //getInput();
 
     if     (dir == LEFT)    *x-=1;
     else if(dir == RIGHT)   *x+=1;
@@ -106,6 +109,7 @@ void updateLogic(int *x, int *y)
 
 bool getGhostCollision()
 {
+    //colliion when powered up
     Rectangle pacHitBox = {pacX, pacY, pacWidth, pacHeight};
     Rectangle blinkyHitBox = {blinkyX, blinkyY, blinkyWidth * 0.5, blinkyHeight * 0.5};
     Rectangle clydeHitBox = {clydeX, clydeY, clydeWidth * 0.5, clydeHeight * 0.5};
@@ -115,18 +119,56 @@ bool getGhostCollision()
     if(CheckCollisionRecs(pacHitBox, blinkyHitBox) && poweredUp == true)
     {
         blinkyX = ghostStartX[0]; blinkyY = ghostStartY[0]; blinkyCrossedWall = false;
+        blinkyEaten = true;
+        score+=25;
     }
     if(CheckCollisionRecs(pacHitBox, clydeHitBox) && poweredUp == true)
     {
         clydeX = ghostStartX[1]; clydeY = ghostStartY[1]; clydeCrossedWall = false;
+        clydeEaten = true;
+        score+=25;
     }
     if(CheckCollisionRecs(pacHitBox, inkyHitBox) && poweredUp == true)
     {
         inkyX = ghostStartX[2]; inkyY = ghostStartY[2]; inkyCrossedWall = false;
+        inkyEaten = true;
+        score+=25;
     }
     if(CheckCollisionRecs(pacHitBox, pinkyHitBox) && poweredUp == true)
     {
         pinkyX = ghostStartX[3]; pinkyY = ghostStartY[3]; pinkyCrossedWall = false;
+        pinkyEaten = true;
+        score+=25;
+   }
+
+    //collision when not powered up, different implementation of collision used(circle hitboxes)
+    int distXBlinky = abs(pacX - blinkyX);
+    int distYBlinky = abs(pacY - blinkyY);
+
+    int distXClyde = abs(pacX - clydeX);
+    int distYClyde = abs(pacY - clydeY);
+
+    int distXInky = abs(pacX - inkyX);
+    int distYInky = abs(pacY - inkyY);
+
+    int distXPinky = abs(pacX - pinkyX);
+    int distYPinky = abs(pacY - pinkyY);
+
+    if(distXBlinky < 30 && distYBlinky < 30 && poweredUp == false) {
+        paused = true;
+        lives--;
+    }
+    if(distXClyde < 30 && distYClyde < 30 && poweredUp == false) {
+        paused = true;
+        lives--;
+    }
+    if(distXInky < 30 && distYInky < 30 && poweredUp == false) {
+        paused = true;
+        lives--;
+    }
+    if(distXPinky < 30 && distYPinky < 30 && poweredUp == false) {
+        paused = true;
+        lives--;
     }
 }
 
@@ -139,6 +181,7 @@ bool atePowerUp(int pacX, int pacY)
             if(showPowerUp[i])
             {
                 showPowerUp[i] = false;
+                poweredUpDuration = 0;
                 return true;
             }
         }

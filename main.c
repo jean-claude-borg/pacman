@@ -5,16 +5,19 @@
 #include "draw.h"
 #include "ai.h"
 
+#define HUD_EXTENSION_LENGTH 30
+
 void gameLoop(int sizeOfWallArray);
 
 int main()
 {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     float volume = 0.0f;
-    InitWindow(700, 700, "Pacman");
-    SetTargetFPS(70);
+    InitWindow(windowWidth, windowHeight, "Pacman");
+    SetTargetFPS(60);
     loadTextures();
     sizeOfWallArray = loadMap();
-    SetWindowSize(map.width, map.height);
+    SetWindowSize(map.width, map.height + HUD_EXTENSION_LENGTH);
     playAudio(volume);
     dir = STOP;
 
@@ -30,12 +33,17 @@ void gameLoop(int sizeOfWallArray)
     {
         UpdateMusicStream(siren1);
         UpdateMusicStream(siren2);
-        updateLogic(&pacX, &pacY);
-        updateAi();
-        
+
+        getInput();
+        if(!paused)
+        {
+            updateLogic(&pacX, &pacY);
+            updateAi();
+        }
+
         BeginDrawing();
         ClearBackground(BLACK);
-        generateMapFromImage();
+        renderMap();
         draw(pacX, pacY);
         DrawFPS(20,20);
 
