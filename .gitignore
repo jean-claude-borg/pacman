@@ -1,2 +1,6 @@
 .vscode/
 build/
+.idea/
+.vs/
+cmake-build-debug/
+raylib/

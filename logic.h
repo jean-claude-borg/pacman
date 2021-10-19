@@ -6,6 +6,7 @@
 enum eDirection bufferDir;
 bool getGhostCollision();
 bool atePowerUp(int x, int y);
+bool onPacCollision();
 
 bool getCollision(int x, int y)
 {
@@ -29,6 +30,7 @@ bool ateFood(int x, int y, int sizeOfFoodArray)
 
 void getInput()
 {
+    //bufferDir = STOP;
     if(IsKeyPressed(KEY_P))
         paused = !paused;
 
@@ -154,21 +156,23 @@ bool getGhostCollision()
     int distXPinky = abs(pacX - pinkyX);
     int distYPinky = abs(pacY - pinkyY);
 
-    if(distXBlinky < 30 && distYBlinky < 30 && poweredUp == false) {
-        paused = true;
-        lives--;
+    int collisionDist = 25;
+
+    if(distXBlinky < collisionDist && distYBlinky < collisionDist && poweredUp == false) {
+        collided = true;
+        onPacCollision();
     }
-    if(distXClyde < 30 && distYClyde < 30 && poweredUp == false) {
-        paused = true;
-        lives--;
+    if(distXClyde < collisionDist && distYClyde < collisionDist && poweredUp == false) {
+        collided = true;
+        onPacCollision();
     }
-    if(distXInky < 30 && distYInky < 30 && poweredUp == false) {
-        paused = true;
-        lives--;
+    if(distXInky < collisionDist && distYInky < collisionDist && poweredUp == false) {
+        collided = true;
+        onPacCollision();
     }
-    if(distXPinky < 30 && distYPinky < 30 && poweredUp == false) {
-        paused = true;
-        lives--;
+    if(distXPinky < collisionDist && distYPinky < collisionDist && poweredUp == false) {
+        collided = true;
+        onPacCollision();
     }
 }
 
@@ -187,4 +191,12 @@ bool atePowerUp(int pacX, int pacY)
         }
     }
     return false;
+}
+
+bool onPacCollision()
+{
+    lives--;
+    dir = STOP;
+    pacX = 213;
+    pacY = 270;
 }

@@ -119,3 +119,4 @@ int poweredUpDuration = 0;
 int poweredUpMaxDuration = 350;
 
 int lives = 3;
+bool collided = false;

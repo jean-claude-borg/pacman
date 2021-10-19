@@ -47,6 +47,8 @@ void gameLoop(int sizeOfWallArray)
         draw(pacX, pacY);
         DrawFPS(20,20);
 
+        //printf("X: %d, Y: %d\n", pacX, pacY);
+
         EndDrawing();
     }
     CloseAudioDevice();
