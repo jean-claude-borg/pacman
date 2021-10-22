@@ -66,6 +66,19 @@ void loadTextures()
     blueGhost = LoadTextureFromImage(tempBlueGhost);
 };
 
+void drawMap()
+{
+    for(int i = 0; i < sizeOfVisibleWallArray; i++)
+        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, DARKBLUE);
+
+    // for(int i = 0; i < sizeOfWallArray; i++)
+    //     DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);
+
+    for(int i = 0; i < sizeOfFoodArray; i++)
+        if(showFood[i])
+            DrawRectangle(foodsX[i], foodsY[i], 4, 4, WHITE);
+};
+
 void drawPauseMenu()
 {
     double menuX = GetScreenWidth() * 0.1;
@@ -73,8 +86,15 @@ void drawPauseMenu()
     double menuWidth = GetScreenWidth() * 0.8;
     double menuHeight = GetScreenHeight() * 0.3;
 
-    DrawRectangle((int)menuX, (int)menuY, (int)menuWidth, (int)menuHeight, (Color){41,37,39,235});
-    DrawText("Paused", (int)menuX + (menuWidth*0.33), (int)menuY + (menuHeight*0.30), 35, WHITE);
+    //DrawRectangle((int)menuX, (int)menuY, (int)menuWidth, (int)menuHeight, (Color){41,37,39,235});
+    Rectangle rec;
+    rec.x = menuX;
+    rec.y = menuY;
+    rec.width = menuWidth;
+    rec.height = menuHeight;
+
+    DrawRectangleRounded(rec, 0.5f, 1, (Color){51,0,51,235});
+    DrawText("Paused", (int)menuX + (menuWidth*0.33), (int)menuY + (menuHeight*0.35), 35, WHITE);
 }
 
 void drawHud()
@@ -87,8 +107,34 @@ void drawHud()
     DrawText(TextFormat("x%i", lives), heartX+30, heartY+15, 20, WHITE);
 }
 
+void drawGameOverScreen()
+{
+    double menuX = GetScreenWidth() * 0.1;
+    double menuY = GetScreenHeight() * 0.3;
+    double menuWidth = GetScreenWidth() * 0.8;
+    double menuHeight = GetScreenHeight() * 0.3;
+    Rectangle rec;
+    rec.x = menuX;
+    rec.y = menuY;
+    rec.width = menuWidth;
+    rec.height = menuHeight;
+
+    //DrawRectangle((int)menuX, (int)menuY, (int)menuWidth, (int)menuHeight, (Color){0,0,102,235});
+    DrawRectangleRounded(rec, 0.5f, 1, (Color){0,0,102,235});
+    DrawText("Game Over!", (int)menuX + (menuWidth*0.20), (int)menuY + (menuHeight*0.18), 37, WHITE);
+    DrawText(TextFormat("Score: %i", score), (int)menuX + (menuWidth*0.20), (int)menuY + (menuHeight*0.49), 25, GRAY);
+    DrawText("Press R to Retry", (int)menuX + (menuWidth*0.20), (int)menuY + (menuHeight*0.75), 20, GRAY);
+}
+
 void draw(int pacX, int pacY)
 {
+    if(lives <= 0) {
+        drawGameOverScreen();
+        return;
+    }
+
+    drawMap();
+
     for(int i = 0; i < numPowerups; i++)
         if(showPowerUp[i])
             DrawTexture(powerup, powerUpX[i] - powerup.width / 2 + 1, powerUpY[i] - powerup.height / 2, CLITERAL(Color){ 255, 188, 180, 225});

@@ -11,12 +11,14 @@ void gameLoop(int sizeOfWallArray);
 
 int main()
 {
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    //SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     float volume = 0.0f;
     InitWindow(windowWidth, windowHeight, "Pacman");
-    SetTargetFPS(60);
+    SetTargetFPS(40);
     loadTextures();
     sizeOfWallArray = loadMap();
+    pacX = 213;
+    pacY = 270;
     SetWindowSize(map.width, map.height + HUD_EXTENSION_LENGTH);
     playAudio(volume);
     dir = STOP;
@@ -43,7 +45,6 @@ void gameLoop(int sizeOfWallArray)
 
         BeginDrawing();
         ClearBackground(BLACK);
-        renderMap();
         draw(pacX, pacY);
         DrawFPS(20,20);
 

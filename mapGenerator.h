@@ -40,19 +40,6 @@ int loadMap()
     return counter;
 };
 
-void renderMap()
-{
-    for(int i = 0; i < sizeOfVisibleWallArray; i++)
-        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, DARKBLUE);
-
-    // for(int i = 0; i < sizeOfWallArray; i++)
-    //     DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);
-
-    for(int i = 0; i < sizeOfFoodArray; i++)
-        if(showFood[i])
-            DrawRectangle(foodsX[i], foodsY[i], 4, 4, WHITE);
-};
-
 int getVisibleWallPositions()
 {
     int counter = 0;

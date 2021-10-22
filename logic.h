@@ -13,6 +13,7 @@ enum eDirection bufferDir;
 bool getGhostCollision();
 bool atePowerUp(int x, int y);
 void onPacCollision();
+void resetGame();
 
 bool getCollision(int x, int y)
 {
@@ -40,7 +41,10 @@ void getInput()
     if(IsKeyPressed(KEY_P))
         paused = !paused;
 
-    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
+    if(IsKeyPressed(KEY_R))
+        resetGame();
+
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
         bufferDir = RIGHT;
     else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
         bufferDir = LEFT;
@@ -113,7 +117,7 @@ void updateLogic(int *x, int *y)
         poweredUpDuration++;
 
     getGhostCollision();
-}; 
+};
 
 bool getGhostCollision()
 {
@@ -233,12 +237,24 @@ void onPacCollision()
     pacY = 270;
 }
 
-void checkGameOver()
+void resetGame()
 {
-    if(lives == 0)
-    {
-        //draw game over screen
+    for(int i = 0; i < sizeOfFoodArray; i++)
+        showFood[i] = true;
 
-    }
+    for(int i = 0; i < numPowerups; i++)
+        showPowerUp[i] = true;
+
+    resetGhostPositions();
+    blinkyWait = 100;
+    clydeWait = 400;
+    inkyWait = 800;
+    pinkyWait = 1200;
+
+    lives = 3;
+    score = 0;
+    pacX = 213;
+    pacY = 270;
 }
+
 
