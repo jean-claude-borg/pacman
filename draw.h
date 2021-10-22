@@ -84,7 +84,7 @@ void drawHud()
 
     double heartX = map.width - 75, heartY = map.height - 7;
     DrawTexture(heart, heartX, heartY, WHITE);
-    DrawText(TextFormat("x%i", lives), heartX+40, heartY+15, 20, WHITE);
+    DrawText(TextFormat("x%i", lives), heartX+30, heartY+15, 20, WHITE);
 }
 
 void draw(int pacX, int pacY)

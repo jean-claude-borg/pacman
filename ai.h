@@ -82,7 +82,16 @@ void aiCalcDir()
 {
     //blinky
     if(blinkyY <= ghostWallY - 33)   {blinkyCrossedWall = true;} 
-    if(!blinkyCrossedWall)   blinkyDir = UP; 
+    if(!blinkyCrossedWall)
+    {
+        if(blinkyWait <=0)
+            blinkyDir = UP;
+        else if(blinkyWait > 0)
+        {
+            blinkyWait --;
+            blinkyDir = STOP;
+        }
+    }
 
     if(!poweredUp)
         blinkyChaseState();
@@ -90,34 +99,58 @@ void aiCalcDir()
         blinkyRunState();
 
     //clyde
-    if(clydeY <= ghostWallY - 33)   {clydeCrossedWall = true;} 
-    if(!clydeCrossedWall)   clydeDir = UP; 
-
+    if(clydeY <= ghostWallY - 33)   {clydeCrossedWall = true;}
+    if(!clydeCrossedWall)
+    {
+        if(clydeWait <=0)
+            clydeDir = UP;
+        else if(clydeWait > 0)
+        {
+            clydeWait --;
+            clydeDir = STOP;
+        }
+    }
     clydeChaseState();
 
     //inky
-    if(inkyY <= ghostWallY - 33)   {inkyCrossedWall = true;} 
-    if(!inkyCrossedWall)   inkyDir = UP; 
-
+    if(inkyY <= ghostWallY - 33)   {inkyCrossedWall = true;}
+    if(!inkyCrossedWall)
+    {
+        if(inkyWait <=0)
+            inkyDir = UP;
+        else if(inkyWait > 0)
+        {
+            inkyWait --;
+            inkyDir = STOP;
+        }
+    }
     inkyChaseState();
 
     //pinky
-    if(pinkyY <= ghostWallY - 33)   {pinkyCrossedWall = true;} 
-    if(!pinkyCrossedWall)   pinkyDir = UP; 
-
+    if(pinkyY <= ghostWallY - 33)   {pinkyCrossedWall = true;}
+    if(!pinkyCrossedWall)
+    {
+        if(pinkyWait <=0)
+            pinkyDir = UP;
+        else if(pinkyWait > 0)
+        {
+            pinkyWait --;
+            pinkyDir = STOP;
+        }
+    }
     pinkyChaseState();
 };
 
 void updateBlinky()
 {
-    if(!blinkyCrossedWall){aiCalcDir();}
-    
-    if(!blinkyCrossedWall)
-    {    
-        if(blinkyDir == LEFT      ) blinkyX -= 1;
-        else if(blinkyDir == RIGHT) blinkyX += 1;
-        else if(blinkyDir == UP   ) blinkyY -= 1;
-        else if(blinkyDir == DOWN ) blinkyY += 1;
+    if(blinkyCrossedWall == false){aiCalcDir();}
+
+    if(blinkyCrossedWall == false)
+    {
+//        if(blinkyDir == LEFT      ) blinkyX -= 1;
+//        else if(blinkyDir == RIGHT) blinkyX += 1;
+        if(blinkyDir == UP   ) blinkyY -= 1;
+      //  else if(blinkyDir == DOWN ) blinkyY += 1;
     }
     if(blinkyCrossedWall) 
     {
@@ -149,14 +182,14 @@ void updateBlinky()
 
 void updateClyde()
 {
-    if(!clydeCrossedWall){aiCalcDir();}
-    
-    if(!clydeCrossedWall)
-    {    
-        if(clydeDir == LEFT      ) clydeX -= 1;
-        else if(clydeDir == RIGHT) clydeX += 1;
-        else if(clydeDir == UP   ) clydeY -= 1;
-        else if(clydeDir == DOWN ) clydeY += 1;
+    if(clydeCrossedWall == false){aiCalcDir();}
+
+    if(clydeCrossedWall == false)
+    {
+//        if(clydeDir == LEFT      ) clydeX -= 1;
+//        else if(clydeDir == RIGHT) clydeX += 1;
+        if(clydeDir == UP   ) clydeY -= 1;
+       // else if(clydeDir == DOWN ) clydeY += 1;
     }
     if(clydeCrossedWall) 
     {
@@ -188,14 +221,14 @@ void updateClyde()
 
 void updateInky()
 {
-    if(!inkyCrossedWall){aiCalcDir();}
-    
-    if(!inkyCrossedWall)
-    {    
-        if(inkyDir == LEFT      ) inkyX -= 1;
-        else if(inkyDir == RIGHT) inkyX += 1;
-        else if(inkyDir == UP   ) inkyY -= 1;
-        else if(inkyDir == DOWN ) inkyY += 1;
+    if(inkyCrossedWall == false){aiCalcDir();}
+
+    if(inkyCrossedWall == false)
+    {
+       // if(inkyDir == LEFT      ) inkyX -= 1;
+        //else if(inkyDir == RIGHT) inkyX += 1;
+        if(inkyDir == UP   ) inkyY -= 1;
+        //else if(inkyDir == DOWN ) inkyY += 1;
     }
     if(inkyCrossedWall) 
     {
@@ -227,14 +260,14 @@ void updateInky()
 
 void updatePinky()
 {
-    if(!pinkyCrossedWall){aiCalcDir();}
-    
-    if(!pinkyCrossedWall)
-    {    
-        if(pinkyDir == LEFT      ) pinkyX -= 1;
-        else if(pinkyDir == RIGHT) pinkyX += 1;
-        else if(pinkyDir == UP   ) pinkyY -= 1;
-        else if(pinkyDir == DOWN ) pinkyY += 1;
+    if(pinkyCrossedWall == false){aiCalcDir();}
+
+    if(pinkyCrossedWall == false)
+    {
+        //if(pinkyDir == LEFT      ) pinkyX -= 1;
+        //else if(pinkyDir == RIGHT) pinkyX += 1;
+        if(pinkyDir == UP   ) pinkyY -= 1;
+        //else if(pinkyDir == DOWN ) pinkyY += 1;
     }
     if(pinkyCrossedWall) 
     {

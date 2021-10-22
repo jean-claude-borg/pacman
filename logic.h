@@ -1,12 +1,18 @@
 #pragma once
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #include "globals.h"
 #include "stdio.h"
 
 enum eDirection bufferDir;
 bool getGhostCollision();
 bool atePowerUp(int x, int y);
-bool onPacCollision();
+void onPacCollision();
 
 bool getCollision(int x, int y)
 {
@@ -193,10 +199,46 @@ bool atePowerUp(int pacX, int pacY)
     return false;
 }
 
-bool onPacCollision()
+void resetGhostPositions()
 {
+    blinkyX = ghostStartX[0];
+    blinkyY = ghostStartY[0];
+    blinkyCrossedWall = false;
+
+    clydeX = ghostStartX[1];
+    clydeY = ghostStartY[1];
+    clydeCrossedWall = false;
+
+    inkyX = ghostStartX[2];
+    inkyY = ghostStartY[2];
+    inkyCrossedWall = false;
+
+    pinkyX = ghostStartX[3];
+    pinkyY = ghostStartY[3];
+    pinkyCrossedWall = false;
+}
+
+void onPacCollision()
+{
+    usleep(1500000);
+    blinkyWait = 100;
+    clydeWait = 400;
+    inkyWait = 800;
+    pinkyWait = 1200;
+    resetGhostPositions();
+
     lives--;
     dir = STOP;
     pacX = 213;
     pacY = 270;
 }
+
+void checkGameOver()
+{
+    if(lives == 0)
+    {
+        //draw game over screen
+
+    }
+}
+

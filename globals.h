@@ -93,6 +93,11 @@ int pinkyY;
 int pinkyWidth = 24;
 int pinkyHeight = 24;
 
+int blinkyWait = 100;
+int clydeWait = 400;
+int inkyWait = 800;
+int pinkyWait = 1200;
+
 int blinkyTimeInSpawn;
 int clydeTimeInSpawn;
 int inkyTimeInSpawn;
