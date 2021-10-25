@@ -18,7 +18,15 @@ Texture2D pacWideRight;
 Texture2D pacNarrowRight;
 Texture2D pacClosed;
 
-Texture2D blinky;
+Texture2D blinkyL1;
+Texture2D blinkyL2;
+Texture2D blinkyR1;
+Texture2D blinkyR2;
+Texture2D blinkyU1;
+Texture2D blinkyU2;
+Texture2D blinkyD1;
+Texture2D blinkyD2;
+
 Texture2D clyde;
 Texture2D inky;
 Texture2D pinky;
@@ -27,12 +35,14 @@ Texture2D blueGhost;
 Texture2D powerup;
 Texture2D heart;
 
+long long int frame = 0;
+
 bool paused = false;
 
 int windowWidth = 700, windowHeight = 700;
 
 int animCounter = 0;
-const int animMax = 4;
+const int animMax = 3;
 bool drawWide = true;
 bool drawNarrow = false;
 
@@ -92,6 +102,18 @@ int pinkyX;
 int pinkyY;
 int pinkyWidth = 24;
 int pinkyHeight = 24;
+
+enum eDirection blinkyDir;
+int blinkyFrameCounter = 0;
+
+enum eDirection clydeDir;
+int clydeMovCounter = 0;
+
+enum eDirection inkyDir;
+int inkyMovCounter = 0;
+
+enum eDirection pinkyDir;
+int pinkyMovCounter = 0;
 
 int blinkyWait = 100;
 int clydeWait = 400;

@@ -8,7 +8,16 @@ void drawHud();
 
 void loadTextures()
 {
-    Image tempBlinky = LoadImage("../assets/sprites/blinky.png");
+    //blinky(red)
+    Image tempBlinkyL1 = LoadImage("../assets/sprites/ghosts/red/blinkyL1.png");
+    Image tempBlinkyL2 = LoadImage("../assets/sprites/ghosts/red/blinkyL2.png");
+    Image tempBlinkyR1 = LoadImage("../assets/sprites/ghosts/red/blinkyR1.png");
+    Image tempBlinkyR2 = LoadImage("../assets/sprites/ghosts/red/blinkyR2.png");
+    Image tempBlinkyU1 = LoadImage("../assets/sprites/ghosts/red/blinkyU1.png");
+    Image tempBlinkyU2 = LoadImage("../assets/sprites/ghosts/red/blinkyU2.png");
+    Image tempBlinkyD1 = LoadImage("../assets/sprites/ghosts/red/blinkyD1.png");
+    Image tempBlinkyD2 = LoadImage("../assets/sprites/ghosts/red/blinkyD2.png");
+
     Image tempClyde = LoadImage("../assets/sprites/clyde.png");
     Image tempInky = LoadImage("../assets/sprites/inky.png");
     Image tempPinky = LoadImage("../assets/sprites/pinky.png");
@@ -48,8 +57,16 @@ void loadTextures()
     ImageResize(&tempPowerup, 21, 14);
     powerup = LoadTextureFromImage(tempPowerup);
     
-    //ghosts
-    ImageResize(&tempBlinky,blinkyWidth,blinkyHeight);
+    //blinky(red)
+    ImageResize(&tempBlinkyL1,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyL2,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyR1,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyR2,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyU1,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyU2,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyD1,blinkyWidth,blinkyHeight);
+    ImageResize(&tempBlinkyD2,blinkyWidth,blinkyHeight);
+
     ImageResize(&tempClyde,clydeWidth,clydeHeight);
     ImageResize(&tempInky,inkyWidth,inkyHeight);
     ImageResize(&tempPinky,pinkyWidth,pinkyHeight);
@@ -59,7 +76,15 @@ void loadTextures()
     ImageResize(&tempHeart, 40,40);
     heart = LoadTextureFromImage(tempHeart);
 
-    blinky = LoadTextureFromImage(tempBlinky);
+    blinkyL1 = LoadTextureFromImage(tempBlinkyL1);
+    blinkyL2 = LoadTextureFromImage(tempBlinkyL2);
+    blinkyR1 = LoadTextureFromImage(tempBlinkyR1);
+    blinkyR2 = LoadTextureFromImage(tempBlinkyR2);
+    blinkyU1 = LoadTextureFromImage(tempBlinkyU1);
+    blinkyU2 = LoadTextureFromImage(tempBlinkyU2);
+    blinkyD1 = LoadTextureFromImage(tempBlinkyD1);
+    blinkyD2 = LoadTextureFromImage(tempBlinkyD2);
+
     clyde = LoadTextureFromImage(tempClyde);
     inky = LoadTextureFromImage(tempInky);
     pinky = LoadTextureFromImage(tempPinky);
@@ -76,7 +101,7 @@ void drawMap()
 
     for(int i = 0; i < sizeOfFoodArray; i++)
         if(showFood[i])
-            DrawRectangle(foodsX[i], foodsY[i], 4, 4, WHITE);
+            DrawCircle(foodsX[i], foodsY[i], 2.5f, WHITE);
 };
 
 void drawPauseMenu()
@@ -154,7 +179,7 @@ void draw(int pacX, int pacY)
         DrawTexture(pacNarrow, pacX ,pacY ,WHITE);
         animCounter++;
     }
-    if(animCounter >= animMax && paused == false)
+    if(animCounter >= animMax && paused == false && dir != STOP)
     {
         if(drawWide)
         {
@@ -177,12 +202,56 @@ void draw(int pacX, int pacY)
         drawPauseMenu();
 };
 
+bool usingBlinkyL1 = true;
+
+void drawBlinky()
+{
+    blinkyFrameCounter++;
+    Texture2D blinkyLeft = blinkyL1;
+    Texture2D blinkyRight = blinkyR1;
+    Texture2D blinkyUp = blinkyU1;
+    Texture2D blinkyDown = blinkyD1;
+
+    //swapping between blinky left sprites
+    if(blinkyFrameCounter >= 10)
+    {
+        if(usingBlinkyL1)
+        {
+            blinkyLeft = blinkyL2;
+            blinkyRight = blinkyR2;
+            blinkyUp = blinkyU2;
+            blinkyDown = blinkyD2;
+
+            usingBlinkyL1 = false;
+        }
+        else {
+            blinkyLeft = blinkyL1;
+            blinkyRight = blinkyR1;
+            blinkyUp = blinkyU1;
+            blinkyDown = blinkyD1;
+
+            usingBlinkyL1 = true;
+        }
+        blinkyFrameCounter = 0;
+    }
+
+    if(blinkyDir == LEFT)
+        DrawTexture(blinkyLeft, blinkyX+4 , blinkyY+4 ,WHITE);
+    if(blinkyDir == RIGHT)
+        DrawTexture(blinkyRight, blinkyX+4 , blinkyY+4 ,WHITE);
+    if(blinkyDir == UP)
+        DrawTexture(blinkyUp, blinkyX+4 , blinkyY+4 ,WHITE);
+    if(blinkyDir == DOWN)
+        DrawTexture(blinkyDown, blinkyX+4 , blinkyY+4 ,WHITE);
+
+}
+
 void drawGhosts()
 {
     //offset by 4 to centre the ghosts
     if(!poweredUp)
     {
-        DrawTexture(blinky, blinkyX+4 , blinkyY+4, WHITE);
+        drawBlinky();
         DrawTexture(clyde, clydeX+4 , clydeY+4 ,WHITE);
         DrawTexture(inky, inkyX+4 , inkyY+4 ,WHITE);
         DrawTexture(pinky, pinkyX+4 , pinkyY+4 ,WHITE);

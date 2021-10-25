@@ -33,6 +33,7 @@ void gameLoop(int sizeOfWallArray)
 {
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        frame++;
         UpdateMusicStream(siren1);
         UpdateMusicStream(siren2);
 

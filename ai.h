@@ -14,19 +14,6 @@ void clydeRunState();
 void inkyRunState();
 void pinkyRunState();
 
-
-enum eDirection blinkyDir;
-int blinkyMovCounter = 0;
-
-enum eDirection clydeDir;
-int clydeMovCounter = 0;
-
-enum eDirection inkyDir;
-int inkyMovCounter = 0;
-
-enum eDirection pinkyDir;
-int pinkyMovCounter = 0;
-
 void initAi()
 {    
     blinkyX = ghostStartX[0];
@@ -157,27 +144,27 @@ void updateBlinky()
         if(blinkyX < 7) blinkyX = 454;
         else if(blinkyX >= 454) blinkyX = 10;
         //iteration1
-        if(blinkyDir == LEFT        && ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyMovCounter >=0) aiCalcDir();
-        else if(blinkyDir == RIGHT  && ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyMovCounter >=0) aiCalcDir();
-        else if(blinkyDir == UP     && ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyMovCounter >=0) aiCalcDir();
-        else if(blinkyDir == DOWN   && ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyMovCounter >=0) aiCalcDir();
+        if(blinkyDir == LEFT && ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
+        else if(blinkyDir == RIGHT && ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
+        else if(blinkyDir == UP && ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyFrameCounter >= 0) aiCalcDir();
+        else if(blinkyDir == DOWN && ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyFrameCounter >= 0) aiCalcDir();
         if     (blinkyDir == LEFT   && !ghostsGetCollision(blinkyX - 1,blinkyY)) blinkyX -= 1;
         else if(blinkyDir == RIGHT  && !ghostsGetCollision(blinkyX + 1,blinkyY)) blinkyX += 1;
         else if(blinkyDir == UP     && !ghostsGetCollision(blinkyX,blinkyY - 1)) blinkyY -= 1;
         else if(blinkyDir == DOWN   && !ghostsGetCollision(blinkyX,blinkyY + 1)) blinkyY += 1;
         if(atCrossRoad(blinkyX, blinkyY)) aiCalcDir();
         //iteration2
-        if(blinkyDir == LEFT        && ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyMovCounter >=0) aiCalcDir();
-        else if(blinkyDir == RIGHT  && ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyMovCounter >=0) aiCalcDir();
-        else if(blinkyDir == UP     && ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyMovCounter >=0) aiCalcDir();
-        else if(blinkyDir == DOWN   && ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyMovCounter >=0) aiCalcDir();
+        if(blinkyDir == LEFT && ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
+        else if(blinkyDir == RIGHT && ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
+        else if(blinkyDir == UP && ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyFrameCounter >= 0) aiCalcDir();
+        else if(blinkyDir == DOWN && ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyFrameCounter >= 0) aiCalcDir();
         if     (blinkyDir == LEFT   && !ghostsGetCollision(blinkyX - 1,blinkyY)) blinkyX -= 1;
         else if(blinkyDir == RIGHT  && !ghostsGetCollision(blinkyX + 1,blinkyY)) blinkyX += 1;
         else if(blinkyDir == UP     && !ghostsGetCollision(blinkyX,blinkyY - 1)) blinkyY -= 1;
         else if(blinkyDir == DOWN   && !ghostsGetCollision(blinkyX,blinkyY + 1)) blinkyY += 1;
         if(atCrossRoad(blinkyX, blinkyY)) aiCalcDir();   
     }
-    blinkyMovCounter++;
+    blinkyFrameCounter++;
 };
 
 void updateClyde()
@@ -331,7 +318,7 @@ void blinkyChaseState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN && closerToPac(blinkyX, blinkyY, blinkyX, blinkyY - 1)) {blinkyDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP && closerToPac(blinkyX, blinkyY, blinkyX, blinkyY + 1)) {blinkyDir = DOWN; break;}
     }
-    blinkyMovCounter = 0;
+    //blinkyFrameCounter = 0;
 }
 
 void clydeChaseState()
@@ -349,7 +336,7 @@ void clydeChaseState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN && closerToPac(clydeX, clydeY, clydeX, clydeY - 1)) {clydeDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP && closerToPac(clydeX, clydeY, clydeX, clydeY + 1)) {clydeDir = DOWN; break;}
     }
-    clydeMovCounter = 0;
+   // clydeMovCounter = 0;
 }
 
 void inkyChaseState()
@@ -367,7 +354,7 @@ void inkyChaseState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN && closerToPac(inkyX, inkyY, inkyX, inkyY - 1)) {inkyDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP && closerToPac(inkyX, inkyY, inkyX, inkyY + 1)) {inkyDir = DOWN; break;}
     }
-    inkyMovCounter = 0;
+   // inkyMovCounter = 0;
 }
 
 void pinkyChaseState()
@@ -385,7 +372,7 @@ void pinkyChaseState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY - 1)) {pinkyDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY + 1)) {pinkyDir = DOWN; break;}
     }
-    pinkyMovCounter = 0;
+   // pinkyMovCounter = 0;
 }
 
 void blinkyRunState()
@@ -403,7 +390,7 @@ void blinkyRunState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyDir != DOWN && !closerToPac(blinkyX, blinkyY, blinkyX, blinkyY - 1)) {blinkyDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyDir != UP && !closerToPac(blinkyX, blinkyY, blinkyX, blinkyY + 1)) {blinkyDir = DOWN; break;}
     }
-    blinkyMovCounter = 0;
+   // blinkyFrameCounter = 0;
 }
 
 void clydeRunState()
@@ -421,7 +408,7 @@ void clydeRunState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(clydeX,clydeY - 1) && clydeDir != DOWN && closerToPac(clydeX, clydeY, clydeX, clydeY - 1)) {clydeDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(clydeX,clydeY + 1) && clydeDir != UP && closerToPac(clydeX, clydeY, clydeX, clydeY + 1)) {clydeDir = DOWN; break;}
     }
-    clydeMovCounter = 0;
+   // clydeMovCounter = 0;
 }
 
 void inkyRunState()
@@ -439,7 +426,7 @@ void inkyRunState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(inkyX,inkyY - 1) && inkyDir != DOWN && closerToPac(inkyX, inkyY, inkyX, inkyY - 1)) {inkyDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(inkyX,inkyY + 1) && inkyDir != UP && closerToPac(inkyX, inkyY, inkyX, inkyY + 1)) {inkyDir = DOWN; break;}
     }
-    inkyMovCounter = 0;
+   // inkyMovCounter = 0;
 }
 
 void pinkyRunState()
@@ -457,6 +444,6 @@ void pinkyRunState()
         else if((random == 8 || random == 9 || random == 10) && !ghostsGetCollision(pinkyX,pinkyY - 1) && pinkyDir != DOWN && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY - 1)) {pinkyDir = UP; break;}
         else if((random == 11 || random == 12 || random == 13) && !ghostsGetCollision(pinkyX,pinkyY + 1) && pinkyDir != UP && closerToPac(pinkyX, pinkyY, pinkyX, pinkyY + 1)) {pinkyDir = DOWN; break;}
     }
-    pinkyMovCounter = 0;
+ //   pinkyMovCounter = 0;
 }
 #pragma clang diagnostic pop

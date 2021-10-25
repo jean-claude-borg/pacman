@@ -53,62 +53,54 @@ void getInput()
     else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
         bufferDir = DOWN;
 
-    if (bufferDir == RIGHT && !getCollision(pacX+1, pacY) && !getCollision(pacX+2, pacY) && !getCollision(pacX+3, pacY) && !getCollision(pacX+4, pacY))
+    if (bufferDir == RIGHT && !getCollision(pacX+1, pacY) && !getCollision(pacX+2, pacY) && !getCollision(pacX+3, pacY))
         dir = RIGHT;
-    else if (bufferDir == LEFT && !getCollision(pacX-1, pacY) && !getCollision(pacX-2, pacY) && !getCollision(pacX-3, pacY) && !getCollision(pacX-4, pacY))
+    else if (bufferDir == LEFT && !getCollision(pacX-1, pacY) && !getCollision(pacX-2, pacY) && !getCollision(pacX-3, pacY))
         dir = LEFT;
-    else if (bufferDir == UP && !getCollision(pacX, pacY-1) && !getCollision(pacX, pacY-2) && !getCollision(pacX, pacY-3) && !getCollision(pacX, pacY-4))
+    else if (bufferDir == UP && !getCollision(pacX, pacY-1) && !getCollision(pacX, pacY-2) && !getCollision(pacX, pacY-3))
         dir = UP;
-    else if (bufferDir == DOWN && !getCollision(pacX, pacY+1) && !getCollision(pacX, pacY+2) && !getCollision(pacX, pacY+3) && !getCollision(pacX, pacY+4))
+    else if (bufferDir == DOWN && !getCollision(pacX, pacY+1) && !getCollision(pacX, pacY+2) && !getCollision(pacX, pacY+3))
         dir = DOWN;
 };
 
 void updateLogic(int *x, int *y)
 {
-    //getInput();
+    getInput();
 
-    if     (dir == LEFT)    *x-=1;
-    else if(dir == RIGHT)   *x+=1;
-    else if(dir == UP)      *y-=1;
-    else if(dir == DOWN)    *y+=1;
+    if     (dir == LEFT)    *x-=3;
+    else if(dir == RIGHT)   *x+=3;
+    else if(dir == UP)      *y-=3;
+    else if(dir == DOWN)    *y+=3;
 
-    if(getCollision(*x,*y) && dir == LEFT)    *x+=1;
-    if(getCollision(*x,*y) && dir == RIGHT)   *x-=1;
-
-    if(getCollision(*x,*y) && dir == UP)      *y+=1;
-    if(getCollision(*x,*y) && dir == DOWN)    *y-=1;
-
-    getInput(sizeOfWallArray);
-
-    if     (dir == LEFT)    *x-=1;
-    else if(dir == RIGHT)   *x+=1;
-    else if(dir == UP)      *y-=1;
-    else if(dir == DOWN)    *y+=1;
-
-    if(getCollision(*x,*y) && dir == LEFT)    *x+=1;
-    if(getCollision(*x,*y) && dir == RIGHT)   *x-=1;
-
-    if(getCollision(*x,*y) && dir == UP)      *y+=1;
-    if(getCollision(*x,*y) && dir == DOWN)    *y-=1;
-
-    getInput(sizeOfWallArray);
-
-    if     (dir == LEFT)    *x-=1;
-    else if(dir == RIGHT)   *x+=1;
-    else if(dir == UP)      *y-=1;
-    else if(dir == DOWN)    *y+=1;
-
-    if(getCollision(*x,*y) && dir == LEFT)    *x+=1;
-    if(getCollision(*x,*y) && dir == RIGHT)   *x-=1;
-
-    if(getCollision(*x,*y) && dir == UP)      *y+=1;
-    if(getCollision(*x,*y) && dir == DOWN)    *y-=1;
+    if(getCollision(*x,*y) && dir == LEFT)
+    {
+        while(getCollision(*x,*y))
+            *x+=1;
+        dir = STOP;
+    }
+    if(getCollision(*x,*y) && dir == RIGHT)
+    {
+        while(getCollision(*x,*y))
+            *x-=1;
+        dir = STOP;
+    }
+    if(getCollision(*x,*y) && dir == UP)
+    {
+        while(getCollision(*x,*y))
+            *y+=1;
+        dir = STOP;
+    }
+    if(getCollision(*x,*y) && dir == DOWN)
+    {
+        while(getCollision(*x,*y))
+            *y-=1;
+        dir = STOP;
+    }
 
     if(pacX <= 7) pacX = 454;
     else if(pacX >= 454) pacX = 7;
 
     if(ateFood(*x, *y, sizeOfFoodArray)) score++;
-    //printf("Score: %d\n", score);
 
     if(atePowerUp(pacX, pacY))
         poweredUp = true;
