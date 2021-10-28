@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(pacman)
 
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static")
 set(CMAKE_C_STANDARD 11)
 
 # This part downloads raylib and builds it if it's not installed on your system

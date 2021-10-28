@@ -18,6 +18,7 @@ Texture2D pacWideRight;
 Texture2D pacNarrowRight;
 Texture2D pacClosed;
 
+//blinky
 Texture2D blinkyL1;
 Texture2D blinkyL2;
 Texture2D blinkyR1;
@@ -27,8 +28,36 @@ Texture2D blinkyU2;
 Texture2D blinkyD1;
 Texture2D blinkyD2;
 
-Texture2D clyde;
-Texture2D inky;
+//clyde
+Texture2D clydeL1;
+Texture2D clydeL2;
+Texture2D clydeR1;
+Texture2D clydeR2;
+Texture2D clydeU1;
+Texture2D clydeU2;
+Texture2D clydeD1;
+Texture2D clydeD2;
+
+//inky
+Texture2D inkyL1;
+Texture2D inkyL2;
+Texture2D inkyR1;
+Texture2D inkyR2;
+Texture2D inkyU1;
+Texture2D inkyU2;
+Texture2D inkyD1;
+Texture2D inkyD2;
+
+//pinky
+Texture2D pinkyL1;
+Texture2D pinkyL2;
+Texture2D pinkyR1;
+Texture2D pinkyR2;
+Texture2D pinkyU1;
+Texture2D pinkyU2;
+Texture2D pinkyD1;
+Texture2D pinkyD2;
+
 Texture2D pinky;
 Texture2D blueGhost;
 
@@ -107,13 +136,13 @@ enum eDirection blinkyDir;
 int blinkyFrameCounter = 0;
 
 enum eDirection clydeDir;
-int clydeMovCounter = 0;
+int clydeFrameCounter = 0;
 
 enum eDirection inkyDir;
-int inkyMovCounter = 0;
+int inkyFrameCounter = 0;
 
 enum eDirection pinkyDir;
-int pinkyMovCounter = 0;
+int pinkyFrameCounter = 0;
 
 int blinkyWait = 100;
 int clydeWait = 400;

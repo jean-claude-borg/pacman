@@ -1,9 +1,9 @@
 #pragma once
 
 #ifdef _WIN32
-#include <Windows.h>
+//#include <Windows.h>
 #else
-#include <unistd.h>
+//#include <unistd.h>
 #endif
 
 #include "globals.h"
@@ -37,7 +37,6 @@ bool ateFood(int x, int y, int sizeOfFoodArray)
 
 void getInput()
 {
-    //bufferDir = STOP;
     if(IsKeyPressed(KEY_P))
         paused = !paused;
 
@@ -65,6 +64,8 @@ void getInput()
 
 void updateLogic(int *x, int *y)
 {
+    //i dont know why this works only when function is called twice
+    getInput();
     getInput();
 
     if     (dir == LEFT)    *x-=3;
@@ -216,7 +217,7 @@ void resetGhostPositions()
 
 void onPacCollision()
 {
-    usleep(1500000);
+    //usleep(1500000);
     blinkyWait = 100;
     clydeWait = 400;
     inkyWait = 800;
