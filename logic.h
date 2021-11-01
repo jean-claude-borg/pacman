@@ -68,6 +68,12 @@ void updateLogic(int *x, int *y)
     getInput();
     getInput();
 
+    if(dead)
+    {
+        dir = STOP;
+        return;
+    }
+
     if     (dir == LEFT)    *x-=3;
     else if(dir == RIGHT)   *x+=3;
     else if(dir == UP)      *y-=3;
@@ -109,6 +115,7 @@ void updateLogic(int *x, int *y)
     if(poweredUp == true)
         poweredUpDuration++;
 
+    updateAi();
     getGhostCollision();
 };
 
@@ -218,16 +225,9 @@ void resetGhostPositions()
 void onPacCollision()
 {
     //usleep(1500000);
-    blinkyWait = 100;
-    clydeWait = 400;
-    inkyWait = 800;
-    pinkyWait = 1200;
-    resetGhostPositions();
-
-    lives--;
     dir = STOP;
-    pacX = 213;
-    pacY = 270;
+    dead = true;
+    lives--;
 }
 
 void resetGame()
@@ -239,6 +239,8 @@ void resetGame()
         showPowerUp[i] = true;
 
     resetGhostPositions();
+    dead = false;
+    deathFrameCounter = 0;
     blinkyWait = 100;
     clydeWait = 400;
     inkyWait = 800;
@@ -246,8 +248,10 @@ void resetGame()
 
     lives = 3;
     score = 0;
-    pacX = 213;
-    pacY = 270;
+    pacX = 210;
+    pacY = 265;
+    dir = STOP;
+    bufferDir = STOP;
 }
 
 

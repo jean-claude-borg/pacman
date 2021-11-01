@@ -12,7 +12,9 @@ int getPowerUpPositions();
 
 int loadMap()
 {
-    map = LoadImage("../assets/maps/map4-3.png");
+    map = LoadImage("../assets/maps/map4-6.png");
+    windowWidth = map.width;
+    windowHeight = map.height;
     pixels = LoadImageColors(map);
 
     wallsX = (int*)malloc(map.width * map.height * sizeof (int));

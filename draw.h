@@ -5,6 +5,7 @@
 void drawGhosts();
 void drawPauseMenu();
 void drawHud();
+void pacDeathAnimation();
 
 void loadTextures()
 {
@@ -47,43 +48,7 @@ void loadTextures()
     Image tempPinkyU2 = LoadImage("../assets/sprites/ghosts/pink/pinkyU2.png");
     Image tempPinkyD1 = LoadImage("../assets/sprites/ghosts/pink/pinkyD1.png");
     Image tempPinkyD2 = LoadImage("../assets/sprites/ghosts/pink/pinkyD2.png");
-    
-    Image tempBlueGhost = LoadImage("../assets/sprites/blue_ghost.png");
 
-    Image tempPacWideRight = LoadImage("../assets/sprites/pacWide.png");
-    Image tempPacNarrowRight = LoadImage("../assets/sprites/pacNarrow.png");
-    Image tempPacClosed = LoadImage("../assets/sprites/pacClosed.png");
-
-    Image tempHeart = LoadImage("../assets/sprites/heart.png");
-
-    Image tempPowerup = LoadImage("../assets/sprites/powerup.png");
-
-    ImageResize(&tempPacWideRight, pacWidth, pacHeight);
-    ImageResize(&tempPacNarrowRight, pacWidth, pacHeight);
-    pacWideRight = LoadTextureFromImage(tempPacWideRight);
-    pacNarrowRight = LoadTextureFromImage(tempPacNarrowRight);
-
-    ImageRotateCW(&tempPacWideRight);
-    ImageRotateCW(&tempPacNarrowRight);
-    pacWideDown = LoadTextureFromImage(tempPacWideRight);
-    pacNarrowDown = LoadTextureFromImage(tempPacNarrowRight);
-
-    ImageRotateCW(&tempPacWideRight);
-    ImageRotateCW(&tempPacNarrowRight);
-    pacWideLeft = LoadTextureFromImage(tempPacWideRight);
-    pacNarrowLeft = LoadTextureFromImage(tempPacNarrowRight);
-
-    ImageRotateCW(&tempPacWideRight);
-    ImageRotateCW(&tempPacNarrowRight);
-    pacWideUp = LoadTextureFromImage(tempPacWideRight);
-    pacNarrowUp = LoadTextureFromImage(tempPacNarrowRight);
-
-    // ImageResize(&tempPacClosed, 20, 20);
-    // pacClosed = LoadTextureFromImage(tempPacClosed);
-
-    ImageResize(&tempPowerup, 21, 14);
-    powerup = LoadTextureFromImage(tempPowerup);
-    
     //blinky(red)
     ImageResize(&tempBlinkyL1,blinkyWidth,blinkyHeight);
     ImageResize(&tempBlinkyL2,blinkyWidth,blinkyHeight);
@@ -123,12 +88,6 @@ void loadTextures()
     ImageResize(&tempPinkyU2,pinkyWidth,pinkyHeight);
     ImageResize(&tempPinkyD1,pinkyWidth,pinkyHeight);
     ImageResize(&tempPinkyD2,pinkyWidth,pinkyHeight);
-
-    //resized to the size of any ghost since they are all the same size
-    ImageResize(&tempBlueGhost,pinkyWidth,pinkyHeight);
-
-    ImageResize(&tempHeart, 40,40);
-    heart = LoadTextureFromImage(tempHeart);
 
     //blinky
     blinkyL1 = LoadTextureFromImage(tempBlinkyL1);
@@ -170,7 +129,96 @@ void loadTextures()
     pinkyD1 = LoadTextureFromImage(tempPinkyD1);
     pinkyD2 = LoadTextureFromImage(tempPinkyD2);
 
-    blueGhost = LoadTextureFromImage(tempBlueGhost);
+    //vulnerable ghosts
+    Image tempBlueGhost1 = LoadImage("../assets/sprites/ghosts/vulnerable/blue1.png");
+    Image tempBlueGhost2 = LoadImage("../assets/sprites/ghosts/vulnerable/blue2.png");
+    Image tempWhiteGhost1 = LoadImage("../assets/sprites/ghosts/vulnerable/white1.png");
+    Image tempWhiteGhost2 = LoadImage("../assets/sprites/ghosts/vulnerable/white2.png");
+
+    ImageResize(&tempBlueGhost1,pinkyWidth,pinkyHeight); //resized to the size of any ghost since they are all the same size
+    ImageResize(&tempBlueGhost2,pinkyWidth,pinkyHeight); //resized to the size of any ghost since they are all the same size
+    ImageResize(&tempWhiteGhost1,pinkyWidth,pinkyHeight); //resized to the size of any ghost since they are all the same size
+    ImageResize(&tempWhiteGhost2,pinkyWidth,pinkyHeight); //resized to the size of any ghost since they are all the same size
+
+    blueGhost1 = LoadTextureFromImage(tempBlueGhost1);
+    blueGhost2 = LoadTextureFromImage(tempBlueGhost2);
+    whiteGhost1 = LoadTextureFromImage(tempWhiteGhost1);
+    whiteGhost2 = LoadTextureFromImage(tempWhiteGhost2);
+
+    //heart
+    Image tempHeart = LoadImage("../assets/sprites/heart.png");
+    ImageResize(&tempHeart, 40,40);
+    heart = LoadTextureFromImage(tempHeart);
+
+    //powerup
+    Image tempPowerup = LoadImage("../assets/sprites/powerup.png");
+    ImageResize(&tempPowerup, 21, 14);
+    powerup = LoadTextureFromImage(tempPowerup);
+
+    //pacman
+    Image tempPacWideRight = LoadImage("../assets/sprites/pac/pacWide2.png");
+    Image tempPacNarrowRight = LoadImage("../assets/sprites/pac/pacNarrow2.png");
+    Image tempPacClosed = LoadImage("../assets/sprites/pac/pacClosed.png");
+
+    ImageResize(&tempPacWideRight, pacWidth, pacHeight);
+    ImageResize(&tempPacNarrowRight, pacWidth, pacHeight);
+    pacWideRight = LoadTextureFromImage(tempPacWideRight);
+    pacNarrowRight = LoadTextureFromImage(tempPacNarrowRight);
+
+    ImageRotateCW(&tempPacWideRight);
+    ImageRotateCW(&tempPacNarrowRight);
+    pacWideDown = LoadTextureFromImage(tempPacWideRight);
+    pacNarrowDown = LoadTextureFromImage(tempPacNarrowRight);
+
+    ImageRotateCW(&tempPacWideRight);
+    ImageRotateCW(&tempPacNarrowRight);
+    pacWideLeft = LoadTextureFromImage(tempPacWideRight);
+    pacNarrowLeft = LoadTextureFromImage(tempPacNarrowRight);
+
+    ImageRotateCW(&tempPacWideRight);
+    ImageRotateCW(&tempPacNarrowRight);
+    pacWideUp = LoadTextureFromImage(tempPacWideRight);
+    pacNarrowUp = LoadTextureFromImage(tempPacNarrowRight);
+
+    ImageResize(&tempPacClosed, pacWidth, pacHeight);
+    pacClosed = LoadTextureFromImage(tempPacClosed);
+
+    //pacman death sprites
+    Image tempDeath1 = LoadImage("../assets/sprites/pac/deathAnim/death1.png");
+    Image tempDeath2 = LoadImage("../assets/sprites/pac/deathAnim/death2.png");
+    Image tempDeath3 = LoadImage("../assets/sprites/pac/deathAnim/death3.png");
+    Image tempDeath4 = LoadImage("../assets/sprites/pac/deathAnim/death4.png");
+    Image tempDeath5 = LoadImage("../assets/sprites/pac/deathAnim/death5.png");
+    Image tempDeath6 = LoadImage("../assets/sprites/pac/deathAnim/death6.png");
+    Image tempDeath7 = LoadImage("../assets/sprites/pac/deathAnim/death7.png");
+    Image tempDeath8 = LoadImage("../assets/sprites/pac/deathAnim/death8.png");
+    Image tempDeath9 = LoadImage("../assets/sprites/pac/deathAnim/death9.png");
+    Image tempDeath10 = LoadImage("../assets/sprites/pac/deathAnim/death10.png");
+    Image tempDeath11 = LoadImage("../assets/sprites/pac/deathAnim/death11.png");
+
+    ImageResize(&tempDeath1, pacWidth, pacHeight);
+    ImageResize(&tempDeath2, pacWidth, pacHeight);
+    ImageResize(&tempDeath3, pacWidth, pacHeight);
+    ImageResize(&tempDeath4, pacWidth, pacHeight);
+    ImageResize(&tempDeath5, pacWidth, pacHeight);
+    ImageResize(&tempDeath6, pacWidth, pacHeight);
+    ImageResize(&tempDeath7, pacWidth, pacHeight);
+    ImageResize(&tempDeath8, pacWidth, pacHeight);
+    ImageResize(&tempDeath9, pacWidth, pacHeight);
+    ImageResize(&tempDeath10, pacWidth, pacHeight);
+    ImageResize(&tempDeath11, pacWidth, pacHeight);
+
+    pacDeath1 = LoadTextureFromImage(tempDeath1);
+    pacDeath2 = LoadTextureFromImage(tempDeath2);
+    pacDeath3 = LoadTextureFromImage(tempDeath3);
+    pacDeath4 = LoadTextureFromImage(tempDeath4);
+    pacDeath5 = LoadTextureFromImage(tempDeath5);
+    pacDeath6 = LoadTextureFromImage(tempDeath6);
+    pacDeath7 = LoadTextureFromImage(tempDeath7);
+    pacDeath8 = LoadTextureFromImage(tempDeath8);
+    pacDeath9 = LoadTextureFromImage(tempDeath9);
+    pacDeath10 = LoadTextureFromImage(tempDeath10);
+    pacDeath11 = LoadTextureFromImage(tempDeath11);
 };
 
 void drawMap()
@@ -188,10 +236,10 @@ void drawMap()
 
 void drawPauseMenu()
 {
-    double menuX = GetScreenWidth() * 0.1;
-    double menuY = GetScreenHeight() * 0.3;
-    double menuWidth = GetScreenWidth() * 0.8;
-    double menuHeight = GetScreenHeight() * 0.3;
+    double menuX = windowWidth * 0.1;
+    double menuY = windowHeight * 0.3;
+    double menuWidth = windowWidth * 0.8;
+    double menuHeight = windowHeight * 0.3;
 
     //DrawRectangle((int)menuX, (int)menuY, (int)menuWidth, (int)menuHeight, (Color){41,37,39,235});
     Rectangle rec;
@@ -206,20 +254,20 @@ void drawPauseMenu()
 
 void drawHud()
 {
-    double scoreX = 15, scoreY = map.height + 3;
+    double scoreX = 10, scoreY = map.height + 10;
     DrawText(TextFormat("Score: %i", score), scoreX, scoreY, 20, WHITE);
 
-    double heartX = map.width - 75, heartY = map.height - 7;
+    double heartX = map.width - 75, heartY = map.height - 4;
     DrawTexture(heart, heartX, heartY, WHITE);
-    DrawText(TextFormat("x%i", lives), heartX+30, heartY+15, 20, WHITE);
+    DrawText(TextFormat("x%i", lives), heartX+35, heartY+15, 20, WHITE);
 }
 
 void drawGameOverScreen()
 {
-    double menuX = GetScreenWidth() * 0.1;
-    double menuY = GetScreenHeight() * 0.3;
-    double menuWidth = GetScreenWidth() * 0.8;
-    double menuHeight = GetScreenHeight() * 0.3;
+    double menuX = windowWidth * 0.1;
+    double menuY = windowHeight * 0.3;
+    double menuWidth = windowWidth * 0.8;
+    double menuHeight = windowHeight * 0.3;
     Rectangle rec;
     rec.x = menuX;
     rec.y = menuY;
@@ -233,30 +281,20 @@ void drawGameOverScreen()
     DrawText("Press R to Retry", (int)menuX + (menuWidth*0.20), (int)menuY + (menuHeight*0.75), 20, GRAY);
 }
 
-void draw(int pacX, int pacY)
+void drawPacMan()
 {
-    if(lives <= 0) {
-        drawGameOverScreen();
-        return;
-    }
-
-    drawMap();
-
-    for(int i = 0; i < numPowerups; i++)
-        if(showPowerUp[i])
-            DrawTexture(powerup, powerUpX[i] - powerup.width / 2 + 1, powerUpY[i] - powerup.height / 2, CLITERAL(Color){ 255, 188, 180, 225});
-
     if(dir == LEFT)          {pacWide = pacWideLeft;     pacNarrow = pacNarrowLeft;}
     else if(dir == RIGHT)    {pacWide = pacWideRight;    pacNarrow = pacNarrowRight;}
     else if(dir == UP)       {pacWide = pacWideUp;       pacNarrow = pacNarrowUp;}
     else if(dir == DOWN)     {pacWide = pacWideDown;     pacNarrow = pacNarrowDown;}
+    else if(dir == STOP)     {pacWide = pacClosed;       pacNarrow = pacClosed;}
 
-    if(drawWide)
+    if(drawWide && !dead)
     {
         DrawTexture(pacWide, pacX ,pacY ,WHITE);
         animCounter++;
     }
-    else if(drawNarrow)
+    else if(drawNarrow && !dead)
     {
         DrawTexture(pacNarrow, pacX ,pacY ,WHITE);
         animCounter++;
@@ -275,17 +313,58 @@ void draw(int pacX, int pacY)
         }
         animCounter = 0;
     }
+}
+
+void drawPowerups()
+{
+    static int flashLength = 7;
+    static int flashCounter = 0;
+    static bool flash = false;
+    for(int i = 0; i < numPowerups; i++)
+        if(showPowerUp[i]) {
+            if (frame % 20 == 0 || flash) {
+
+                flash = true;
+
+                //DrawTexture(powerup, powerUpX[i] - powerup.width / 2 + 1, powerUpY[i] - powerup.height / 2,CLITERAL(Color) {255, 255, 255, 255});
+                if (flash && flashCounter <= flashLength) {
+                    DrawCircle(powerUpX[i], powerUpY[i], 7, WHITE);
+                    flashCounter++;
+                }
+                if (flashCounter > flashLength) {
+                    flash = false;
+                    flashCounter = 0;
+                }
+            }
+        }
+}
+
+void draw(int pacX, int pacY)
+{
+    if(lives <= 0) {
+        drawGameOverScreen();
+        return;
+    }
+
+    drawMap();
+    drawPacMan();
+    drawPowerups();
+
     DrawRectangle(ghostWallX,ghostWallY, 37, 4, CLITERAL(Color){ 255, 203, 164, 255 }); 
-    drawGhosts();
+
+    if(!dead)
+        drawGhosts();
 
     drawHud();
 
     if(paused)
         drawPauseMenu();
+
+    if(dead)
+        pacDeathAnimation();
 };
 
 bool usingBlinkyL1 = true;
-
 void drawBlinky()
 {
     blinkyFrameCounter++;
@@ -325,11 +404,11 @@ void drawBlinky()
         DrawTexture(blinkyUp, blinkyX+4 , blinkyY+4 ,WHITE);
     if(blinkyDir == DOWN)
         DrawTexture(blinkyDown, blinkyX+4 , blinkyY+4 ,WHITE);
-
+    if(blinkyDir == STOP)
+        DrawTexture(blinkyUp, blinkyX+4 , blinkyY+4 ,WHITE);
 }
 
 bool usingClydeL1 = true;
-
 void drawClyde()
 {
     clydeFrameCounter++;
@@ -369,11 +448,11 @@ void drawClyde()
         DrawTexture(clydeUp, clydeX+4 , clydeY+4 ,WHITE);
     if(clydeDir == DOWN)
         DrawTexture(clydeDown, clydeX+4 , clydeY+4 ,WHITE);
-
+    if(clydeDir == STOP)
+        DrawTexture(clydeUp, clydeX+4 , clydeY+4 ,WHITE);
 }
 
 bool usingInkyL1 = true;
-
 void drawInky() {
     inkyFrameCounter++;
     Texture2D inkyLeft = inkyL1;
@@ -409,10 +488,11 @@ void drawInky() {
         DrawTexture(inkyUp, inkyX+4 , inkyY+4 ,WHITE);
     if(inkyDir == DOWN)
         DrawTexture(inkyDown, inkyX+4 , inkyY+4 ,WHITE);
+    if(inkyDir == STOP)
+        DrawTexture(inkyUp, inkyX+4 , inkyY+4 ,WHITE);
 }
 
 bool usingPinkyL1 = true;
-
 void drawPinky()
 {
     pinkyFrameCounter++;
@@ -452,6 +532,8 @@ void drawPinky()
         DrawTexture(pinkyUp, pinkyX+4 , pinkyY+4 ,WHITE);
     if(pinkyDir == DOWN)
         DrawTexture(pinkyDown, pinkyX+4 , pinkyY+4 ,WHITE);
+    if(pinkyDir == STOP)
+        DrawTexture(pinkyUp, pinkyX+4 , pinkyY+4 ,WHITE);
 }
 
 void drawGhosts()
@@ -466,14 +548,154 @@ void drawGhosts()
     }
     else if(poweredUp)
     {
+        static Texture2D blueGhost;
+        Texture2D whiteGhost = whiteGhost1;
+
+        static bool usingBlueSprite1 = true;
+        static bool usingWhiteSprite1 = true;
+        static bool showingWhite = false;
+        static int vulnerableFrameCounter = 0;
+        static int vulnerableFrameLimit = 5;
+        static int blinkLength = 10;
+        static int blinkCounter = 0;
+        //swapping sprites
+        vulnerableFrameCounter++;
+        if(vulnerableFrameCounter > vulnerableFrameLimit)
+        {
+            if(showingWhite == false)
+            {
+                if (usingBlueSprite1 == true) {
+                    blueGhost = blueGhost2;
+                    usingBlueSprite1 = false;
+                } else {
+                    blueGhost = blueGhost1;
+                    usingBlueSprite1 = true;
+                }
+            }
+            if(showingWhite == true)
+            {
+                if (usingWhiteSprite1 == true) {
+                    blueGhost = whiteGhost2;
+                    usingWhiteSprite1 = false;
+                }
+                else
+                {
+                    blueGhost = whiteGhost1;
+                    usingWhiteSprite1 = true;
+                }
+            }
+            vulnerableFrameCounter = 0;
+        }
+
+        if(poweredUpDuration >= 0.6*poweredUpMaxDuration)
+        {
+            blinkCounter++;
+           if(blinkCounter > blinkLength)
+           {
+               //alternate Colour
+               showingWhite = !showingWhite;
+               blinkCounter = 0;
+           }
+        }
+
         DrawTexture(blueGhost, blinkyX+4 , blinkyY+4, WHITE);
         DrawTexture(blueGhost, clydeX+4 , clydeY+4 ,WHITE);
         DrawTexture(blueGhost, inkyX+4 , inkyY+4 ,WHITE);
         DrawTexture(blueGhost, pinkyX+4 , pinkyY+4 ,WHITE);
+
         if(poweredUpDuration >= poweredUpMaxDuration)
         {
             poweredUp = false;
             poweredUpDuration = 0;
         }
+
     }
+}
+
+void pacDeathAnimation()
+{
+    if(deathFrameCounter <= 1*deathAnimMax)
+    {
+        DrawTexture(pacDeath1, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 2*deathAnimMax)
+    {
+        DrawTexture(pacDeath2, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 3*deathAnimMax)
+    {
+        DrawTexture(pacDeath3, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 4*deathAnimMax)
+    {
+        DrawTexture(pacDeath4, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 5*deathAnimMax)
+    {
+        DrawTexture(pacDeath5, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 6*deathAnimMax)
+    {
+        DrawTexture(pacDeath6, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 7*deathAnimMax)
+    {
+        DrawTexture(pacDeath7, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 8*deathAnimMax)
+    {
+        DrawTexture(pacDeath8, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 9*deathAnimMax)
+    {
+        DrawTexture(pacDeath9, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 10*deathAnimMax)
+    {
+        DrawTexture(pacDeath10, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter <= 11*deathAnimMax)
+    {
+        DrawTexture(pacDeath11, pacX, pacY, WHITE);
+        deathFrameCounter++;
+        return;
+    }
+    if(deathFrameCounter > 20*deathAnimMax)
+    {
+        deathFrameCounter = 0;
+        dead = false;
+        pacX = 210;
+        pacY = 265;
+        dir = STOP;
+        bufferDir = STOP;
+        blinkyWait = 100;
+        clydeWait = 400;
+        inkyWait = 800;
+        pinkyWait = 1200;
+        resetGhostPositions();
+        return;
+    }
+    else
+        deathFrameCounter++;
+
 }

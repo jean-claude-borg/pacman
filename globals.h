@@ -5,6 +5,7 @@
 enum eDirection{LEFT,RIGHT,UP,DOWN,STOP};
 enum eDirection dir;
 
+//pacman
 Texture2D pacWide;
 Texture2D pacNarrow;
 
@@ -17,6 +18,19 @@ Texture2D pacNarrowLeft;
 Texture2D pacWideRight;
 Texture2D pacNarrowRight;
 Texture2D pacClosed;
+
+//pacman deaths
+Texture2D pacDeath1;
+Texture2D pacDeath2;
+Texture2D pacDeath3;
+Texture2D pacDeath4;
+Texture2D pacDeath5;
+Texture2D pacDeath6;
+Texture2D pacDeath7;
+Texture2D pacDeath8;
+Texture2D pacDeath9;
+Texture2D pacDeath10;
+Texture2D pacDeath11;
 
 //blinky
 Texture2D blinkyL1;
@@ -58,8 +72,15 @@ Texture2D pinkyU2;
 Texture2D pinkyD1;
 Texture2D pinkyD2;
 
-Texture2D pinky;
-Texture2D blueGhost;
+Texture2D blueGhost1;
+Texture2D blueGhost2;
+Texture2D whiteGhost1;
+Texture2D whiteGhost2;
+
+int blinkyFrameCounter = 0;
+int clydeFrameCounter = 0;
+int inkyFrameCounter = 0;
+int pinkyFrameCounter = 0;
 
 Texture2D powerup;
 Texture2D heart;
@@ -70,10 +91,16 @@ bool paused = false;
 
 int windowWidth = 700, windowHeight = 700;
 
+//pacman animation
 int animCounter = 0;
 const int animMax = 3;
 bool drawWide = true;
 bool drawNarrow = false;
+
+//pacman death animation
+int deathFrameCounter = 0;
+const int deathAnimMax = 8;
+bool dead = false;
 
 Image map;
 Color* pixels;
@@ -133,16 +160,9 @@ int pinkyWidth = 24;
 int pinkyHeight = 24;
 
 enum eDirection blinkyDir;
-int blinkyFrameCounter = 0;
-
 enum eDirection clydeDir;
-int clydeFrameCounter = 0;
-
 enum eDirection inkyDir;
-int inkyFrameCounter = 0;
-
 enum eDirection pinkyDir;
-int pinkyFrameCounter = 0;
 
 int blinkyWait = 100;
 int clydeWait = 400;
@@ -160,7 +180,6 @@ int inkyEaten = false;
 int pinkyEaten = false;
 
 int maxTimeInSpawn = 250;
-
 
 bool blinkyCrossedWall = false;
 bool clydeCrossedWall = false;
