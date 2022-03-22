@@ -115,9 +115,11 @@ bool paused = false;
 //pacman animation
 bool drawPac = true;
 int animCounter = 0;
-const int animMax = 5;
+const int animMax = 4;
 bool drawWide = true;
 bool drawNarrow = false;
+bool drawClosed = false;
+bool drawNarrow2 = false;
 
 //pacman death animation
 int deathFrameCounter = 0;

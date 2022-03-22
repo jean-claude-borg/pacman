@@ -323,6 +323,18 @@ void drawPacMan()
         DrawTexture(pacNarrow, pacX ,pacY ,WHITE);
         animCounter++;
     }
+    else if(drawClosed && !dead)
+    {
+        DrawTexture(pacClosed, pacX ,pacY ,WHITE);
+        animCounter++;
+    }
+    else if(drawNarrow2 && !dead)
+    {
+        DrawTexture(pacNarrow, pacX ,pacY ,WHITE);
+        animCounter++;
+    }
+
+    //alternates drawWide and drawNarrow flags
     if(animCounter >= animMax && paused == false && dir != STOP)
     {
         if(drawWide)
@@ -332,8 +344,18 @@ void drawPacMan()
         }
         else if(drawNarrow)
         {
-            drawWide = true;
             drawNarrow = false;
+            drawClosed = true;
+        }
+        else if(drawClosed)
+        {
+            drawNarrow2 = true;
+            drawClosed = false;
+        }
+        else if(drawNarrow2)
+        {
+            drawNarrow2 = false;
+            drawWide = true;
         }
         animCounter = 0;
     }
