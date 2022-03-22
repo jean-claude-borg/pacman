@@ -1,5 +1,6 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "cert-msc50-cpp"
+#pragma once
 #include "globals.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -36,7 +37,7 @@ void initAi()
 
 bool atCrossRoad(int x, int y)
 {
-    int dirCounter = 0;
+    int dirCounter = 1;
 
     if(!ghostsGetCollision(x-1, y) && !ghostsGetCollision(x-2, y) && !ghostsGetCollision(x-3, y) && !ghostsGetCollision(x-4, y) && !ghostsGetCollision(x-5, y) && !ghostsGetCollision(x-6, y) && !ghostsGetCollision(x-7, y))
         dirCounter++;
@@ -286,6 +287,9 @@ void updatePinky()
 
 void updateAi()
 {
+    if(!updateAiMovement)
+        return;
+
     updateBlinky();
     updateClyde();
     updateInky();

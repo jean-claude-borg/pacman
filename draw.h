@@ -6,6 +6,7 @@ void drawGhosts();
 void drawPauseMenu();
 void drawHud();
 void pacDeathAnimation();
+void drawEyes();
 
 void loadTextures()
 {
@@ -219,6 +220,26 @@ void loadTextures()
     pacDeath9 = LoadTextureFromImage(tempDeath9);
     pacDeath10 = LoadTextureFromImage(tempDeath10);
     pacDeath11 = LoadTextureFromImage(tempDeath11);
+
+    Image tempFont200 = LoadImage("../assets/fonts/200.png");
+    ImageResize(&tempFont200, 20, 10);
+    font200 = LoadTextureFromImage(tempFont200);
+
+    //eyes
+    Image tempEyesLeft = LoadImage("../assets/sprites/ghosts/eyes/leftEyes.png");
+    Image tempEyesRight = LoadImage("../assets/sprites/ghosts/eyes/rightEyes.png");
+    Image tempEyesUp = LoadImage("../assets/sprites/ghosts/eyes/upEyes.png");
+    Image tempEyesDown = LoadImage("../assets/sprites/ghosts/eyes/downEyes.png");
+
+    ImageResize(&tempEyesLeft, blinkyWidth, blinkyHeight);
+    ImageResize(&tempEyesRight, blinkyWidth, blinkyHeight);
+    ImageResize(&tempEyesUp, blinkyWidth, blinkyHeight);
+    ImageResize(&tempEyesDown, blinkyWidth, blinkyHeight);
+
+    eyesLeft = LoadTextureFromImage(tempEyesLeft);
+    eyesRight = LoadTextureFromImage(tempEyesRight);
+    eyesUp = LoadTextureFromImage(tempEyesUp);
+    eyesDown = LoadTextureFromImage(tempEyesDown);
 };
 
 void drawMap()
@@ -283,11 +304,14 @@ void drawGameOverScreen()
 
 void drawPacMan()
 {
+    if(!drawPac)
+        return;
+
     if(dir == LEFT)          {pacWide = pacWideLeft;     pacNarrow = pacNarrowLeft;}
     else if(dir == RIGHT)    {pacWide = pacWideRight;    pacNarrow = pacNarrowRight;}
     else if(dir == UP)       {pacWide = pacWideUp;       pacNarrow = pacNarrowUp;}
     else if(dir == DOWN)     {pacWide = pacWideDown;     pacNarrow = pacNarrowDown;}
-    else if(dir == STOP)     {pacWide = pacClosed;       pacNarrow = pacClosed;}
+   // else if(dir == STOP)     {pacWide = pacClosed;       pacNarrow = pacClosed;}
 
     if(drawWide && !dead)
     {
@@ -317,12 +341,12 @@ void drawPacMan()
 
 void drawPowerups()
 {
-    static int flashLength = 7;
+    static int flashLength = 40;
     static int flashCounter = 0;
     static bool flash = false;
     for(int i = 0; i < numPowerups; i++)
         if(showPowerUp[i]) {
-            if (frame % 20 == 0 || flash) {
+            if (frame % 30 == 0 || flash) {
 
                 flash = true;
 
@@ -350,6 +374,9 @@ void draw(int pacX, int pacY)
     drawPacMan();
     drawPowerups();
 
+    if(blinkyEaten || clydeEaten || pinkyEaten || inkyEaten)
+        drawEyes();
+
     DrawRectangle(ghostWallX,ghostWallY, 37, 4, CLITERAL(Color){ 255, 203, 164, 255 }); 
 
     if(!dead)
@@ -367,6 +394,9 @@ void draw(int pacX, int pacY)
 bool usingBlinkyL1 = true;
 void drawBlinky()
 {
+    if(!showBlinky)
+        return;
+
     blinkyFrameCounter++;
     Texture2D blinkyLeft = blinkyL1;
     Texture2D blinkyRight = blinkyR1;
@@ -411,6 +441,9 @@ void drawBlinky()
 bool usingClydeL1 = true;
 void drawClyde()
 {
+    if(!showClyde)
+        return;
+
     clydeFrameCounter++;
     Texture2D clydeLeft = clydeL1;
     Texture2D clydeRight = clydeR1;
@@ -453,7 +486,11 @@ void drawClyde()
 }
 
 bool usingInkyL1 = true;
-void drawInky() {
+void drawInky()
+{
+    if(!showInky)
+        return;
+
     inkyFrameCounter++;
     Texture2D inkyLeft = inkyL1;
     Texture2D inkyRight = inkyR1;
@@ -495,6 +532,9 @@ void drawInky() {
 bool usingPinkyL1 = true;
 void drawPinky()
 {
+    if(!showPinky)
+        return;
+
     pinkyFrameCounter++;
     Texture2D pinkyLeft = pinkyL1;
     Texture2D pinkyRight = pinkyR1;
@@ -549,7 +589,6 @@ void drawGhosts()
     else if(poweredUp)
     {
         static Texture2D blueGhost;
-        Texture2D whiteGhost = whiteGhost1;
 
         static bool usingBlueSprite1 = true;
         static bool usingWhiteSprite1 = true;
@@ -598,10 +637,14 @@ void drawGhosts()
            }
         }
 
-        DrawTexture(blueGhost, blinkyX+4 , blinkyY+4, WHITE);
-        DrawTexture(blueGhost, clydeX+4 , clydeY+4 ,WHITE);
-        DrawTexture(blueGhost, inkyX+4 , inkyY+4 ,WHITE);
-        DrawTexture(blueGhost, pinkyX+4 , pinkyY+4 ,WHITE);
+        if(showBlinky)
+            DrawTexture(blueGhost, blinkyX+4 , blinkyY+4, WHITE);
+        if(showClyde)
+            DrawTexture(blueGhost, clydeX+4 , clydeY+4 ,WHITE);
+        if(showInky)
+            DrawTexture(blueGhost, inkyX+4 , inkyY+4 ,WHITE);
+        if(showPinky)
+            DrawTexture(blueGhost, pinkyX+4 , pinkyY+4 ,WHITE);
 
         if(poweredUpDuration >= poweredUpMaxDuration)
         {
@@ -609,6 +652,29 @@ void drawGhosts()
             poweredUpDuration = 0;
         }
 
+    }
+}
+
+void drawEyes()
+{
+    if(blinkyEaten)
+    {
+        if(eyesDir == LEFT)
+        {
+            DrawTexture(eyesLeft, blinkyX, blinkyY, WHITE);
+        }
+        else if(eyesDir == RIGHT)
+        {
+            DrawTexture(eyesRight, blinkyX, blinkyY, WHITE);
+        }
+        else if(eyesDir == UP)
+        {
+            DrawTexture(eyesUp, blinkyX, blinkyY, WHITE);
+        }
+        else if(eyesDir == DOWN)
+        {
+            DrawTexture(eyesDown, blinkyX, blinkyY, WHITE);
+        }
     }
 }
 

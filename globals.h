@@ -4,6 +4,21 @@
 
 enum eDirection{LEFT,RIGHT,UP,DOWN,STOP};
 enum eDirection dir;
+enum eDirection eyesDir;
+
+int windowWidth = 700, windowHeight = 700;
+
+//sound
+Music start;
+Sound credit;
+Sound munch1;
+Sound munch2;
+
+Music siren1;
+Music siren2;
+Sound siren3;
+Sound siren4;
+Sound siren5;
 
 //pacman
 Texture2D pacWide;
@@ -77,23 +92,30 @@ Texture2D blueGhost2;
 Texture2D whiteGhost1;
 Texture2D whiteGhost2;
 
+Texture2D powerup;
+Texture2D heart;
+Texture2D font200;
+
+Texture2D eyesLeft;
+Texture2D eyesRight;
+Texture2D eyesUp;
+Texture2D eyesDown;
+
+bool updateAiMovement = true;
+
 int blinkyFrameCounter = 0;
 int clydeFrameCounter = 0;
 int inkyFrameCounter = 0;
 int pinkyFrameCounter = 0;
 
-Texture2D powerup;
-Texture2D heart;
-
 long long int frame = 0;
 
 bool paused = false;
 
-int windowWidth = 700, windowHeight = 700;
-
 //pacman animation
+bool drawPac = true;
 int animCounter = 0;
-const int animMax = 3;
+const int animMax = 5;
 bool drawWide = true;
 bool drawNarrow = false;
 
@@ -121,17 +143,6 @@ int sizeOfWallArray;
 int sizeOfVisibleWallArray;
 int numPowerups = 0;
 int score = 0;
-
-Music start;
-Sound credit;
-Sound munch1;
-Sound munch2;
-
-Music siren1;
-Music siren2;
-Sound siren3;
-Sound siren4;
-Sound siren5;
 
 int pacWidth = 31;
 int pacHeight = 31;
@@ -164,6 +175,11 @@ enum eDirection clydeDir;
 enum eDirection inkyDir;
 enum eDirection pinkyDir;
 
+bool showBlinky = true;
+bool showClyde = true;
+bool showInky = true;
+bool showPinky = true;
+
 int blinkyWait = 100;
 int clydeWait = 400;
 int inkyWait = 800;
@@ -189,6 +205,7 @@ bool pinkyCrossedWall = false;
 int ghostWallX;
 int ghostWallY;
 
+//powerups
 bool poweredUp = false;
 int poweredUpDuration = 0;
 int poweredUpMaxDuration = 350;

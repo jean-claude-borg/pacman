@@ -28,5 +28,5 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 
 endif()
 
-add_executable(pacman main.c)
+add_executable(pacman main.c save.c)
 target_link_libraries(pacman raylib)

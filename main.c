@@ -4,8 +4,9 @@
 #include "logic.h"
 #include "draw.h"
 #include "ai.h"
+#include "save.h"
 
-#define SCALE 1.5f
+#define SCALE 1.0f
 #define HUD_EXTENSION_LENGTH 35*SCALE
 void gameLoop(int sizeOfWallArray);
 
@@ -25,7 +26,7 @@ int main()
     bufferDir = STOP;
 
     initAi();
-    gameLoop(sizeOfWallArray);    
+    gameLoop(sizeOfWallArray);
 
     return 0;
 }
@@ -35,6 +36,7 @@ void gameLoop(int sizeOfWallArray)
     // Create a RenderTexture2D to be used for render to texture
     RenderTexture2D target = LoadRenderTexture(windowWidth, windowHeight + HUD_EXTENSION_LENGTH);
     RenderTexture2D targetFlipped = LoadRenderTexture(windowWidth, windowHeight + HUD_EXTENSION_LENGTH);
+    getHighScoreFromFile(&score);
 
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -43,10 +45,6 @@ void gameLoop(int sizeOfWallArray)
         UpdateMusicStream(siren2);
 
         getInput();
-        if(!paused)
-        {
-            updateLogic(&pacX, &pacY);
-        }
 
         ClearBackground(BLACK);  // Clear texture background
 
@@ -54,6 +52,8 @@ void gameLoop(int sizeOfWallArray)
            // ClearBackground(BLACK);  // Clear texture background
                 BeginDrawing();
                     ClearBackground(BLACK);
+                    if(!paused)
+                        updateLogic(&pacX, &pacY);
                     draw(pacX, pacY);
                     DrawFPS(20,20);
                 EndDrawing();
@@ -71,5 +71,6 @@ void gameLoop(int sizeOfWallArray)
 
         //DrawTexturePro(target.texture, (Rectangle){(0, 0, target.texture.width, -target.texture.height)}, (Rectangle){(0, 0, target.texture.width, target.texture.height)}, position, 0, WHITE);
     }
+    saveScoreToFile(score);
     CloseAudioDevice();
 }
