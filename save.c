@@ -2,27 +2,35 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-void saveScoreToFile(int score)
+void saveScoreToFile(int score, int highScore)
 {
     FILE *filePointer;
-    filePointer = fopen("../save/save.txt", "w");
 
+    if(score > highScore)
+    {
+        filePointer = fopen("../save/save.txt", "w");
+
+        if(filePointer == NULL)
+        {
+            printf("\nError while opening save file\n");
+            exit(1);
+        }
+
+        fprintf(filePointer, "%d", score);
+    }
+    fclose(filePointer);
+};
+
+void getHighScoreFromFile(int *highScore)
+{
+    FILE *filePointer;
+    filePointer = fopen("../save/save.txt", "r");
     if(filePointer == NULL)
     {
         printf("\nError while opening save file\n");
         exit(1);
     }
-    //fwrite(&score, sizeof(int) , 1, filePointer);
-    fprintf(filePointer, "%d", score);
-};
-
-void getHighScoreFromFile(int *score1)
-{
-    FILE *filePointer;
-    filePointer = fopen("../save/save.txt", "w");
-    int tempScore;
-
-    fscanf("%d", &tempScore);
-    *score1 = tempScore;
+    fscanf(filePointer, "%d", highScore);
+    fclose(filePointer);
 
 }

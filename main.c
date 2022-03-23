@@ -26,6 +26,7 @@ int main()
     bufferDir = STOP;
 
     initAi();
+    getHighScoreFromFile(&highScore);
     gameLoop(sizeOfWallArray);
 
     return 0;
@@ -36,8 +37,6 @@ void gameLoop(int sizeOfWallArray)
     // Create a RenderTexture2D to be used for render to texture
     RenderTexture2D target = LoadRenderTexture(windowWidth, windowHeight + HUD_EXTENSION_LENGTH);
     RenderTexture2D targetFlipped = LoadRenderTexture(windowWidth, windowHeight + HUD_EXTENSION_LENGTH);
-    getHighScoreFromFile(&score);
-
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         frame++;
@@ -71,6 +70,6 @@ void gameLoop(int sizeOfWallArray)
 
         //DrawTexturePro(target.texture, (Rectangle){(0, 0, target.texture.width, -target.texture.height)}, (Rectangle){(0, 0, target.texture.width, target.texture.height)}, position, 0, WHITE);
     }
-    saveScoreToFile(score);
+    saveScoreToFile(score, highScore);
     CloseAudioDevice();
 }

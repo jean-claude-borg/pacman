@@ -145,6 +145,7 @@ int sizeOfWallArray;
 int sizeOfVisibleWallArray;
 int numPowerups = 0;
 int score = 0;
+int highScore = 0;
 
 int pacWidth = 31;
 int pacHeight = 31;

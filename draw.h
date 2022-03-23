@@ -275,8 +275,11 @@ void drawPauseMenu()
 
 void drawHud()
 {
-    double scoreX = 10, scoreY = map.height + 10;
+    int scoreX = 10, scoreY = map.height + 10;
     DrawText(TextFormat("Score: %i", score), scoreX, scoreY, 20, WHITE);
+
+    int highScoreX = 160, highScoreY = map.height + 10;
+    DrawText(TextFormat("High Score: %i", highScore), highScoreX, highScoreY, 20, WHITE);
 
     double heartX = map.width - 75, heartY = map.height - 4;
     DrawTexture(heart, heartX, heartY, WHITE);
