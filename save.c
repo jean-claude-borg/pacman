@@ -32,5 +32,4 @@ void getHighScoreFromFile(int *highScore)
     }
     fscanf(filePointer, "%d", highScore);
     fclose(filePointer);
-
 }

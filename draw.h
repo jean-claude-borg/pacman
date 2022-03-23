@@ -7,6 +7,7 @@ void drawPauseMenu();
 void drawHud();
 void pacDeathAnimation();
 void drawEyes();
+void playStartSceneAnimation();
 
 void loadTextures()
 {
@@ -314,7 +315,8 @@ void drawPacMan()
     else if(dir == RIGHT)    {pacWide = pacWideRight;    pacNarrow = pacNarrowRight;}
     else if(dir == UP)       {pacWide = pacWideUp;       pacNarrow = pacNarrowUp;}
     else if(dir == DOWN)     {pacWide = pacWideDown;     pacNarrow = pacNarrowDown;}
-   // else if(dir == STOP)     {pacWide = pacClosed;       pacNarrow = pacClosed;}
+
+    else if(dir == STOP)     {pacWide = pacClosed;       pacNarrow = pacClosed;}
 
     if(drawWide && !dead)
     {
@@ -388,11 +390,44 @@ void drawPowerups()
         }
 }
 
+void drawStartMenu()
+{
+    double menuX = windowWidth * 0.05;
+    double menuY = windowHeight * 0.15;
+    double menuWidth = windowWidth * 0.9;
+    double menuHeight = windowHeight * 0.7;
+
+    //DrawRectangle((int)menuX, (int)menuY, (int)menuWidth, (int)menuHeight, (Color){41,37,39,235});
+    Rectangle rec;
+    rec.x = menuX;
+    rec.y = menuY;
+    rec.width = menuWidth;
+    rec.height = menuHeight;
+
+    DrawRectangleRounded(rec, 0.5f, 1, (Color){51,0,51,255});
+    DrawText("Pacman Needs Help ", (int)menuX + (menuWidth*0.12), (int)menuY + (menuHeight*0.15), 30, WHITE);
+    DrawText("Slapping the Ghosts!", (int)menuX + (menuWidth*0.12), (int)menuY + (menuHeight*0.25), 30, WHITE);
+    DrawText("Press Space to Help Pacman", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.45), 20, WHITE);
+    DrawText("Press P to Pause", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.55), 20, WHITE);
+    DrawText("Press Esc to Ditch Pacman", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.65), 20, WHITE);
+    DrawText("Use the Arrow Keys to Move", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.75), 20, WHITE);
+}
+
 void draw(int pacX, int pacY)
 {
     if(lives <= 0) {
         drawGameOverScreen();
         return;
+    }
+
+    if(startMenu)
+    {
+        drawMap();
+        drawStartMenu();
+        if(playStartScene)
+            playStartSceneAnimation();
+        return;
+
     }
 
     drawMap();
@@ -788,5 +823,65 @@ void pacDeathAnimation()
     }
     else
         deathFrameCounter++;
+}
+void playStartSceneAnimation()
+{
+    double backgroundX = windowWidth * 0;
+    double backgroundY = windowHeight * 0;
+    double backgroundWidth = windowWidth * 1;
+    double backgroundHeight = windowHeight * 1;
 
+    Rectangle rec;
+    rec.x = backgroundX;
+    rec.y = backgroundY;
+    rec.width = backgroundWidth;
+    rec.height = backgroundHeight;
+
+    if(pacX < windowWidth)
+    {
+        DrawRectangleRounded(rec, 0.0f, 1, (Color){0,0,0,255});
+        dir = RIGHT;
+        pacX+=2;
+        pacY = 150;
+        drawPacMan();
+        blinkyY = pacY;
+        blinkyX = pacX - 50;
+        blinkyDir = RIGHT;
+        drawBlinky();
+        clydeY = pacY;
+        clydeX = pacX - 100;
+        clydeDir = RIGHT;
+        drawClyde();
+        inkyY = pacY;
+        inkyX = pacX - 150;
+        inkyDir = RIGHT;
+        drawInky();
+        pinkyY = pacY;
+        pinkyX = pacX - 200;
+        pinkyDir = RIGHT;
+        drawPinky();
+    }
+
+    else{
+        startMenu = false;
+        dir = STOP;
+        blinkyDir = STOP;
+        blinkyX = ghostStartX[0];
+        blinkyY = ghostStartY[0];
+
+        clydeDir = STOP;
+        clydeX = ghostStartX[1];
+        clydeY = ghostStartY[1];
+
+        inkyDir = STOP;
+        inkyX = ghostStartX[2];
+        inkyY = ghostStartY[2];
+
+        pinkyDir = STOP;
+        pinkyX = ghostStartX[3];
+        pinkyY = ghostStartY[3];
+
+        pacX = 210;
+        pacY = 265;
+    }
 }

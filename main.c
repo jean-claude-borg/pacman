@@ -18,9 +18,9 @@ int main()
     SetTargetFPS(50);
     loadTextures();
     sizeOfWallArray = loadMap();
-    pacX = 210;
-    pacY = 265;
     SetWindowSize(map.width*SCALE, map.height*SCALE + HUD_EXTENSION_LENGTH);
+    pacX = 0;
+    pacY = windowHeight / 2;
     playAudio(volume);
     dir = STOP;
     bufferDir = STOP;

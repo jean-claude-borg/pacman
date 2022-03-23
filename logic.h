@@ -45,6 +45,9 @@ void getInput()
     if(IsKeyPressed(KEY_R))
         resetGame();
 
+    if(IsKeyPressed(KEY_SPACE))
+        playStartScene = true;
+
         if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
         bufferDir = RIGHT;
     else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
@@ -66,6 +69,9 @@ void getInput()
 
 void updateLogic(int *x, int *y)
 {
+    if(startMenu)
+        return;
+
     //i dont know why this works only when function is called twice
     getInput();
     getInput();

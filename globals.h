@@ -111,6 +111,8 @@ int pinkyFrameCounter = 0;
 long long int frame = 0;
 
 bool paused = false;
+bool startMenu = true;
+bool playStartScene = false;
 
 //pacman animation
 bool drawPac = true;
