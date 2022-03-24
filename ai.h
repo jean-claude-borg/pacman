@@ -14,6 +14,7 @@ void blinkyRunState();
 void clydeRunState();
 void inkyRunState();
 void pinkyRunState();
+void blinkyEyesState();
 
 void initAi()
 {    
@@ -66,6 +67,16 @@ bool closerToPac(int oldX, int oldY, int newX, int newY)
     return false;
 }
 
+bool closerToSpawn(int oldX, int oldY, int newX, int newY)
+{
+    if((abs(ghostStartX[0] - oldX) > abs(ghostStartX[0] - newX)) || (abs(ghostStartY[0] - oldY) > abs(ghostStartY[0] - newY)))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void aiCalcDir()
 {
     //blinky
@@ -81,7 +92,9 @@ void aiCalcDir()
         }
     }
 
-    if(!poweredUp)
+    if(blinkyDead)
+        blinkyEyesState();
+    else if(!poweredUp)
         blinkyChaseState();
     else if(poweredUp)
         blinkyRunState();
@@ -142,27 +155,27 @@ void updateBlinky()
     }
     if(blinkyCrossedWall) 
     {
-        if(blinkyX < 7) blinkyX = 454;
-        else if(blinkyX >= 454) blinkyX = 10;
+        if(blinkyX < 9) blinkyX = 450;
+        else if(blinkyX >= 450) blinkyX = 9;
         //iteration1
         if(blinkyDir == LEFT && ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
         else if(blinkyDir == RIGHT && ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
         else if(blinkyDir == UP && ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyFrameCounter >= 0) aiCalcDir();
         else if(blinkyDir == DOWN && ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyFrameCounter >= 0) aiCalcDir();
-        if     (blinkyDir == LEFT   && !ghostsGetCollision(blinkyX - 1,blinkyY)) blinkyX -= 1;
-        else if(blinkyDir == RIGHT  && !ghostsGetCollision(blinkyX + 1,blinkyY)) blinkyX += 1;
-        else if(blinkyDir == UP     && !ghostsGetCollision(blinkyX,blinkyY - 1)) blinkyY -= 1;
-        else if(blinkyDir == DOWN   && !ghostsGetCollision(blinkyX,blinkyY + 1)) blinkyY += 1;
+        if     (blinkyDir == LEFT   ) blinkyX -= 1;
+        else if(blinkyDir == RIGHT  ) blinkyX += 1;
+        else if(blinkyDir == UP     ) blinkyY -= 1;
+        else if(blinkyDir == DOWN   ) blinkyY += 1;
         if(atCrossRoad(blinkyX, blinkyY)) aiCalcDir();
         //iteration2
         if(blinkyDir == LEFT && ghostsGetCollision(blinkyX - 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
         else if(blinkyDir == RIGHT && ghostsGetCollision(blinkyX + 1,blinkyY) && blinkyFrameCounter >= 0) aiCalcDir();
         else if(blinkyDir == UP && ghostsGetCollision(blinkyX,blinkyY - 1) && blinkyFrameCounter >= 0) aiCalcDir();
         else if(blinkyDir == DOWN && ghostsGetCollision(blinkyX,blinkyY + 1) && blinkyFrameCounter >= 0) aiCalcDir();
-        if     (blinkyDir == LEFT   && !ghostsGetCollision(blinkyX - 1,blinkyY)) blinkyX -= 1;
-        else if(blinkyDir == RIGHT  && !ghostsGetCollision(blinkyX + 1,blinkyY)) blinkyX += 1;
-        else if(blinkyDir == UP     && !ghostsGetCollision(blinkyX,blinkyY - 1)) blinkyY -= 1;
-        else if(blinkyDir == DOWN   && !ghostsGetCollision(blinkyX,blinkyY + 1)) blinkyY += 1;
+        if     (blinkyDir == LEFT   ) blinkyX -= 1;
+        else if(blinkyDir == RIGHT  ) blinkyX += 1;
+        else if(blinkyDir == UP     ) blinkyY -= 1;
+        else if(blinkyDir == DOWN   ) blinkyY += 1;
         if(atCrossRoad(blinkyX, blinkyY)) aiCalcDir();   
     }
     blinkyFrameCounter++;
@@ -450,4 +463,31 @@ void pinkyRunState()
     }
  //   pinkyMovCounter = 0;
 }
+
+void blinkyEyesState()
+{
+    int pointsLeft = 0 + abs(ghostStartX[0] - (blinkyX - 1));
+    int pointsRight = 0 + abs(ghostStartX[0] - (blinkyX + 1));
+    int pointsUp = 0 + abs(ghostStartY[0] - (blinkyY - 1));
+    int pointsDown = 0 + abs(ghostStartY[0] - (blinkyY + 1));
+
+    if(ghostsGetCollision(blinkyX - 2,blinkyY))    pointsLeft -= 1500;
+    if(ghostsGetCollision(blinkyX + 2,blinkyY))    pointsRight -= 1500;
+    if(ghostsGetCollision(blinkyX,blinkyY - 2))    pointsUp -= 1500;
+    if(ghostsGetCollision(blinkyX,blinkyY + 2))    pointsDown -= 1500;
+
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX - 1, blinkyY)) pointsLeft += 500 + abs(ghostStartX[0] - blinkyX);
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX + 1, blinkyY)) pointsRight += 500 + abs(ghostStartX[0] - blinkyX);
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX, blinkyY + 1)) pointsDown += 500 + abs(ghostStartY[0] - blinkyY);
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX, blinkyY - 1)) pointsUp += 500 + abs(ghostStartY[0] - blinkyY);
+
+    if(pointsLeft >= pointsRight && pointsLeft >= pointsDown && pointsLeft >= pointsUp && blinkyDir != RIGHT) blinkyDir = LEFT;
+    else if(pointsDown >= pointsRight && pointsDown >= pointsUp && blinkyDir != UP) blinkyDir = DOWN;
+    else if(pointsUp >= pointsRight && blinkyDir != DOWN) blinkyDir = UP;
+    else if(blinkyDir != LEFT) { blinkyDir = RIGHT; }
+
+    if(blinkyX == ghostStartX[0] && blinkyY == ghostStartY[0])
+        blinkyDead = false;
+}
+
 #pragma clang diagnostic pop

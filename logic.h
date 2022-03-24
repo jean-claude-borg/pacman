@@ -15,7 +15,6 @@ bool getGhostCollision();
 bool atePowerUp(int x, int y);
 void onPacCollision();
 void resetGame();
-void startEyesAnimation(int* x, int* y);
 
 bool getCollision(int x, int y)
 {
@@ -39,6 +38,9 @@ bool ateFood(int x, int y, int sizeOfFoodArray)
 
 void getInput()
 {
+    if(!allowUserInput)
+        return;
+
     if(IsKeyPressed(KEY_P))
         paused = !paused;
 
@@ -127,21 +129,27 @@ void updateLogic(int *x, int *y)
     getGhostCollision();
 
     //blinky eaten while vulnerable
-    static int powerEatMaxTime = 100;
+    static int powerEatMaxTime = 50;
     static int powerEatAnimCounter = 0;
-    if(blinkyEaten)
+    if(blinkyDead)
     {
-        DrawText("200", pacX + 5, pacY + pacHeight/2, 15, WHITE);
-        powerEatAnimCounter++;
-        startEyesAnimation(&blinkyX, &blinkyY);
+        if(!showedPoints)
+        {
+            DrawText("200", pacX + 5, pacY + pacHeight/2, 15, WHITE);
+            updateAiMovement = false;
+            allowUserInput = false;
+            showBlinky = false;
+            powerEatAnimCounter++;
+        }
         if(powerEatAnimCounter >= powerEatMaxTime)
         {
-//            showBlinky = true;
-//            updateAiMovement = true;
-//
-//            drawPac = true;
-//            blinkyEaten = false;
-//            powerEatAnimCounter = 0;
+              showBlinky = true;
+              updateAiMovement = true;
+              allowUserInput = true;
+
+              drawPac = true;
+              powerEatAnimCounter = 0;
+              showedPoints = true;
         }
     }
 };
@@ -155,17 +163,18 @@ bool getGhostCollision()
     Rectangle inkyHitBox = {inkyX, inkyY, inkyWidth * 0.5, inkyHeight * 0.5};
     Rectangle pinkyHitBox = {pinkyX, pinkyY, pinkyWidth * 0.5, pinkyHeight * 0.5};
 
-    if(CheckCollisionRecs(pacHitBox, blinkyHitBox) && poweredUp == true && !blinkyEaten)
+    if(CheckCollisionRecs(pacHitBox, blinkyHitBox) && poweredUp == true && !blinkyDead)
     {
         //blinkyX = ghostStartX[0]; blinkyY = ghostStartY[0]; blinkyCrossedWall = false;
-        showBlinky = false;
-        updateAiMovement = false;
+        showBlinky = true;
+        updateAiMovement = true;
 
         dir = STOP;
         bufferDir = STOP;
         drawPac = false;
 
-        blinkyEaten = true;
+        blinkyDead = true;
+        showedPoints = false;
         score+=200;
     }
     if(CheckCollisionRecs(pacHitBox, clydeHitBox) && poweredUp == true)
@@ -288,56 +297,3 @@ void resetGame()
     bufferDir = STOP;
 }
 
-bool closerToSpawn(int oldX, int oldY, int newX, int newY)
-{
-    if((abs(ghostStartX[2] - oldX) > abs(ghostStartX[2] - newX)) || (abs(ghostStartY[2] - oldY) > abs(ghostStartY[2] - newY)))
-    {
-        return true;
-    }
-
-    return false;
-}
-
-void startEyesAnimation(int *x, int *y)
-{
-    printf("\nX: %d , Y: %d\n",*x, *y);
-    static bool pickedStarterDirection = false;
-    if(pickedStarterDirection == false)
-    {
-        if (!ghostsGetCollision(*x - 1, *y))
-            eyesDir = LEFT;
-        else if (!ghostsGetCollision(*x + 1, *y))
-            eyesDir = RIGHT;
-        else if (!ghostsGetCollision(*x, *y - 1))
-            eyesDir = UP;
-        else if (!ghostsGetCollision(*x, *y + 1))
-            eyesDir = DOWN;
-
-        if(eyesDir == UP || eyesDir == DOWN || eyesDir == LEFT || eyesDir == RIGHT)
-            pickedStarterDirection = true;
-    }
-
-    if(eyesDir == LEFT)
-        *x-=1;
-    else if(eyesDir == RIGHT)
-        *x+=1;
-    else if(eyesDir == UP)
-        *y-=1;
-    else if(eyesDir == DOWN)
-        *y+=1;
-
-    if(atCrossRoad(*x,*y))
-    {
-        if(*x == ghostStartX[2] && *y == ghostStartY[2])
-            return;
-        else if(closerToSpawn(*x,*y, *x-1, *y))
-            eyesDir = LEFT;
-        else if(closerToSpawn(*x,*y, *x+1, *y))
-            eyesDir = RIGHT;
-        else if(closerToSpawn(*x,*y, *x, *y-1))
-            eyesDir = UP;
-        else if(closerToSpawn(*x,*y, *x, *y+1))
-            eyesDir = DOWN;
-    }
-    printf("\nX: %d , Y: %d\n",*x, *y);
-}

@@ -102,6 +102,8 @@ Texture2D eyesUp;
 Texture2D eyesDown;
 
 bool updateAiMovement = true;
+bool allowUserInput = true;
+bool showedPoints = false;
 
 int blinkyFrameCounter = 0;
 int clydeFrameCounter = 0;
@@ -195,17 +197,17 @@ int clydeTimeInSpawn;
 int inkyTimeInSpawn;
 int pinkyTimeInSpawn;
 
-int blinkyEaten = false;
-int clydeEaten = false;
-int inkyEaten = false;
-int pinkyEaten = false;
-
 int maxTimeInSpawn = 250;
 
 bool blinkyCrossedWall = false;
 bool clydeCrossedWall = false;
 bool inkyCrossedWall = false;
 bool pinkyCrossedWall = false;
+
+bool blinkyDead = false;
+bool clydeEaten = false;
+bool inkyEaten = false;
+bool pinkyEaten = false;
 
 int ghostWallX;
 int ghostWallY;

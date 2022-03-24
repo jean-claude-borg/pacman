@@ -6,7 +6,6 @@ void drawGhosts();
 void drawPauseMenu();
 void drawHud();
 void pacDeathAnimation();
-void drawEyes();
 void playStartSceneAnimation();
 
 void loadTextures()
@@ -434,9 +433,6 @@ void draw(int pacX, int pacY)
     drawPacMan();
     drawPowerups();
 
-    if(blinkyEaten || clydeEaten || pinkyEaten || inkyEaten)
-        drawEyes();
-
     DrawRectangle(ghostWallX,ghostWallY, 37, 4, CLITERAL(Color){ 255, 203, 164, 255 }); 
 
     if(!dead)
@@ -454,8 +450,8 @@ void draw(int pacX, int pacY)
 bool usingBlinkyL1 = true;
 void drawBlinky()
 {
-    if(!showBlinky)
-        return;
+//    if(!showBlinky)
+//        return;
 
     blinkyFrameCounter++;
     Texture2D blinkyLeft = blinkyL1;
@@ -487,15 +483,40 @@ void drawBlinky()
     }
 
     if(blinkyDir == LEFT)
-        DrawTexture(blinkyLeft, blinkyX+4 , blinkyY+4 ,WHITE);
+    {
+        if(!blinkyDead)
+            DrawTexture(blinkyLeft, blinkyX + 4, blinkyY + 4, WHITE);
+        else if (blinkyDead)
+            DrawTexture(eyesLeft, blinkyX + 4, blinkyY + 4, WHITE);
+    }
     if(blinkyDir == RIGHT)
-        DrawTexture(blinkyRight, blinkyX+4 , blinkyY+4 ,WHITE);
+    {
+        if(!blinkyDead)
+            DrawTexture(blinkyRight, blinkyX + 4, blinkyY + 4, WHITE);
+        else if(blinkyDead)
+            DrawTexture(eyesRight, blinkyX + 4, blinkyY + 4, WHITE);
+    }
     if(blinkyDir == UP)
-        DrawTexture(blinkyUp, blinkyX+4 , blinkyY+4 ,WHITE);
+    {
+        if(!blinkyDead)
+            DrawTexture(blinkyUp, blinkyX + 4, blinkyY + 4, WHITE);
+        else if(blinkyDead)
+            DrawTexture(eyesUp, blinkyX + 4, blinkyY + 4, WHITE);
+    }
     if(blinkyDir == DOWN)
-        DrawTexture(blinkyDown, blinkyX+4 , blinkyY+4 ,WHITE);
+    {
+        if(!blinkyDead)
+            DrawTexture(blinkyDown, blinkyX + 4, blinkyY + 4, WHITE);
+        else if(blinkyDead)
+            DrawTexture(eyesDown, blinkyX + 4, blinkyY + 4, WHITE);
+    }
     if(blinkyDir == STOP)
-        DrawTexture(blinkyUp, blinkyX+4 , blinkyY+4 ,WHITE);
+    {
+        if(!blinkyDead)
+            DrawTexture(blinkyUp, blinkyX + 4, blinkyY + 4, WHITE);
+        else if(blinkyDead)
+            DrawTexture(eyesUp, blinkyX + 4, blinkyY + 4, WHITE);
+    }
 }
 
 bool usingClydeL1 = true;
@@ -639,9 +660,10 @@ void drawPinky()
 void drawGhosts()
 {
     //offset by 4 to centre the ghosts
-    if(!poweredUp)
+    if(!poweredUp || blinkyDead)
     {
-        drawBlinky();
+        if(showBlinky)
+            drawBlinky();
         drawClyde();
         drawInky();
         drawPinky();
@@ -697,7 +719,7 @@ void drawGhosts()
            }
         }
 
-        if(showBlinky)
+        if(poweredUp && !blinkyDead)
             DrawTexture(blueGhost, blinkyX+4 , blinkyY+4, WHITE);
         if(showClyde)
             DrawTexture(blueGhost, clydeX+4 , clydeY+4 ,WHITE);
@@ -712,29 +734,6 @@ void drawGhosts()
             poweredUpDuration = 0;
         }
 
-    }
-}
-
-void drawEyes()
-{
-    if(blinkyEaten)
-    {
-        if(eyesDir == LEFT)
-        {
-            DrawTexture(eyesLeft, blinkyX, blinkyY, WHITE);
-        }
-        else if(eyesDir == RIGHT)
-        {
-            DrawTexture(eyesRight, blinkyX, blinkyY, WHITE);
-        }
-        else if(eyesDir == UP)
-        {
-            DrawTexture(eyesUp, blinkyX, blinkyY, WHITE);
-        }
-        else if(eyesDir == DOWN)
-        {
-            DrawTexture(eyesDown, blinkyX, blinkyY, WHITE);
-        }
     }
 }
 
@@ -837,7 +836,7 @@ void playStartSceneAnimation()
     rec.width = backgroundWidth;
     rec.height = backgroundHeight;
 
-    if(pacX < windowWidth)
+    if(pacX < windowWidth * 1.5)
     {
         DrawRectangleRounded(rec, 0.0f, 1, (Color){0,0,0,255});
         dir = RIGHT;
