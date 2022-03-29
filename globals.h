@@ -159,23 +159,23 @@ int* ghostStartY;
 
 int blinkyX;
 int blinkyY;
-int blinkyWidth = 24;
-int blinkyHeight = 24;
+int blinkyWidth = 28;
+int blinkyHeight = 28;
 
 int clydeX;
 int clydeY;
-int clydeWidth = 24;
-int clydeHeight = 24;
+int clydeWidth = 28;
+int clydeHeight = 28;
 
 int inkyX;
 int inkyY;
-int inkyWidth = 24;
-int inkyHeight = 24;
+int inkyWidth = 28;
+int inkyHeight = 28;
 
 int pinkyX;
 int pinkyY;
-int pinkyWidth = 24;
-int pinkyHeight = 24;
+int pinkyWidth = 28;
+int pinkyHeight = 28;
 
 enum eDirection blinkyDir;
 enum eDirection clydeDir;
@@ -188,8 +188,8 @@ bool showInky = true;
 bool showPinky = true;
 
 int blinkyWait = 100;
-int clydeWait = 400;
-int inkyWait = 800;
+int clydeWait = 800;
+int inkyWait = 400;
 int pinkyWait = 1200;
 
 int blinkyTimeInSpawn;

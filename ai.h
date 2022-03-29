@@ -22,6 +22,9 @@ static int clydeUpdateLimit = 0;
 static int inkyUpdateLimit = 0;
 static int pinkyUpdateLimit = 0;
 
+//only speed 1 works, TODO: find why the hell other speeds break everything
+int ghostSpeed = 1;
+
 void initAi()
 {    
     blinkyX = ghostStartX[0];
@@ -110,7 +113,12 @@ void aiCalcDir()
     if(!clydeCrossedWall)
     {
         if(clydeWait <=0)
-            clydeDir = UP;
+        {
+            if(clydeX < ghostStartX[2])
+                clydeDir = RIGHT;
+            else
+                clydeDir = UP;
+        }
         else if(clydeWait > 0)
         {
             clydeWait --;
@@ -137,8 +145,12 @@ void aiCalcDir()
     if(pinkyY <= ghostWallY - 33)   {pinkyCrossedWall = true;}
     if(!pinkyCrossedWall)
     {
-        if(pinkyWait <=0)
-            pinkyDir = UP;
+        if(pinkyWait <=0) {
+            if(pinkyX > ghostStartX[2])
+                pinkyDir = LEFT;
+            else
+                pinkyDir = UP;
+        }
         else if(pinkyWait > 0)
         {
             pinkyWait --;
@@ -171,10 +183,10 @@ void updateBlinky()
         else if(blinkyDir == UP && ghostsGetCollision(blinkyX,blinkyY - 1)) {aiCalcDir();}
         else if(blinkyDir == DOWN && ghostsGetCollision(blinkyX,blinkyY + 1)) {aiCalcDir();}
 
-        if     (blinkyDir == LEFT   && !ghostsGetCollision(blinkyX-1, blinkyY)) blinkyX -= 1;
-        else if(blinkyDir == RIGHT  && !ghostsGetCollision(blinkyX+1, blinkyY)) blinkyX += 1;
-        else if(blinkyDir == UP     && !ghostsGetCollision(blinkyX, blinkyY-1)) blinkyY -= 1;
-        else if(blinkyDir == DOWN   && !ghostsGetCollision(blinkyX, blinkyY+1)) blinkyY += 1;
+        if     (blinkyDir == LEFT   && !ghostsGetCollision(blinkyX-1, blinkyY)) blinkyX -= ghostSpeed;
+        else if(blinkyDir == RIGHT  && !ghostsGetCollision(blinkyX+1, blinkyY)) blinkyX += ghostSpeed;
+        else if(blinkyDir == UP     && !ghostsGetCollision(blinkyX, blinkyY-1)) blinkyY -= ghostSpeed;
+        else if(blinkyDir == DOWN   && !ghostsGetCollision(blinkyX, blinkyY+1)) blinkyY += ghostSpeed;
     }
 };
 
@@ -185,8 +197,8 @@ void updateClyde()
     if(clydeCrossedWall == false)
     {
 //        if(clydeDir == LEFT      ) clydeX -= 1;
-//        else if(clydeDir == RIGHT) clydeX += 1;
-        if(clydeDir == UP   ) clydeY -= 1;
+        if(clydeDir == RIGHT) clydeX += ghostSpeed;
+        else if(clydeDir == UP   ) clydeY -= ghostSpeed;
        // else if(clydeDir == DOWN ) clydeY += 1;
     }
     if(clydeCrossedWall)
@@ -196,15 +208,15 @@ void updateClyde()
         else if(clydeX >= 450) clydeX = 15;
         //iteration1
         if(atCrossRoad(clydeX, clydeY)) {aiCalcDir();}
-        else if(clydeDir == LEFT && ghostsGetCollision(clydeX - 1,clydeY)) {aiCalcDir();}
-        else if(clydeDir == RIGHT && ghostsGetCollision(clydeX + 1,clydeY)) {aiCalcDir();}
-        else if(clydeDir == UP && ghostsGetCollision(clydeX,clydeY - 1)) {aiCalcDir();}
-        else if(clydeDir == DOWN && ghostsGetCollision(clydeX,clydeY + 1)) {aiCalcDir();}
+        else if(clydeDir == LEFT && ghostsGetCollision(clydeX - ghostSpeed,clydeY)) {aiCalcDir();}
+        else if(clydeDir == RIGHT && ghostsGetCollision(clydeX + ghostSpeed,clydeY)) {aiCalcDir();}
+        else if(clydeDir == UP && ghostsGetCollision(clydeX,clydeY - ghostSpeed)) {aiCalcDir();}
+        else if(clydeDir == DOWN && ghostsGetCollision(clydeX,clydeY + ghostSpeed)) {aiCalcDir();}
 
-        if     (clydeDir == LEFT   && !ghostsGetCollision(clydeX-1, clydeY)) clydeX -= 1;
-        else if(clydeDir == RIGHT  && !ghostsGetCollision(clydeX+1, clydeY)) clydeX += 1;
-        else if(clydeDir == UP     && !ghostsGetCollision(clydeX, clydeY-1)) clydeY -= 1;
-        else if(clydeDir == DOWN   && !ghostsGetCollision(clydeX, clydeY+1)) clydeY += 1;
+        if     (clydeDir == LEFT   && !ghostsGetCollision(clydeX-1, clydeY)) clydeX -= ghostSpeed;
+        else if(clydeDir == RIGHT  && !ghostsGetCollision(clydeX+1, clydeY)) clydeX += ghostSpeed;
+        else if(clydeDir == UP     && !ghostsGetCollision(clydeX, clydeY-1)) clydeY -= ghostSpeed;
+        else if(clydeDir == DOWN   && !ghostsGetCollision(clydeX, clydeY+1)) clydeY += ghostSpeed;
     }
 };
 
@@ -231,10 +243,10 @@ void updateInky()
         else if(inkyDir == UP && ghostsGetCollision(inkyX,inkyY - 1)) {aiCalcDir();}
         else if(inkyDir == DOWN && ghostsGetCollision(inkyX,inkyY + 1)) {aiCalcDir();}
 
-        if     (inkyDir == LEFT   && !ghostsGetCollision(inkyX-1, inkyY)) inkyX -= 1;
-        else if(inkyDir == RIGHT  && !ghostsGetCollision(inkyX+1, inkyY)) inkyX += 1;
-        else if(inkyDir == UP     && !ghostsGetCollision(inkyX, inkyY-1)) inkyY -= 1;
-        else if(inkyDir == DOWN   && !ghostsGetCollision(inkyX, inkyY+1)) inkyY += 1;
+        if     (inkyDir == LEFT   && !ghostsGetCollision(inkyX-1, inkyY)) inkyX -= ghostSpeed;
+        else if(inkyDir == RIGHT  && !ghostsGetCollision(inkyX+1, inkyY)) inkyX += ghostSpeed;
+        else if(inkyDir == UP     && !ghostsGetCollision(inkyX, inkyY-1)) inkyY -= ghostSpeed;
+        else if(inkyDir == DOWN   && !ghostsGetCollision(inkyX, inkyY+1)) inkyY += ghostSpeed;
     }
 };
 
@@ -244,9 +256,9 @@ void updatePinky()
 
     if(pinkyCrossedWall == false)
     {
-        //if(pinkyDir == LEFT      ) pinkyX -= 1;
+        if(pinkyDir == LEFT      ) pinkyX -= 1;
         //else if(pinkyDir == RIGHT) pinkyX += 1;
-        if(pinkyDir == UP   ) pinkyY -= 1;
+        else if(pinkyDir == UP   ) pinkyY -= 1;
         //else if(pinkyDir == DOWN ) pinkyY += 1;
     }
     if(pinkyCrossedWall)
@@ -261,10 +273,10 @@ void updatePinky()
         else if(pinkyDir == UP && ghostsGetCollision(pinkyX,pinkyY - 1)) {aiCalcDir();}
         else if(pinkyDir == DOWN && ghostsGetCollision(pinkyX,pinkyY + 1)) {aiCalcDir();}
 
-        if     (pinkyDir == LEFT   && !ghostsGetCollision(pinkyX-1, pinkyY)) pinkyX -= 1;
-        else if(pinkyDir == RIGHT  && !ghostsGetCollision(pinkyX+1, pinkyY)) pinkyX += 1;
-        else if(pinkyDir == UP     && !ghostsGetCollision(pinkyX, pinkyY-1)) pinkyY -= 1;
-        else if(pinkyDir == DOWN   && !ghostsGetCollision(pinkyX, pinkyY+1)) pinkyY += 1;
+        if     (pinkyDir == LEFT   && !ghostsGetCollision(pinkyX-1, pinkyY)) pinkyX -= ghostSpeed;
+        else if(pinkyDir == RIGHT  && !ghostsGetCollision(pinkyX+1, pinkyY)) pinkyX += ghostSpeed;
+        else if(pinkyDir == UP     && !ghostsGetCollision(pinkyX, pinkyY-1)) pinkyY -= ghostSpeed;
+        else if(pinkyDir == DOWN   && !ghostsGetCollision(pinkyX, pinkyY+1)) pinkyY += ghostSpeed;
     }
 };
 
@@ -448,6 +460,8 @@ void pinkyRunState()
 
 void blinkyEyesState()
 {
+    if(blinkyX == ghostStartX[0] && blinkyY == ghostStartY[0]) { blinkyDead = false; printf("\n\n\n\n HELLO \n\n\n\n"); }
+
     int pointsLeft = 0 + abs(ghostStartX[0] - (blinkyX - 1));
     int pointsRight = 0 + abs(ghostStartX[0] - (blinkyX + 1));
     int pointsUp = 0 + abs(ghostStartY[0] - (blinkyY - 1));
@@ -467,9 +481,6 @@ void blinkyEyesState()
     else if(pointsDown >= pointsRight && pointsDown >= pointsUp && blinkyDir != UP) blinkyDir = DOWN;
     else if(pointsUp >= pointsRight && blinkyDir != DOWN) blinkyDir = UP;
     else if(blinkyDir != LEFT) { blinkyDir = RIGHT; }
-
-    if(blinkyX == ghostStartX[0] && blinkyY == ghostStartY[0])
-        blinkyDead = false;
 }
 
 #pragma clang diagnostic pop

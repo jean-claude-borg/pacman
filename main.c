@@ -15,7 +15,7 @@ int main()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     float volume = 0.0f;
     InitWindow(windowWidth, windowHeight, "Pacman");
-    SetTargetFPS(80);
+    SetTargetFPS(50);
     loadTextures();
     sizeOfWallArray = loadMap();
     SetWindowSize(map.width*SCALE, map.height*SCALE + HUD_EXTENSION_LENGTH);

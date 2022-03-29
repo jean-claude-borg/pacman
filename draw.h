@@ -2,6 +2,8 @@
 
 #include "globals.h"
 
+int textureOffset = 2;
+
 void drawGhosts();
 void drawPauseMenu();
 void drawHud();
@@ -412,7 +414,7 @@ void drawStartMenu()
     DrawText("Use the Arrow Keys to Move", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.75), 20, WHITE);
 }
 
-void draw(int pacX, int pacY)
+void draw()
 {
     if(lives <= 0) {
         drawGameOverScreen();
@@ -454,10 +456,10 @@ void drawBlinky()
 //        return;
 
     blinkyFrameCounter++;
-    Texture2D blinkyLeft = blinkyL1;
-    Texture2D blinkyRight = blinkyR1;
-    Texture2D blinkyUp = blinkyU1;
-    Texture2D blinkyDown = blinkyD1;
+    static Texture2D blinkyLeft;
+    static Texture2D blinkyRight;
+    static Texture2D blinkyUp;
+    static Texture2D blinkyDown;
 
     //swapping between blinky left sprites
     if(blinkyFrameCounter >= 5)
@@ -485,37 +487,37 @@ void drawBlinky()
     if(blinkyDir == LEFT)
     {
         if(!blinkyDead)
-            DrawTexture(blinkyLeft, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(blinkyLeft, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if (blinkyDead)
-            DrawTexture(eyesLeft, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(eyesLeft, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == RIGHT)
     {
         if(!blinkyDead)
-            DrawTexture(blinkyRight, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(blinkyRight, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
-            DrawTexture(eyesRight, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(eyesRight, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == UP)
     {
         if(!blinkyDead)
-            DrawTexture(blinkyUp, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(blinkyUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
-            DrawTexture(eyesUp, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(eyesUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == DOWN)
     {
         if(!blinkyDead)
-            DrawTexture(blinkyDown, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(blinkyDown, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
-            DrawTexture(eyesDown, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(eyesDown, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == STOP)
     {
         if(!blinkyDead)
-            DrawTexture(blinkyUp, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(blinkyUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
-            DrawTexture(eyesUp, blinkyX + 4, blinkyY + 4, WHITE);
+            DrawTexture(eyesUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
 }
 
@@ -526,10 +528,10 @@ void drawClyde()
         return;
 
     clydeFrameCounter++;
-    Texture2D clydeLeft = clydeL1;
-    Texture2D clydeRight = clydeR1;
-    Texture2D clydeUp = clydeU1;
-    Texture2D clydeDown = clydeD1;
+    static Texture2D clydeLeft;
+    static Texture2D clydeRight;
+    static Texture2D clydeUp;
+    static Texture2D clydeDown;
 
     //swapping between clyde left sprites
     if(clydeFrameCounter >= 5)
@@ -555,15 +557,15 @@ void drawClyde()
     }
 
     if(clydeDir == LEFT)
-        DrawTexture(clydeLeft, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(clydeLeft, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
     if(clydeDir == RIGHT)
-        DrawTexture(clydeRight, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(clydeRight, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
     if(clydeDir == UP)
-        DrawTexture(clydeUp, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(clydeUp, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
     if(clydeDir == DOWN)
-        DrawTexture(clydeDown, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(clydeDown, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
     if(clydeDir == STOP)
-        DrawTexture(clydeUp, clydeX+4 , clydeY+4 ,WHITE);
+        DrawTexture(clydeUp, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
 }
 
 bool usingInkyL1 = true;
@@ -573,10 +575,10 @@ void drawInky()
         return;
 
     inkyFrameCounter++;
-    Texture2D inkyLeft = inkyL1;
-    Texture2D inkyRight = inkyR1;
-    Texture2D inkyUp = inkyU1;
-    Texture2D inkyDown = inkyD1;
+    static Texture2D inkyLeft;
+    static Texture2D inkyRight;
+    static Texture2D inkyUp;
+    static Texture2D inkyDown;
 
     //swapping between inky left sprites
     if (inkyFrameCounter >= 5) {
@@ -599,15 +601,15 @@ void drawInky()
     }
 
     if(inkyDir == LEFT)
-        DrawTexture(inkyLeft, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(inkyLeft, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
     if(inkyDir == RIGHT)
-        DrawTexture(inkyRight, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(inkyRight, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
     if(inkyDir == UP)
-        DrawTexture(inkyUp, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(inkyUp, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
     if(inkyDir == DOWN)
-        DrawTexture(inkyDown, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(inkyDown, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
     if(inkyDir == STOP)
-        DrawTexture(inkyUp, inkyX+4 , inkyY+4 ,WHITE);
+        DrawTexture(inkyUp, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
 }
 
 bool usingPinkyL1 = true;
@@ -617,10 +619,10 @@ void drawPinky()
         return;
 
     pinkyFrameCounter++;
-    Texture2D pinkyLeft = pinkyL1;
-    Texture2D pinkyRight = pinkyR1;
-    Texture2D pinkyUp = pinkyU1;
-    Texture2D pinkyDown = pinkyD1;
+    static Texture2D pinkyLeft;
+    static Texture2D pinkyRight;
+    static Texture2D pinkyUp;
+    static Texture2D pinkyDown;
 
     //swapping between pinky left sprites
     if(pinkyFrameCounter >= 5)
@@ -646,15 +648,15 @@ void drawPinky()
     }
 
     if(pinkyDir == LEFT)
-        DrawTexture(pinkyLeft, pinkyX+4 , pinkyY+4 ,WHITE);
+        DrawTexture(pinkyLeft, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
     if(pinkyDir == RIGHT)
-        DrawTexture(pinkyRight, pinkyX+4 , pinkyY+4 ,WHITE);
+        DrawTexture(pinkyRight, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
     if(pinkyDir == UP)
-        DrawTexture(pinkyUp, pinkyX+4 , pinkyY+4 ,WHITE);
+        DrawTexture(pinkyUp, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
     if(pinkyDir == DOWN)
-        DrawTexture(pinkyDown, pinkyX+4 , pinkyY+4 ,WHITE);
+        DrawTexture(pinkyDown, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
     if(pinkyDir == STOP)
-        DrawTexture(pinkyUp, pinkyX+4 , pinkyY+4 ,WHITE);
+        DrawTexture(pinkyUp, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
 }
 
 void drawGhosts()
