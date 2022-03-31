@@ -47,6 +47,12 @@ void getInput()
     if(IsKeyPressed(KEY_R))
         resetGame();
 
+    if(IsKeyPressed(KEY_L))
+    {
+        blinkyX = pacX;
+        blinkyY = pacY;
+    }
+
     if(IsKeyPressed(KEY_SPACE))
         playStartScene = true;
 
@@ -179,21 +185,42 @@ bool getGhostCollision()
     }
     if(CheckCollisionRecs(pacHitBox, clydeHitBox) && poweredUp == true)
     {
-        clydeX = ghostStartX[1]; clydeY = ghostStartY[1]; clydeCrossedWall = false;
-        clydeEaten = true;
-        score+=25;
+        showClyde = true;
+        updateAiMovement = true;
+
+        dir = STOP;
+        bufferDir = STOP;
+        drawPac = false;
+
+        clydeDead = true;
+        showedPoints = false;
+        score+=200;
     }
     if(CheckCollisionRecs(pacHitBox, inkyHitBox) && poweredUp == true)
     {
-        inkyX = ghostStartX[2]; inkyY = ghostStartY[2]; inkyCrossedWall = false;
-        inkyEaten = true;
-        score+=25;
+        showInky = true;
+        updateAiMovement = true;
+
+        dir = STOP;
+        bufferDir = STOP;
+        drawPac = false;
+
+        inkyDead = true;
+        showedPoints = false;
+        score+=200;
     }
     if(CheckCollisionRecs(pacHitBox, pinkyHitBox) && poweredUp == true)
     {
-        pinkyX = ghostStartX[3]; pinkyY = ghostStartY[3]; pinkyCrossedWall = false;
-        pinkyEaten = true;
-        score+=25;
+        showPinky = true;
+        updateAiMovement = true;
+
+        dir = STOP;
+        bufferDir = STOP;
+        drawPac = false;
+
+        pinkyDead = true;
+        showedPoints = false;
+        score+=200;
    }
 
     //collision when not powered up, different implementation of collision used(circle hitboxes)

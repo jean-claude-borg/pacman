@@ -205,9 +205,9 @@ bool inkyCrossedWall = false;
 bool pinkyCrossedWall = false;
 
 bool blinkyDead = false;
-bool clydeEaten = false;
-bool inkyEaten = false;
-bool pinkyEaten = false;
+bool clydeDead = false;
+bool inkyDead = false;
+bool pinkyDead = false;
 
 int ghostWallX;
 int ghostWallY;

@@ -16,6 +16,9 @@ void clydeRunState();
 void inkyRunState();
 void pinkyRunState();
 void blinkyEyesState();
+void clydeEyesState();
+void inkyEyesState();
+void pinkyEyesState();
 
 static int blinkyUpdateLimit = 0;
 static int clydeUpdateLimit = 0;
@@ -125,7 +128,12 @@ void aiCalcDir()
             clydeDir = STOP;
         }
     }
-    clydeChaseState();
+    if(clydeDead)
+        clydeEyesState();
+    else if(!poweredUp)
+        clydeChaseState();
+    else if(poweredUp)
+        clydeRunState();
 
     //inky
     if(inkyY <= ghostWallY - 33)   {inkyCrossedWall = true;}
@@ -139,7 +147,12 @@ void aiCalcDir()
             inkyDir = STOP;
         }
     }
-    inkyChaseState();
+    if(inkyDead)
+        inkyEyesState();
+    else if(!poweredUp)
+        inkyChaseState();
+    else if(poweredUp)
+        inkyRunState();
 
     //pinky
     if(pinkyY <= ghostWallY - 33)   {pinkyCrossedWall = true;}
@@ -157,7 +170,12 @@ void aiCalcDir()
             pinkyDir = STOP;
         }
     }
-    pinkyChaseState();
+    if(pinkyDead)
+        pinkyEyesState();
+    else if(!poweredUp)
+        pinkyChaseState();
+    else if(poweredUp)
+        pinkyRunState();
 };
 
 void updateBlinky()
@@ -462,25 +480,128 @@ void blinkyEyesState()
 {
     if(blinkyX == ghostStartX[0] && blinkyY == ghostStartY[0]) { blinkyDead = false; printf("\n\n\n\n HELLO \n\n\n\n"); }
 
-    int pointsLeft = 0 + abs(ghostStartX[0] - (blinkyX - 1));
-    int pointsRight = 0 + abs(ghostStartX[0] - (blinkyX + 1));
-    int pointsUp = 0 + abs(ghostStartY[0] - (blinkyY - 1));
-    int pointsDown = 0 + abs(ghostStartY[0] - (blinkyY + 1));
+    enum eDirection previousDir = blinkyDir;
 
-    if(ghostsGetCollision(blinkyX - 2,blinkyY))    pointsLeft -= 1500;
-    if(ghostsGetCollision(blinkyX + 2,blinkyY))    pointsRight -= 1500;
-    if(ghostsGetCollision(blinkyX,blinkyY - 2))    pointsUp -= 1500;
-    if(ghostsGetCollision(blinkyX,blinkyY + 2))    pointsDown -= 1500;
+    int pointsLeft = 0 + abs(ghostStartX[0] - (blinkyX + 1)) + rand() % 5;
+    int pointsRight = 0 + abs(ghostStartX[0] - (blinkyX - 1)) + rand() % 5;
+    int pointsUp = 0 + abs(ghostStartY[0] - (blinkyY + 1)) + rand() % 5;
+    int pointsDown = 0 + abs(ghostStartY[0] - (blinkyY - 1)) + rand() % 5;
 
-    if(closerToSpawn(blinkyX, blinkyY, blinkyX - 1, blinkyY)) pointsLeft += 500 + abs(ghostStartX[0] - blinkyX);
-    if(closerToSpawn(blinkyX, blinkyY, blinkyX + 1, blinkyY)) pointsRight += 500 + abs(ghostStartX[0] - blinkyX);
-    if(closerToSpawn(blinkyX, blinkyY, blinkyX, blinkyY + 1)) pointsDown += 500 + abs(ghostStartY[0] - blinkyY);
-    if(closerToSpawn(blinkyX, blinkyY, blinkyX, blinkyY - 1)) pointsUp += 500 + abs(ghostStartY[0] - blinkyY);
+    if(ghostsGetCollision(blinkyX - 1,blinkyY))    pointsLeft -= 15000;
+    if(ghostsGetCollision(blinkyX + 1,blinkyY))    pointsRight -= 15000;
+    if(ghostsGetCollision(blinkyX,blinkyY - 1))    pointsUp -= 15000;
+    if(ghostsGetCollision(blinkyX,blinkyY + 1))    pointsDown -= 15000;
 
-    if(pointsLeft >= pointsRight && pointsLeft >= pointsDown && pointsLeft >= pointsUp && blinkyDir != RIGHT) blinkyDir = LEFT;
-    else if(pointsDown >= pointsRight && pointsDown >= pointsUp && blinkyDir != UP) blinkyDir = DOWN;
-    else if(pointsUp >= pointsRight && blinkyDir != DOWN) blinkyDir = UP;
-    else if(blinkyDir != LEFT) { blinkyDir = RIGHT; }
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX - 1, blinkyY)) pointsLeft += 500;
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX + 1, blinkyY)) pointsRight += 500;
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX, blinkyY + 1)) pointsDown += 500;
+    if(closerToSpawn(blinkyX, blinkyY, blinkyX, blinkyY - 1)) pointsUp += 500;
+
+    if(previousDir == RIGHT) pointsLeft-=10000;
+    else if(previousDir == UP) pointsDown-=10000;
+    else if(previousDir == DOWN) pointsUp-=10000;
+    else if(previousDir == LEFT) { pointsRight-=10000; }
+
+    if(pointsLeft >= pointsRight && pointsLeft >= pointsDown && pointsLeft >= pointsUp) blinkyDir = LEFT;
+    else if(pointsDown >= pointsRight && pointsDown >= pointsUp) blinkyDir = DOWN;
+    else if(pointsUp >= pointsRight) blinkyDir = UP;
+    else{ blinkyDir = RIGHT; }
+}
+
+void clydeEyesState()
+{
+    if(clydeX == ghostStartX[0] && clydeY == ghostStartY[0]) { clydeDead = false; printf("\n\n\n\n HELLO \n\n\n\n"); }
+
+    enum eDirection previousDir = clydeDir;
+
+    int pointsLeft = 0 + abs(ghostStartX[0] - (clydeX + 1)) + rand() % 5;
+    int pointsRight = 0 + abs(ghostStartX[0] - (clydeX - 1)) + rand() % 5;
+    int pointsUp = 0 + abs(ghostStartY[0] - (clydeY + 1)) + rand() % 5;
+    int pointsDown = 0 + abs(ghostStartY[0] - (clydeY - 1)) + rand() % 5;
+
+    if(ghostsGetCollision(clydeX - 1,clydeY))    pointsLeft -= 15000;
+    if(ghostsGetCollision(clydeX + 1,clydeY))    pointsRight -= 15000;
+    if(ghostsGetCollision(clydeX,clydeY - 1))    pointsUp -= 15000;
+    if(ghostsGetCollision(clydeX,clydeY + 1))    pointsDown -= 15000;
+
+    if(closerToSpawn(clydeX, clydeY, clydeX - 1, clydeY)) pointsLeft += 500;
+    if(closerToSpawn(clydeX, clydeY, clydeX + 1, clydeY)) pointsRight += 500;
+    if(closerToSpawn(clydeX, clydeY, clydeX, clydeY + 1)) pointsDown += 500;
+    if(closerToSpawn(clydeX, clydeY, clydeX, clydeY - 1)) pointsUp += 500;
+
+    if(previousDir == RIGHT) pointsLeft-=10000;
+    else if(previousDir == UP) pointsDown-=10000;
+    else if(previousDir == DOWN) pointsUp-=10000;
+    else if(previousDir == LEFT) { pointsRight-=10000; }
+
+    if(pointsLeft >= pointsRight && pointsLeft >= pointsDown && pointsLeft >= pointsUp) clydeDir = LEFT;
+    else if(pointsDown >= pointsRight && pointsDown >= pointsUp) clydeDir = DOWN;
+    else if(pointsUp >= pointsRight) clydeDir = UP;
+    else{ clydeDir = RIGHT; }
+}
+
+void inkyEyesState()
+{
+    if(inkyX == ghostStartX[0] && inkyY == ghostStartY[0]) { inkyDead = false; printf("\n\n\n\n HELLO \n\n\n\n"); }
+
+    enum eDirection previousDir = inkyDir;
+
+    int pointsLeft = 0 + abs(ghostStartX[0] - (inkyX + 1)) + rand() % 5;
+    int pointsRight = 0 + abs(ghostStartX[0] - (inkyX - 1)) + rand() % 5;
+    int pointsUp = 0 + abs(ghostStartY[0] - (inkyY + 1)) + rand() % 5;
+    int pointsDown = 0 + abs(ghostStartY[0] - (inkyY - 1)) + rand() % 5;
+
+    if(ghostsGetCollision(inkyX - 1,inkyY))    pointsLeft -= 15000;
+    if(ghostsGetCollision(inkyX + 1,inkyY))    pointsRight -= 15000;
+    if(ghostsGetCollision(inkyX,inkyY - 1))    pointsUp -= 15000;
+    if(ghostsGetCollision(inkyX,inkyY + 1))    pointsDown -= 15000;
+
+    if(closerToSpawn(inkyX, inkyY, inkyX - 1, inkyY)) pointsLeft += 500;
+    if(closerToSpawn(inkyX, inkyY, inkyX + 1, inkyY)) pointsRight += 500;
+    if(closerToSpawn(inkyX, inkyY, inkyX, inkyY + 1)) pointsDown += 500;
+    if(closerToSpawn(inkyX, inkyY, inkyX, inkyY - 1)) pointsUp += 500;
+
+    if(previousDir == RIGHT) pointsLeft-=10000;
+    else if(previousDir == UP) pointsDown-=10000;
+    else if(previousDir == DOWN) pointsUp-=10000;
+    else if(previousDir == LEFT) { pointsRight-=10000; }
+
+    if(pointsLeft >= pointsRight && pointsLeft >= pointsDown && pointsLeft >= pointsUp) inkyDir = LEFT;
+    else if(pointsDown >= pointsRight && pointsDown >= pointsUp) inkyDir = DOWN;
+    else if(pointsUp >= pointsRight) inkyDir = UP;
+    else{ inkyDir = RIGHT; }
+}
+
+void pinkyEyesState()
+{
+    if(pinkyX == ghostStartX[0] && pinkyY == ghostStartY[0]) { pinkyDead = false; printf("\n\n\n\n HELLO \n\n\n\n"); }
+
+    enum eDirection previousDir = pinkyDir;
+
+    int pointsLeft = 0 + abs(ghostStartX[0] - (pinkyX + 1)) + rand() % 5;
+    int pointsRight = 0 + abs(ghostStartX[0] - (pinkyX - 1)) + rand() % 5;
+    int pointsUp = 0 + abs(ghostStartY[0] - (pinkyY + 1)) + rand() % 5;
+    int pointsDown = 0 + abs(ghostStartY[0] - (pinkyY - 1)) + rand() % 5;
+
+    if(ghostsGetCollision(pinkyX - 1,pinkyY))    pointsLeft -= 15000;
+    if(ghostsGetCollision(pinkyX + 1,pinkyY))    pointsRight -= 15000;
+    if(ghostsGetCollision(pinkyX,pinkyY - 1))    pointsUp -= 15000;
+    if(ghostsGetCollision(pinkyX,pinkyY + 1))    pointsDown -= 15000;
+
+    if(closerToSpawn(pinkyX, pinkyY, pinkyX - 1, pinkyY)) pointsLeft += 500;
+    if(closerToSpawn(pinkyX, pinkyY, pinkyX + 1, pinkyY)) pointsRight += 500;
+    if(closerToSpawn(pinkyX, pinkyY, pinkyX, pinkyY + 1)) pointsDown += 500;
+    if(closerToSpawn(pinkyX, pinkyY, pinkyX, pinkyY - 1)) pointsUp += 500;
+
+    if(previousDir == RIGHT) pointsLeft-=10000;
+    else if(previousDir == UP) pointsDown-=10000;
+    else if(previousDir == DOWN) pointsUp-=10000;
+    else if(previousDir == LEFT) { pointsRight-=10000; }
+
+    if(pointsLeft >= pointsRight && pointsLeft >= pointsDown && pointsLeft >= pointsUp) pinkyDir = LEFT;
+    else if(pointsDown >= pointsRight && pointsDown >= pointsUp) pinkyDir = DOWN;
+    else if(pointsUp >= pointsRight) pinkyDir = UP;
+    else{ pinkyDir = RIGHT; }
 }
 
 #pragma clang diagnostic pop
