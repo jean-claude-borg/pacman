@@ -137,19 +137,35 @@ void updateLogic(int *x, int *y)
     //blinky eaten while vulnerable
     static int powerEatMaxTime = 50;
     static int powerEatAnimCounter = 0;
-    if(blinkyDead)
+    static int pointsEarned = 200;
+    if(blinkyDead || clydeDead || inkyDead || pinkyDead)
     {
         if(!showedPoints)
         {
             DrawText("200", pacX + 5, pacY + pacHeight/2, 15, WHITE);
             updateAiMovement = false;
             allowUserInput = false;
-            showBlinky = false;
+            if(blinkyDead)
+                showBlinky = false;
+            else if(clydeDead)
+                showClyde = false;
+            else if(inkyDead)
+                showInky = false;
+            else if(pinkyDead)
+                showPinky = false;
             powerEatAnimCounter++;
         }
         if(powerEatAnimCounter >= powerEatMaxTime)
         {
-              showBlinky = true;
+            if(!showBlinky)
+                showBlinky = true;
+            else if(!showClyde)
+                showClyde = true;
+            else if(!showInky)
+                showInky = true;
+            else if(!showPinky)
+                showPinky = true;
+
               updateAiMovement = true;
               allowUserInput = true;
 
@@ -183,7 +199,7 @@ bool getGhostCollision()
         showedPoints = false;
         score+=200;
     }
-    if(CheckCollisionRecs(pacHitBox, clydeHitBox) && poweredUp == true)
+    if(CheckCollisionRecs(pacHitBox, clydeHitBox) && poweredUp == true && !clydeDead)
     {
         showClyde = true;
         updateAiMovement = true;
@@ -196,7 +212,7 @@ bool getGhostCollision()
         showedPoints = false;
         score+=200;
     }
-    if(CheckCollisionRecs(pacHitBox, inkyHitBox) && poweredUp == true)
+    if(CheckCollisionRecs(pacHitBox, inkyHitBox) && poweredUp == true && !inkyDead)
     {
         showInky = true;
         updateAiMovement = true;
@@ -209,7 +225,7 @@ bool getGhostCollision()
         showedPoints = false;
         score+=200;
     }
-    if(CheckCollisionRecs(pacHitBox, pinkyHitBox) && poweredUp == true)
+    if(CheckCollisionRecs(pacHitBox, pinkyHitBox) && poweredUp == true && !pinkyDead)
     {
         showPinky = true;
         updateAiMovement = true;

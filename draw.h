@@ -2,7 +2,7 @@
 
 #include "globals.h"
 
-int textureOffset = 2;
+int textureOffset = 1;
 
 void drawGhosts();
 void drawPauseMenu();
@@ -246,11 +246,11 @@ void loadTextures()
 
 void drawMap()
 {
-    for(int i = 0; i < sizeOfVisibleWallArray; i++)
-        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, DARKBLUE);
+//    for(int i = 0; i < sizeOfVisibleWallArray; i++)
+//        DrawRectangle(visibleWallsX[i], visibleWallsY[i], 1,1, DARKBLUE);
 
-//     for(int i = 0; i < sizeOfWallArray; i++)
-//         DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);
+     for(int i = 0; i < sizeOfWallArray; i++)
+         DrawRectangle(wallsX[i], wallsY[i], 1,1, GREEN);
 
     for(int i = 0; i < sizeOfFoodArray; i++)
         if(showFood[i])
@@ -486,35 +486,35 @@ void drawBlinky()
 
     if(blinkyDir == LEFT)
     {
-        if(!blinkyDead)
+        if(!blinkyDead && !poweredUp)
             DrawTexture(blinkyLeft, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if (blinkyDead)
             DrawTexture(eyesLeft, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == RIGHT)
     {
-        if(!blinkyDead)
+        if(!blinkyDead && !poweredUp)
             DrawTexture(blinkyRight, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
             DrawTexture(eyesRight, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == UP)
     {
-        if(!blinkyDead)
+        if(!blinkyDead && !poweredUp)
             DrawTexture(blinkyUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
             DrawTexture(eyesUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == DOWN)
     {
-        if(!blinkyDead)
+        if(!blinkyDead && !poweredUp)
             DrawTexture(blinkyDown, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
             DrawTexture(eyesDown, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
     }
     if(blinkyDir == STOP)
     {
-        if(!blinkyDead)
+        if(!blinkyDead && !poweredUp)
             DrawTexture(blinkyUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
         else if(blinkyDead)
             DrawTexture(eyesUp, blinkyX + textureOffset, blinkyY + textureOffset, WHITE);
@@ -557,15 +557,40 @@ void drawClyde()
     }
 
     if(clydeDir == LEFT)
-        DrawTexture(clydeLeft, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
+    {
+        if(!clydeDead && !poweredUp)
+            DrawTexture(clydeLeft, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+        else if (clydeDead)
+            DrawTexture(eyesLeft, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+    }
     if(clydeDir == RIGHT)
-        DrawTexture(clydeRight, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
+    {
+        if(!clydeDead && !poweredUp)
+            DrawTexture(clydeRight, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+        else if(clydeDead)
+            DrawTexture(eyesRight, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+    }
     if(clydeDir == UP)
-        DrawTexture(clydeUp, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
+    {
+        if(!clydeDead && !poweredUp)
+            DrawTexture(clydeUp, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+        else if(clydeDead)
+            DrawTexture(eyesUp, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+    }
     if(clydeDir == DOWN)
-        DrawTexture(clydeDown, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
+    {
+        if(!clydeDead && !poweredUp)
+            DrawTexture(clydeDown, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+        else if(clydeDead)
+            DrawTexture(eyesDown, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+    }
     if(clydeDir == STOP)
-        DrawTexture(clydeUp, clydeX+textureOffset , clydeY+textureOffset ,WHITE);
+    {
+        if(!clydeDead && !poweredUp)
+            DrawTexture(clydeUp, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+        else if(clydeDead)
+            DrawTexture(eyesUp, clydeX + textureOffset, clydeY + textureOffset, WHITE);
+    }
 }
 
 bool usingInkyL1 = true;
@@ -601,15 +626,40 @@ void drawInky()
     }
 
     if(inkyDir == LEFT)
-        DrawTexture(inkyLeft, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
+    {
+        if(!inkyDead && !poweredUp)
+            DrawTexture(inkyLeft, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+        else if (inkyDead)
+            DrawTexture(eyesLeft, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+    }
     if(inkyDir == RIGHT)
-        DrawTexture(inkyRight, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
+    {
+        if(!inkyDead && !poweredUp)
+            DrawTexture(inkyRight, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+        else if(inkyDead)
+            DrawTexture(eyesRight, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+    }
     if(inkyDir == UP)
-        DrawTexture(inkyUp, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
+    {
+        if(!inkyDead && !poweredUp)
+            DrawTexture(inkyUp, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+        else if(inkyDead)
+            DrawTexture(eyesUp, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+    }
     if(inkyDir == DOWN)
-        DrawTexture(inkyDown, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
+    {
+        if(!inkyDead && !poweredUp)
+            DrawTexture(inkyDown, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+        else if(inkyDead)
+            DrawTexture(eyesDown, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+    }
     if(inkyDir == STOP)
-        DrawTexture(inkyUp, inkyX+textureOffset , inkyY+textureOffset ,WHITE);
+    {
+        if(!inkyDead && !poweredUp)
+            DrawTexture(inkyUp, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+        else if(inkyDead)
+            DrawTexture(eyesUp, inkyX + textureOffset, inkyY + textureOffset, WHITE);
+    }
 }
 
 bool usingPinkyL1 = true;
@@ -648,29 +698,47 @@ void drawPinky()
     }
 
     if(pinkyDir == LEFT)
-        DrawTexture(pinkyLeft, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
+    {
+        if(!pinkyDead && !poweredUp)
+            DrawTexture(pinkyLeft, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+        else if (pinkyDead)
+            DrawTexture(eyesLeft, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+    }
     if(pinkyDir == RIGHT)
-        DrawTexture(pinkyRight, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
+    {
+        if(!pinkyDead && !poweredUp)
+            DrawTexture(pinkyRight, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+        else if(pinkyDead)
+            DrawTexture(eyesRight, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+    }
     if(pinkyDir == UP)
-        DrawTexture(pinkyUp, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
+    {
+        if(!pinkyDead && !poweredUp)
+            DrawTexture(pinkyUp, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+        else if(pinkyDead)
+            DrawTexture(eyesUp, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+    }
     if(pinkyDir == DOWN)
-        DrawTexture(pinkyDown, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
+    {
+        if(!pinkyDead && !poweredUp)
+            DrawTexture(pinkyDown, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+        else if(pinkyDead)
+            DrawTexture(eyesDown, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+    }
     if(pinkyDir == STOP)
-        DrawTexture(pinkyUp, pinkyX+textureOffset , pinkyY+textureOffset ,WHITE);
+    {
+        if(!pinkyDead && !poweredUp)
+            DrawTexture(pinkyUp, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+        else if(pinkyDead)
+            DrawTexture(eyesUp, pinkyX + textureOffset, pinkyY + textureOffset, WHITE);
+    }
 }
 
 void drawGhosts()
 {
     //offset by 4 to centre the ghosts
-    if(!poweredUp || blinkyDead)
-    {
-        if(showBlinky)
-            drawBlinky();
-        drawClyde();
-        drawInky();
-        drawPinky();
-    }
-    else if(poweredUp)
+
+    if(poweredUp)
     {
         static Texture2D blueGhost;
 
@@ -722,13 +790,13 @@ void drawGhosts()
         }
 
         if(poweredUp && !blinkyDead)
-            DrawTexture(blueGhost, blinkyX+4 , blinkyY+4, WHITE);
-        if(showClyde)
-            DrawTexture(blueGhost, clydeX+4 , clydeY+4 ,WHITE);
-        if(showInky)
-            DrawTexture(blueGhost, inkyX+4 , inkyY+4 ,WHITE);
-        if(showPinky)
-            DrawTexture(blueGhost, pinkyX+4 , pinkyY+4 ,WHITE);
+            DrawTexture(blueGhost, blinkyX+textureOffset , blinkyY+4, WHITE);
+        if(poweredUp && !clydeDead)
+            DrawTexture(blueGhost, clydeX+textureOffset , clydeY+4 ,WHITE);
+        if(poweredUp && !inkyDead)
+            DrawTexture(blueGhost, inkyX+textureOffset , inkyY+4 ,WHITE);
+        if(poweredUp && !pinkyDead)
+            DrawTexture(blueGhost, pinkyX+textureOffset , pinkyY+4 ,WHITE);
 
         if(poweredUpDuration >= poweredUpMaxDuration)
         {
@@ -736,6 +804,14 @@ void drawGhosts()
             poweredUpDuration = 0;
         }
 
+    }
+    if(!poweredUp || blinkyDead || clydeDead || inkyDead || pinkyDead)
+    {
+        if(showBlinky)
+            drawBlinky();
+        drawClyde();
+        drawInky();
+        drawPinky();
     }
 }
 

@@ -1,4 +1,6 @@
 # pacman
-Pacman game using raylib for 2D graphics
+Pacman clone using raylib for 2D graphics
 
-This is a work in progrss(not finished yet)
+This is a work in progress
+
+God help me the AI is going to drive me insane

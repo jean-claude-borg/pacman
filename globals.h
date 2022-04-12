@@ -159,23 +159,23 @@ int* ghostStartY;
 
 int blinkyX;
 int blinkyY;
-int blinkyWidth = 28;
-int blinkyHeight = 28;
+int blinkyWidth = 30;
+int blinkyHeight = 30;
 
 int clydeX;
 int clydeY;
-int clydeWidth = 28;
-int clydeHeight = 28;
+int clydeWidth = 30;
+int clydeHeight = 30;
 
 int inkyX;
 int inkyY;
-int inkyWidth = 28;
-int inkyHeight = 28;
+int inkyWidth = 30;
+int inkyHeight = 30;
 
 int pinkyX;
 int pinkyY;
-int pinkyWidth = 28;
-int pinkyHeight = 28;
+int pinkyWidth = 30;
+int pinkyHeight = 30;
 
 enum eDirection blinkyDir;
 enum eDirection clydeDir;

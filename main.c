@@ -8,7 +8,7 @@
 
 #define SCALE 1.0f
 #define HUD_EXTENSION_LENGTH 35*SCALE
-void gameLoop(int sizeOfWallArray);
+void gameLoop();
 
 int main()
 {
@@ -32,7 +32,7 @@ int main()
     return 0;
 }
 
-void gameLoop(int sizeOfWallArray)
+void gameLoop()
 {
     // Create a RenderTexture2D to be used for render to texture
     RenderTexture2D target = LoadRenderTexture(windowWidth, windowHeight + HUD_EXTENSION_LENGTH);
