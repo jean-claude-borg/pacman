@@ -407,10 +407,9 @@ void drawStartMenu()
 
     DrawRectangleRounded(rec, 0.5f, 1, (Color){51,0,51,255});
     DrawText("Pacman Needs Help ", (int)menuX + (menuWidth*0.12), (int)menuY + (menuHeight*0.15), 30, WHITE);
-    DrawText("Slapping the Ghosts!", (int)menuX + (menuWidth*0.12), (int)menuY + (menuHeight*0.25), 30, WHITE);
     DrawText("Press Space to Help Pacman", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.45), 20, WHITE);
     DrawText("Press P to Pause", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.55), 20, WHITE);
-    DrawText("Press Esc to Ditch Pacman", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.65), 20, WHITE);
+    DrawText("Press Esc to Quit", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.65), 20, WHITE);
     DrawText("Use the Arrow Keys to Move", (int)menuX + (menuWidth*0.04), (int)menuY + (menuHeight*0.75), 20, WHITE);
 }
 
